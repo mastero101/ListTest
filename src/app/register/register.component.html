@@ -69,10 +69,10 @@
     </div>  
   
     <div class="form-group">
-      <label for="email">Email:</label>
+      <label for="correo_electronico">Email:</label>
       <mat-form-field appearance="fill" class="form-field">
-        <input matInput placeholder="Email" formControlName="email">
-        <mat-error *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched">
+        <input matInput placeholder="Email" formControlName="correo_electronico">
+        <mat-error *ngIf="registroForm.get('correo_electronico')?.invalid && registroForm.get('correo_electronico')?.touched">
           Ingresa un email válido.
         </mat-error>
       </mat-form-field>
@@ -117,11 +117,12 @@
     </div>
 
     <div class="form-group">
-      <label for="cp">CP:</label>
+      <label for="codigo_postal">CP:</label>
       <mat-form-field appearance="fill" class="form-field">
-        <input matInput type="number" placeholder="CP" formControlName="cp">
-        <mat-error *ngIf="registroForm.get('cp')?.invalid && registroForm.get('cp')?.touched">
-          El CP es requerido.
+        <input matInput type="text" placeholder="Codigo Postal" formControlName="codigo_postal">
+        <mat-error *ngIf="registroForm.get('codigo_postal')?.invalid && registroForm.get('codigo_postal')?.touched">
+          <ng-container *ngIf="registroForm.get('codigo_postal')?.hasError('required')">El CP es requerido.</ng-container>
+          <ng-container *ngIf="registroForm.get('codigo_postal')?.hasError('pattern')">El CP debe tener 5 dígitos.</ng-container>
         </mat-error>
       </mat-form-field>
     </div>
@@ -137,19 +138,19 @@
     </div>
     
     <div class="form-group">
-      <label for="numero_exterior">Numero Exterior:</label>
+      <label for="no_exterior">Numero Exterior:</label>
       <mat-form-field appearance="fill" class="form-field">
-        <input matInput placeholder="Numero Exterior" formControlName="numero_exterior">
-        <mat-error *ngIf="registroForm.get('numero_exterior')?.invalid && registroForm.get('numero_exterior')?.touched">
+        <input matInput placeholder="Numero Exterior" formControlName="no_exterior">
+        <mat-error *ngIf="registroForm.get('no_exterior')?.invalid && registroForm.get('no_exterior')?.touched">
           El Numero Exterior es requerida.
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class="form-group">
-      <label for="numero_interior">Numero Interior:</label>
+      <label for="no_interior">Numero Interior:</label>
       <mat-form-field appearance="fill" class="form-field">
-        <input matInput placeholder="Numero Interior" formControlName="numero_interior">
+        <input matInput placeholder="Numero Interior" formControlName="no_interior">
       </mat-form-field>
     </div>
 
@@ -158,7 +159,8 @@
       <mat-form-field appearance="fill" class="form-field">
         <input matInput type="number" placeholder="Tel Celular" formControlName="tel_celular">
         <mat-error *ngIf="registroForm.get('tel_celular')?.invalid && registroForm.get('tel_celular')?.touched">
-          El Telefono es requerido.
+          <ng-container *ngIf="registroForm.get('tel_celular')?.hasError('required')">El Telefono es requerido.</ng-container>
+          <ng-container *ngIf="registroForm.get('tel_celular')?.hasError('pattern')">El Telefono debe tener 10 o 12 dígitos.</ng-container>
         </mat-error>
       </mat-form-field>
     </div>
@@ -171,8 +173,8 @@
     </div>
 
     <div class="form-group">
-      <label for="victima">El denunciante tambien se considera victima y ofendido (a)</label>
-      <mat-button-toggle-group name="victima" aria-label="Favorite Color" formControlName="victima">
+      <label for="es_victima">El denunciante tambien se considera victima y ofendido (a)</label>
+      <mat-button-toggle-group name="es_victima" aria-label="Favorite Color" formControlName="es_victima">
         <mat-button-toggle value="si">Si</mat-button-toggle>
         <mat-button-toggle value="no">No</mat-button-toggle>
       </mat-button-toggle-group>

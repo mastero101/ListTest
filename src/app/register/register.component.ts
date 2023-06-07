@@ -9,12 +9,12 @@ interface Registro {
   fecha_nacimiento: string;
   escolaridad: string;
   genero: string;
-  email: string;
+  correo_electronico: string;
   estado: string;
   municipio: string;
   colonia: string;
   calle: string;
-  cp: string;
+  codigo_postal: string;
   numero_exterior: string;
   numero_interior: string;
   tel_celular: string;
@@ -43,17 +43,17 @@ export class RegisterComponent implements OnInit{
       fecha_nacimiento: ['', Validators.required],
       genero: ['', Validators.required],
       escolaridad: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      correo_electronico: ['', [Validators.required, Validators.email]],
       estado: ['', Validators.required],
       municipio: ['', Validators.required],
       colonia: ['', Validators.required],
       calle: ['', Validators.required],
-      cp: ['', Validators.required],
-      numero_exterior: ['', Validators.required],
-      numero_interior: [],
-      tel_celular: ['', Validators.required],
+      codigo_postal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
+      no_exterior: ['', Validators.required],
+      no_interior: [],
+      tel_celular: ['', [Validators.required, Validators.pattern(/^\d{10}$|^\d{12}$/)]],
       tel_fijo: [],
-      victima: ['', Validators.required],
+      es_victima: ['', Validators.required],
     });
 
     // Recuperar datos del localStorage al cargar la página
@@ -97,28 +97,11 @@ export class RegisterComponent implements OnInit{
   guardar() {
     const fechaNacimiento = new Date(this.registroForm.value.fecha_nacimiento);
     const fechaNacimientoFormatted = fechaNacimiento.toISOString().split('T')[0];
-
-    const data = {
-      id_denunciante: 1,
-      folio: this.folio,
-      nombre: this.registroForm.value.nombre,
-      apellido_paterno: this.registroForm.value.apellido_paterno,
-      apellido_materno: this.registroForm.value.apellido_materno,
-      fecha_nacimiento: fechaNacimientoFormatted,
-      genero: this.registroForm.value.genero,
-      escolaridad: this.registroForm.value.escolaridad,
-      correo_electronico: this.registroForm.value.email,
-      estado: this.registroForm.value.estado,
-      municipio: this.registroForm.value.municipio,
-      colonia: this.registroForm.value.colonia,
-      codigo_postal: this.registroForm.value.cp,
-      calle: this.registroForm.value.calle,
-      no_exterior: this.registroForm.value.numero_exterior,
-      no_interior: this.registroForm.value.numero_interior,
-      tel_celular: this.registroForm.value.tel_celular,
-      tel_fijo: this.registroForm.value.tel_fijo,
-      es_victima: this.registroForm.value.victima,
-    };
+    
+    const data = this.registroForm.value;
+      data.id_denunciante = 1;
+      data.folio = this.folio;
+      data.fecha_nacimiento = fechaNacimientoFormatted;
     
     // Realiza la solicitud POST utilizando Axios
     console.log(data);
