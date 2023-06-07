@@ -1,0 +1,184 @@
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput placeholder="Nombre" formControlName="nombre">
+        <mat-error *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched">
+          El Nombre es requerido.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="apellido_paterno">Apellido Paterno:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput placeholder="Apellido Paterno" formControlName="apellido_paterno">
+        <mat-error *ngIf="registroForm.get('apellido_paterno')?.invalid && registroForm.get('apellido_paterno')?.touched">
+          El Apellido Paterno es requerido.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="apellido_materno">Apellido Materno:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput placeholder="Apellido Materno" formControlName="apellido_materno">
+        <mat-error *ngIf="registroForm.get('apellido_materno')?.invalid && registroForm.get('apellido_materno')?.touched">
+          El Apellido Materno es requerido.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="fecha_nacimiento">Fecha Nacimiento:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fecha_nacimiento">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="registroForm.get('fecha_nacimiento')?.invalid && registroForm.get('fecha_nacimiento')?.touched">
+          La Fecha de Nacimiento es requerida.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="genero">Género:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Género</mat-label>
+        <mat-select formControlName="genero">
+          <mat-option value="masculino">Masculino</mat-option>
+          <mat-option value="femenino">Femenino</mat-option>
+          <mat-option value="otro">Otro</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="escolaridad">Escolaridad:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Escolaridad</mat-label>
+        <mat-select formControlName="escolaridad">
+          <mat-option value="primeria">Primaria</mat-option>
+          <mat-option value="secundaria">Secundaria</mat-option>
+          <mat-option value="preparatoria/tecnica">Preparatoria/Tecnica</mat-option>
+          <mat-option value="licenciatura">Licenciatura</mat-option>
+          <mat-option value="posgrado">Posgrado</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>  
+  
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched">
+          Ingresa un email válido.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="estado">Estado:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option value="primeria">Primaria</mat-option>
+          <mat-option value="secundaria">Secundaria</mat-option>
+          <mat-option value="preparatoria/tecnica">Preparatoria/Tecnica</mat-option>
+          <mat-option value="licenciatura">Licenciatura</mat-option>
+          <mat-option value="posgrado">Posgrado</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>  
+
+    <div class="form-group">
+      <label for="municipio">Municipio:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Municipio</mat-label>
+        <mat-select formControlName="municipio">
+          <mat-option value="primeria">Primaria</mat-option>
+          <mat-option value="secundaria">Secundaria</mat-option>
+          <mat-option value="preparatoria/tecnica">Preparatoria/Tecnica</mat-option>
+          <mat-option value="licenciatura">Licenciatura</mat-option>
+          <mat-option value="posgrado">Posgrado</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>  
+
+    <div class="form-group">
+      <label for="colonia">Colonia:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput placeholder="Colonia" formControlName="colonia">
+        <mat-error *ngIf="registroForm.get('colonia')?.invalid && registroForm.get('colonia')?.touched">
+          La Colonia es requerida.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="cp">CP:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput type="number" placeholder="CP" formControlName="cp">
+        <mat-error *ngIf="registroForm.get('cp')?.invalid && registroForm.get('cp')?.touched">
+          El CP es requerido.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="calle">Calle:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput placeholder="Calle" formControlName="calle">
+        <mat-error *ngIf="registroForm.get('calle')?.invalid && registroForm.get('calle')?.touched">
+          La Calle es requerida.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    
+    <div class="form-group">
+      <label for="numero_exterior">Numero Exterior:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput placeholder="Numero Exterior" formControlName="numero_exterior">
+        <mat-error *ngIf="registroForm.get('numero_exterior')?.invalid && registroForm.get('numero_exterior')?.touched">
+          El Numero Exterior es requerida.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="numero_interior">Numero Interior:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput placeholder="Numero Interior" formControlName="numero_interior">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="tel_celular">Tel Celular:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput type="number" placeholder="Tel Celular" formControlName="tel_celular">
+        <mat-error *ngIf="registroForm.get('tel_celular')?.invalid && registroForm.get('tel_celular')?.touched">
+          El Telefono es requerido.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="tel_fijo">Tel Fijo:</label>
+      <mat-form-field appearance="fill" class="form-field">
+        <input matInput type="number" placeholder="Tel Fijo" formControlName="tel_fijo">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="victima">El denunciante tambien se considera victima y ofendido (a)</label>
+      <mat-button-toggle-group name="victima" aria-label="Favorite Color" formControlName="victima">
+        <mat-button-toggle value="si">Si</mat-button-toggle>
+        <mat-button-toggle value="no">No</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <button mat-raised-button type="submit">Submit</button>
+</form>
+    <button mat-raised-button type="clear" (click)="clear()">Clear</button>
+
