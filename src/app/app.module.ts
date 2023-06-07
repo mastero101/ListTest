@@ -18,12 +18,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { RegisterComponent } from './register/register.component';
+import { PartsComponent } from './parts/parts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     RegisterComponent,
+    PartsComponent,
   ],
   imports: [
     BrowserModule,

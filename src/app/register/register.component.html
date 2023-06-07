@@ -1,4 +1,4 @@
-<form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="registration-form">
 
     <div class="form-group">
       <label for="nombre">Nombre:</label>
@@ -119,7 +119,7 @@
     <div class="form-group">
       <label for="codigo_postal">CP:</label>
       <mat-form-field appearance="fill" class="form-field">
-        <input matInput type="text" placeholder="Codigo Postal" formControlName="codigo_postal">
+        <input matInput type="number" placeholder="Codigo Postal" formControlName="codigo_postal">
         <mat-error *ngIf="registroForm.get('codigo_postal')?.invalid && registroForm.get('codigo_postal')?.touched">
           <ng-container *ngIf="registroForm.get('codigo_postal')?.hasError('required')">El CP es requerido.</ng-container>
           <ng-container *ngIf="registroForm.get('codigo_postal')?.hasError('pattern')">El CP debe tener 5 dígitos.</ng-container>

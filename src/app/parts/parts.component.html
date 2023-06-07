@@ -1,0 +1,70 @@
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="registration-form">
+    
+    <div class="form-group" style="margin-top: 2em; font-size: large;">
+        <mat-label>{{idInit2}}</mat-label>
+    </div>
+
+    <div class="form-group">
+        <label for="tipo">Componente:</label>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Componente</mat-label>
+          <mat-select formControlName="tipo">
+            <mat-option value="procesador">Procesador</mat-option>
+            <mat-option value="disipador">Disipador</mat-option>
+            <mat-option value="motherboard">Motherboard</mat-option>
+            <mat-option value="ram">Ram</mat-option>
+            <mat-option value="almacenamiento">Almacenamiento</mat-option>
+            <mat-option value="psu">Fuente de Poder</mat-option>
+            <mat-option value="gpu">Grafica</mat-option>
+            <mat-option value="gabinete">Gabinete</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div> 
+
+    <div class="form-group">
+        <label for="modelo">Modelo:</label>
+        <mat-form-field appearance="fill" class="form-field">
+            <input matInput placeholder="Modelo" formControlName="modelo">
+            <mat-error *ngIf="registroForm.get('modelo')?.invalid && registroForm.get('modelo')?.touched">
+            El Modelo es requerido.
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <label for="precio">Precio:</label>
+        <mat-form-field appearance="fill" class="form-field">
+            <input matInput type="number" placeholder="Precio" formControlName="precio">
+            <mat-error *ngIf="registroForm.get('precio')?.invalid && registroForm.get('precio')?.touched">
+            El Precio es requerido.
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <label for="url">URL:</label>
+        <mat-form-field appearance="fill" class="form-field">
+            <input matInput placeholder="URL" formControlName="url">
+            <mat-error *ngIf="registroForm.get('url')?.invalid && registroForm.get('url')?.touched">
+            La URL del producto es requerida.
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <label for="tienda">Tienda:</label>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Tienda</mat-label>
+          <mat-select formControlName="tienda">
+            <mat-option value="cyberpuerta">Cyberpuerta</mat-option>
+            <mat-option value="ddtech">DDTECH</mat-option>
+            <mat-option value="amazon">Amazon</mat-option>
+            <mat-option value="pcel">PCEL</mat-option>
+            <mat-option value="dimercom">Dimercom</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>  
+
+    <button mat-raised-button type="submit">Submit</button>
+</form>
+    <button mat-raised-button type="clear">Clear</button>
