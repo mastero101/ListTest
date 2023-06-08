@@ -56,13 +56,13 @@ export class PartsComponent {
       .then((response) => {
         // Maneja la respuesta exitosa de la inserción en la base de datos
         console.log('Datos guardados exitosamente:', response.data);
-        prompt("Registrado")
       })
       .catch((error) => {
         // Maneja el error en caso de que la inserción falle
         console.error('Error al guardar los datos:', error);
         // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales según tus necesidades
       });
+    alert("Registrado");
   }
 
   recoverid(){
