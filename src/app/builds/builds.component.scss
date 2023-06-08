@@ -6,7 +6,7 @@ mat-card {
 }
 
 mat-card.first {
-    margin-top: 4em;
+    margin-top: 4.5em;
 }
 
 mat-option.extend {
@@ -20,6 +20,9 @@ button {
     margin-top: 1em;
     margin-left: 11em;
     margin-bottom: 2em;
+    @media screen and (min-width: 768px) {
+        margin-left: 40em;
+    }
 }
 
 button.export {

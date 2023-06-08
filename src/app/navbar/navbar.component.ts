@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   opened = false;
+  darkTheme = false;
 
   constructor() {
 
@@ -14,6 +15,10 @@ export class NavbarComponent {
 
   toggleSidebar() {
     this.opened = !this.opened;
+  }
+
+  toggleTheme() {
+    this.darkTheme = !this.darkTheme;
   }
 
 }
