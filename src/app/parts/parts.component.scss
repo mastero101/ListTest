@@ -1,6 +1,7 @@
 .form-group {
     margin-bottom: 20px;
-    margin-left: 5em;
+    margin-left: 1em;
+    margin-right: 1em;
   }
   
   .error-message {
@@ -10,6 +11,10 @@
 
 .form-field {
   width: 100%;
+}
+
+.registration-form {
+  margin-top: 5em;
 }
 
 button {
