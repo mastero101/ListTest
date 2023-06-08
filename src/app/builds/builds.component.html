@@ -1,0 +1,78 @@
+<mat-card class="first">
+    <mat-form-field appearance="fill">
+      <mat-label>Procesador</mat-label>
+      <mat-select (selectionChange)="setPrecioSeleccionado($event.value)">
+        <mat-option *ngFor="let procesador of procesadores" [value]="procesador">{{ procesador.modelo }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>{{ precioSeleccionado|currency }}</p>      
+  </mat-card>
+  <mat-card>
+    <mat-form-field appearance="fill">
+      <mat-label>Placa Madre</mat-label>
+      <mat-select (selectionChange)="setPrecioSeleccionado2($event.value)">
+        <mat-option *ngFor="let motherboard of motherboard" [value]="motherboard.modelo">{{ motherboard.modelo }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>{{ precioSeleccionado2|currency }}</p>
+  </mat-card>
+  <mat-card>
+    <mat-form-field appearance="fill">
+      <mat-label>Ram</mat-label>
+      <mat-select (selectionChange)="setPrecioSeleccionado3($event.value)">
+        <mat-option class="extend" *ngFor="let ram of ram" [value]="ram.modelo">{{ ram.modelo }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>{{ precioSeleccionado3|currency }}</p>
+  </mat-card>
+  <mat-card>
+    <mat-form-field appearance="fill">
+      <mat-label>Almacenamiento</mat-label>
+      <mat-select (selectionChange)="setPrecioSeleccionado4($event.value)">
+        <mat-option class="extend" *ngFor="let almacenamiento of almacenamiento" [value]="almacenamiento.modelo">{{ almacenamiento.modelo }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>{{ precioSeleccionado4|currency }}</p>
+  </mat-card>
+  <mat-card>
+      <mat-form-field appearance="fill">
+        <mat-label>Disipador</mat-label>
+        <mat-select (selectionChange)="setPrecioSeleccionado5($event.value)">
+          <mat-option *ngFor="let disipador of disipador" [value]="disipador.modelo">{{ disipador.modelo }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>{{ precioSeleccionado5|currency }}</p>
+    </mat-card>
+    <mat-card>
+      <mat-form-field appearance="fill">
+        <mat-label>Fuente de Poder</mat-label>
+        <mat-select (selectionChange)="setPrecioSeleccionado6($event.value)">
+          <mat-option class="extend" *ngFor="let fuentedepoder of fuentedepoder" [value]="fuentedepoder.modelo">{{ fuentedepoder.modelo }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>{{ precioSeleccionado6|currency }}</p>
+    </mat-card>
+    <mat-card>
+      <mat-form-field appearance="fill">
+        <mat-label>Grafica</mat-label>
+        <mat-select (selectionChange)="setPrecioSeleccionado7($event.value)">
+          <mat-option class="extend" *ngFor="let grafica of grafica" [value]="grafica.modelo">{{ grafica.modelo }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>{{ precioSeleccionado7|currency }}</p>
+    </mat-card>
+    <mat-card>
+      <mat-form-field appearance="fill">
+        <mat-label>Gabinete</mat-label>
+        <mat-select (selectionChange)="setPrecioSeleccionado8($event.value)">
+          <mat-option *ngFor="let gabinete of gabinetes" [value]="gabinete.modelo">{{ gabinete.modelo }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>{{ precioSeleccionado8|currency }}</p>
+    </mat-card>
+    <mat-card>
+      <p>----------------------------------------------------------------------------------------------------</p>
+      <mat-card-content>Total: {{ sumaPrecios|currency }}</mat-card-content>
+    </mat-card>
+    <br>
+    <button (click)="exportToText()">Exportar</button>

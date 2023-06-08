@@ -1,0 +1,20 @@
+mat-card {
+    margin-top: 1em;
+}
+
+mat-card.first {
+    margin-top: 4em;
+}
+
+mat-option.extend {
+    max-height: fit-content;
+    max-width: fit-content;
+    width: fit-content;
+    height: fit-content;
+}
+
+button {
+    margin-top: 1em;
+    margin-left: 12.5em;
+    margin-bottom: 2em;
+}

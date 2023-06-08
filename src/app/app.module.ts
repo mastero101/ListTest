@@ -16,9 +16,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
 
 import { RegisterComponent } from './register/register.component';
 import { PartsComponent } from './parts/parts.component';
+import { BuildsComponent } from './builds/builds.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { PartsComponent } from './parts/parts.component';
     NavbarComponent,
     RegisterComponent,
     PartsComponent,
+    BuildsComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ import { PartsComponent } from './parts/parts.component';
     MatNativeDateModule,
     MatSelectModule,
     MatButtonToggleModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
