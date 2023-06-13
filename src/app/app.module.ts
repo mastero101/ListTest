@@ -21,6 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { RegisterComponent } from './register/register.component';
 import { PartsComponent } from './parts/parts.component';
 import { BuildsComponent } from './builds/builds.component';
+import { EditpartsComponent } from './editparts/editparts.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { BuildsComponent } from './builds/builds.component';
     RegisterComponent,
     PartsComponent,
     BuildsComponent,
+    EditpartsComponent,
   ],
   imports: [
     BrowserModule,
