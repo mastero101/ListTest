@@ -17,7 +17,7 @@ interface Registro {
   styleUrls: ['./editparts.component.scss']
 })
 export class EditpartsComponent {
-  items: { precio: number; modelo: string; tienda: string; }[] = [];
+  items: { precio: number; tipo: string; modelo: string; tienda: string; url: string }[] = [];
   registroForm: FormGroup = new FormGroup({});
   modeloBusqueda: any;
   modelo: any;
@@ -48,6 +48,17 @@ export class EditpartsComponent {
     // Guardar datos en el localStorage
     localStorage.setItem('registro', JSON.stringify(registro));
     this.guardar();
+  }
+
+  onSelectionChange(selectedItem: any) {
+    this.registroForm.patchValue({
+        id: selectedItem.id,
+        tipo: selectedItem.tipo,
+        modelo: selectedItem.modelo,
+        precio: selectedItem.precio,
+        tienda: selectedItem.tienda,
+        url: selectedItem.url,
+    });
   }
 
   guardar() { 
@@ -92,11 +103,13 @@ export class EditpartsComponent {
       .get('https://nodemysql12.duckdns.org:443/')
       .then((response) => {
         this.items = response.data.map(
-          (item: {id: number; modelo: any; precio: number; tienda: any }) => ({
+          (item: {id: number; tipo: any; modelo: any; precio: number; tienda: any; url: any; }) => ({
             id: item.id,
+            tipo: item.tipo,
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
+            url: item.url,
           })
         );
       })
