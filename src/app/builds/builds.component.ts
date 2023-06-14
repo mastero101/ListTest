@@ -7,11 +7,11 @@ import axios from 'axios';
   styleUrls: ['./builds.component.scss']
 })
 export class BuildsComponent implements OnInit{
-  procesadores: { precio: number; modelo: string }[] = [];
-  motherboard: { precio: number; modelo: string }[] = [];
-  ram: { precio: number; modelo: string }[] = [];
-  almacenamiento: { precio: number; modelo: string }[] = [];
-  disipador: { precio: number; modelo: string }[] = [];
+  procesadores: { precio: number; modelo: string; tienda: string; }[] = [];
+  motherboard: { precio: number; modelo: string; tienda: string; }[] = [];
+  ram: { precio: number; modelo: string; tienda: string; }[] = [];
+  almacenamiento: { precio: number; modelo: string; tienda: string; }[] = [];
+  disipador: { precio: number; modelo: string; tienda: string; }[] = [];
   fuentedepoder: { precio: number; modelo: string; tienda: string; }[] = [];
   grafica: { precio: number; modelo: string; tienda: string; }[] = [];
   gabinetes: { modelo: string; precio: number; tienda: string; }[] = [];
@@ -86,9 +86,10 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/procesadores')
       .then((response) => {
         this.procesadores = response.data.map(
-          (item: { modelo: any; precio: any }) => ({
+          (item: { modelo: any; precio: number; tienda: any }) => ({
             modelo: item.modelo,
             precio: item.precio,
+            tienda: item.tienda,
           })
         );
       })
@@ -101,6 +102,7 @@ export class BuildsComponent implements OnInit{
     if (procesadorSeleccionado) {
       this.precioSeleccionado = procesadorSeleccionado.precio;
       this.modeloSeleccionado = procesadorSeleccionado.modelo;
+      this.tiendaSeleccionada = procesadorSeleccionado.tienda;
       this.sumatoriaPrecios();
     } else {
       this.precioSeleccionado = 0;
@@ -112,9 +114,10 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/motherboards')
       .then((response) => {
         this.motherboard = response.data.map(
-          (item: { modelo: any; precio: number }) => ({
+          (item: { modelo: any; precio: number; tienda: any }) => ({
             modelo: item.modelo,
             precio: item.precio,
+            tienda: item.tienda,
           })
         );
         this.precioSeleccionado2 = 0;
@@ -131,6 +134,7 @@ export class BuildsComponent implements OnInit{
     if (motherboardSeleccionada) {
       this.precioSeleccionado2 = motherboardSeleccionada.precio;
       this.modeloSeleccionado2 = motherboardSeleccionada.modelo;
+      this.tiendaSeleccionada2 = motherboardSeleccionada.tienda;
     }
     this.sumatoriaPrecios();
   }
@@ -140,9 +144,10 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/rams')
       .then((response) => {
         this.ram = response.data.map(
-          (item: { modelo: any; precio: number }) => ({
+          (item: { modelo: any; precio: number; tienda: any }) => ({
             modelo: item.modelo,
             precio: item.precio,
+            tienda: item.tienda,
           })
         );
         this.precioSeleccionado3 = 0;
@@ -157,6 +162,7 @@ export class BuildsComponent implements OnInit{
     if (ramSeleccionada) {
       this.precioSeleccionado3 = ramSeleccionada.precio;
       this.modeloSeleccionado3 = ramSeleccionada.modelo;
+      this.tiendaSeleccionada3 = ramSeleccionada.tienda;
     }
     this.sumatoriaPrecios();
   }
@@ -166,9 +172,10 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/almacenamientos')
       .then((response) => {
         this.almacenamiento = response.data.map(
-          (item: { modelo: any; precio: number }) => ({
+          (item: { modelo: any; precio: number; tienda: any }) => ({
             modelo: item.modelo,
             precio: item.precio,
+            tienda: item.tienda,
           })
         );
         this.precioSeleccionado4 = 0;
@@ -185,6 +192,7 @@ export class BuildsComponent implements OnInit{
     if (almacenamientoSeleccionado) {
       this.precioSeleccionado4 = almacenamientoSeleccionado.precio;
       this.modeloSeleccionado4 = almacenamientoSeleccionado.modelo;
+      this.tiendaSeleccionada4 = almacenamientoSeleccionado.tienda;
     }
     this.sumatoriaPrecios();
   }
@@ -194,9 +202,10 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/disipadores')
       .then((response) => {
         this.disipador = response.data.map(
-          (item: { modelo: any; precio: number }) => ({
+          (item: { modelo: any; precio: number; tienda: any}) => ({
             modelo: item.modelo,
             precio: item.precio,
+            tienda: item.tienda,
           })
         );
         this.precioSeleccionado5 = 0;
@@ -213,6 +222,7 @@ export class BuildsComponent implements OnInit{
     if (disipadorSeleccionado) {
       this.precioSeleccionado5 = disipadorSeleccionado.precio;
       this.modeloSeleccionado5 = disipadorSeleccionado.modelo;
+      this.tiendaSeleccionada5 = disipadorSeleccionado.tienda;
     }
     this.sumatoriaPrecios();
   }
@@ -319,11 +329,11 @@ export class BuildsComponent implements OnInit{
   }
 
   exportToText() {
-    const text = `Procesador: ${this.modeloSeleccionado}, $${this.precioSeleccionado}`;
-    const text2 = `Placa Madre: ${this.modeloSeleccionado2}, $${this.precioSeleccionado2}`;
-    const text3 = `Ram: ${this.modeloSeleccionado3}, $${this.precioSeleccionado3}`;
-    const text4 = `Almacenamiento: ${this.modeloSeleccionado4}, $${this.precioSeleccionado4}`;
-    const text5 = `Enfriamiento: ${this.modeloSeleccionado5}, $${this.precioSeleccionado5}`;
+    const text = `Procesador: ${this.modeloSeleccionado}, $${this.precioSeleccionado}, ${this.tiendaSeleccionada}`;
+    const text2 = `Placa Madre: ${this.modeloSeleccionado2}, $${this.precioSeleccionado2}, ${this.tiendaSeleccionada2}`;
+    const text3 = `Ram: ${this.modeloSeleccionado3}, $${this.precioSeleccionado3}, ${this.tiendaSeleccionada3}`;
+    const text4 = `Almacenamiento: ${this.modeloSeleccionado4}, $${this.precioSeleccionado4}, ${this.tiendaSeleccionada4}`;
+    const text5 = `Enfriamiento: ${this.modeloSeleccionado5}, $${this.precioSeleccionado5}, ${this.tiendaSeleccionada5}`;
     const text6 = `Fuente: ${this.modeloSeleccionado6}, $${this.precioSeleccionado6}, ${this.tiendaSeleccionada6}`;
     const text7 = `Grafica: ${this.modeloSeleccionado7}, $${this.precioSeleccionado7}, ${this.tiendaSeleccionada7}`;
     const text8 = `Gabinete: ${this.modeloSeleccionado8}, $${this.precioSeleccionado8}, ${this.tiendaSeleccionada8}`;

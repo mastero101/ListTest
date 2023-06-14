@@ -1,5 +1,12 @@
 <mat-card class="form-group" style="margin-top: 5em;">
     <mat-label style="text-align: center; margin-bottom: 1em; margin-top: 1em;" for="busqueda">Buscar por modelo:</mat-label>
+        <div>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-select>
+                    <mat-option *ngFor="let item of items" [value]="item">{{ item.modelo }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
         <mat-form-field>
             <input matInput placeholder="Modelo" type="text" id="busqueda" [(ngModel)]="modelo">
         </mat-form-field>
@@ -9,7 +16,7 @@
 <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="registration-form">
     
     <div class="form-group">
-        <label for="id">Modelo:</label>
+        <label for="id">ID:</label>
         <mat-form-field appearance="fill" class="form-field">
             <input matInput placeholder="ID" formControlName="id">
             <mat-error *ngIf="registroForm.get('id')?.invalid && registroForm.get('id')?.touched">

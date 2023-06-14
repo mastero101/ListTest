@@ -17,9 +17,11 @@ interface Registro {
   styleUrls: ['./editparts.component.scss']
 })
 export class EditpartsComponent {
+  items: { precio: number; modelo: string; tienda: string; }[] = [];
   registroForm: FormGroup = new FormGroup({});
   modeloBusqueda: any;
   modelo: any;
+  elementoid: any;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -32,6 +34,7 @@ export class EditpartsComponent {
       url: ['', Validators.required],
       tienda: ['', Validators.required],
     });
+    this.recoverProcesadores();
   }
 
   onSubmit() {
@@ -52,10 +55,11 @@ export class EditpartsComponent {
     
     // Realiza la solicitud POST utilizando Axios
     console.log(data);
-    axios.put('https://nodemysql12.duckdns.org:443/', data)
+    axios.put(`https://nodemysql12.duckdns.org:443/${data.id}`, data)
       .then((response) => {
         // Maneja la respuesta exitosa de la inserción en la base de datos
         console.log('Datos guardados exitosamente:', response.data);
+        alert('Articulo Actualizado')
       })
       .catch((error) => {
         // Maneja el error en caso de que la inserción falle
@@ -81,6 +85,24 @@ export class EditpartsComponent {
       .catch((error) => {
         console.error('Error al buscar el elemento:', error);
         // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales según tus necesidades
+      });
+  }
+
+  recoverProcesadores() {
+    axios
+      .get('https://nodemysql12.duckdns.org:443/')
+      .then((response) => {
+        this.items = response.data.map(
+          (item: {id: number; modelo: any; precio: number; tienda: any }) => ({
+            id: item.id,
+            modelo: item.modelo,
+            precio: item.precio,
+            tienda: item.tienda,
+          })
+        );
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 
