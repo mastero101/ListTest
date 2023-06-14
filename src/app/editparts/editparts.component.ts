@@ -66,7 +66,6 @@ export class EditpartsComponent {
         console.error('Error al guardar los datos:', error);
         // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales según tus necesidades
       });
-    alert("Registrado");
   }
 
   buscar() {
