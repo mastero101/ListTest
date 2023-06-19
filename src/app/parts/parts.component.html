@@ -63,7 +63,17 @@
             <mat-option value="Dimercom">Dimercom</mat-option>
           </mat-select>
         </mat-form-field>
-    </div>  
+    </div>
+    
+    <div class="form-group">
+        <label for="consumo">Consumo:</label>
+        <mat-form-field appearance="fill" class="form-field">
+            <input matInput type="number" placeholder="Consumo" formControlName="consumo">
+            <mat-error *ngIf="registroForm.get('consumo')?.invalid && registroForm.get('consumo')?.touched">
+            El Consumo es requerido.
+            </mat-error>
+        </mat-form-field>
+    </div>
 
     <button mat-raised-button color="primary" type="submit">Submit</button>
 </form>

@@ -9,6 +9,7 @@ interface Registro {
   precio: number;
   url: string;
   tienda: string;
+  consumo: string;
 }
 
 @Component({
@@ -17,7 +18,7 @@ interface Registro {
   styleUrls: ['./editparts.component.scss']
 })
 export class EditpartsComponent {
-  items: { precio: number; tipo: string; modelo: string; tienda: string; url: string }[] = [];
+  items: { precio: number; tipo: string; modelo: string; tienda: string; url: string; consumo: string }[] = [];
   registroForm: FormGroup = new FormGroup({});
   modeloBusqueda: any;
   modelo: any;
@@ -33,6 +34,7 @@ export class EditpartsComponent {
       precio: ['', Validators.required],
       url: ['', Validators.required],
       tienda: ['', Validators.required],
+      consumo: ['', Validators.required],
     });
     this.recoverProcesadores();
   }
@@ -58,6 +60,7 @@ export class EditpartsComponent {
         precio: selectedItem.precio,
         tienda: selectedItem.tienda,
         url: selectedItem.url,
+        consumo: selectedItem.consumo,
     });
   }
 
@@ -103,13 +106,14 @@ export class EditpartsComponent {
       .get('https://nodemysql12.duckdns.org:443/')
       .then((response) => {
         this.items = response.data.map(
-          (item: {id: number; tipo: any; modelo: any; precio: number; tienda: any; url: any; }) => ({
+          (item: {id: number; tipo: any; modelo: any; precio: number; tienda: any; url: any; consumo: any;}) => ({
             id: item.id,
             tipo: item.tipo,
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             url: item.url,
+            consumo: item.consumo,
           })
         );
       })

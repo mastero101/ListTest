@@ -5,7 +5,8 @@
         <mat-option *ngFor="let procesador of procesadores" [value]="procesador">{{ procesador.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>{{ precioSeleccionado|currency }}</p>      
+    <p>{{ precioSeleccionado|currency }}</p>  
+    <p>{{ consumoSeleccionado + " W"}}</p>    
   </mat-card>
   <mat-card>
     <mat-form-field appearance="fill">

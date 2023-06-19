@@ -8,6 +8,7 @@ interface Registro {
   precio: number;
   url: string;
   tienda: string;
+  consumo: string;
 }
 
 @Component({
@@ -30,6 +31,7 @@ export class PartsComponent {
       precio: ['', Validators.required],
       url: ['', Validators.required],
       tienda: ['', Validators.required],
+      consumo: ['', Validators.required],
     });
     this.recoverid();
   }

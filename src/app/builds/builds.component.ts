@@ -7,7 +7,7 @@ import axios from 'axios';
   styleUrls: ['./builds.component.scss']
 })
 export class BuildsComponent implements OnInit{
-  procesadores: { precio: number; modelo: string; tienda: string; }[] = [];
+  procesadores: { precio: number; modelo: string; tienda: string; consumo: string}[] = [];
   motherboard: { precio: number; modelo: string; tienda: string; }[] = [];
   ram: { precio: number; modelo: string; tienda: string; }[] = [];
   almacenamiento: { precio: number; modelo: string; tienda: string; }[] = [];
@@ -23,6 +23,7 @@ export class BuildsComponent implements OnInit{
   precioSeleccionado6: number = 0;
   precioSeleccionado7: number = 0;
   precioSeleccionado8: number = 0;
+  consumoSeleccionado: number = 0;
   modeloSeleccionado: any;
   modeloSeleccionado2: any;
   modeloSeleccionado3: any;
@@ -40,6 +41,7 @@ export class BuildsComponent implements OnInit{
   tiendaSeleccionada7: any;
   tiendaSeleccionada8: any;
   sumaPrecios: number = 0;
+  sumaConsumo: number = 0;
   modelo: any;
   precio: any;
   tienda: any;
@@ -86,10 +88,11 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/procesadores')
       .then((response) => {
         this.procesadores = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
+            consumo: item.consumo,
           })
         );
       })
@@ -103,7 +106,9 @@ export class BuildsComponent implements OnInit{
       this.precioSeleccionado = procesadorSeleccionado.precio;
       this.modeloSeleccionado = procesadorSeleccionado.modelo;
       this.tiendaSeleccionada = procesadorSeleccionado.tienda;
+      this.consumoSeleccionado = procesadorSeleccionado.consumo;
       this.sumatoriaPrecios();
+      this.sumatoriaConsumo();
     } else {
       this.precioSeleccionado = 0;
     }
@@ -326,6 +331,12 @@ export class BuildsComponent implements OnInit{
       this.precioSeleccionado7 +
       this.precioSeleccionado8;
     console.log('$ ' + this.sumaPrecios);
+  }
+
+  sumatoriaConsumo() {
+    this.sumaConsumo =
+      this.consumoSeleccionado
+    console.log(this.consumoSeleccionado + ' W');
   }
 
   exportToText() {
