@@ -17,6 +17,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { RegisterComponent } from './register/register.component';
 import { PartsComponent } from './parts/parts.component';
@@ -49,6 +50,7 @@ import { EditpartsComponent } from './editparts/editparts.component';
     MatSelectModule,
     MatButtonToggleModule,
     MatCardModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
