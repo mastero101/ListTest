@@ -5,8 +5,14 @@
         <mat-option *ngFor="let procesador of procesadores" [value]="procesador">{{ procesador.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>{{ precioSeleccionado|currency }}</p>  
-    <p>{{ consumoSeleccionado + " W"}}</p>    
+    <p>
+      <span style="text-align: right; margin-right: 17em">
+      {{ precioSeleccionado|currency }}
+      </span>
+      <span style="text-align: right;">
+      {{ consumoSeleccionado + " W"}}
+      </span>
+    </p>
   </mat-card>
   <mat-card>
     <mat-form-field appearance="fill">
@@ -15,7 +21,12 @@
         <mat-option *ngFor="let motherboard of motherboard" [value]="motherboard.modelo">{{ motherboard.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>{{ precioSeleccionado2|currency }}</p>
+    <p>
+      <span style="text-align: right; margin-right: 17.5em">
+      {{ precioSeleccionado2|currency }}
+    </span>
+      {{ consumoSeleccionado2 + " W"}}
+    </p>
   </mat-card>
   <mat-card>
     <mat-form-field appearance="fill">
@@ -24,7 +35,12 @@
         <mat-option class="extend" *ngFor="let ram of ram" [value]="ram.modelo">{{ ram.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>{{ precioSeleccionado3|currency }}</p>
+    <p>
+        <span style="text-align: right; margin-right: 17.5em">
+        {{ precioSeleccionado3|currency }}
+      </span>
+        {{ consumoSeleccionado3 + " W"}}
+    </p>
   </mat-card>
   <mat-card>
     <mat-form-field appearance="fill">
@@ -33,7 +49,12 @@
         <mat-option class="extend" *ngFor="let almacenamiento of almacenamiento" [value]="almacenamiento.modelo">{{ almacenamiento.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>{{ precioSeleccionado4|currency }}</p>
+    <p>
+      <span style="text-align: right; margin-right: 18.5em">
+      {{ precioSeleccionado4|currency }}
+    </span>
+      {{ consumoSeleccionado4 + " W"}}
+    </p>
   </mat-card>
   <mat-card>
       <mat-form-field appearance="fill">
@@ -42,7 +63,12 @@
           <mat-option *ngFor="let disipador of disipador" [value]="disipador.modelo">{{ disipador.modelo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p>{{ precioSeleccionado5|currency }}</p>
+      <p>
+        <span style="text-align: right; margin-right: 18.5em">
+        {{ precioSeleccionado5|currency }}
+      </span>
+        {{ consumoSeleccionado5 + " W"}}
+      </p>
     </mat-card>
     <mat-card>
       <mat-form-field appearance="fill">
@@ -51,7 +77,12 @@
           <mat-option class="extend" *ngFor="let fuentedepoder of fuentedepoder" [value]="fuentedepoder.modelo">{{ fuentedepoder.modelo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p>{{ precioSeleccionado6|currency }}</p>
+      <p>
+        <span style="text-align: right; margin-right: 18.5em">
+        {{ precioSeleccionado6|currency }}
+      </span>
+        {{ consumoSeleccionado6 + " W"}}
+      </p>
     </mat-card>
     <mat-card>
       <mat-form-field appearance="fill">
@@ -60,7 +91,12 @@
           <mat-option class="extend" *ngFor="let grafica of grafica" [value]="grafica.modelo">{{ grafica.modelo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p>{{ precioSeleccionado7|currency }}</p>
+      <p>
+        <span style="text-align: right; margin-right: 16.5em">
+        {{ precioSeleccionado7|currency }}
+      </span>
+        {{ consumoSeleccionado7 + " W"}}
+      </p>
     </mat-card>
     <mat-card>
       <mat-form-field appearance="fill">
@@ -69,10 +105,20 @@
           <mat-option *ngFor="let gabinete of gabinetes" [value]="gabinete.modelo">{{ gabinete.modelo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p>{{ precioSeleccionado8|currency }}</p>
+      <p>
+        <span style="text-align: right; margin-right: 18.5em">
+        {{ precioSeleccionado8|currency }}
+      </span>
+        {{ consumoSeleccionado8 + " W"}}
+      </p>
     </mat-card>
     <mat-card>
-      <mat-card-content>Total: {{ sumaPrecios|currency }}</mat-card-content>
+      <mat-card-content>
+        <span style="text-align: right; margin-right: 11.5em">
+        Total: {{ sumaPrecios|currency }}
+        </span>
+        {{sumaConsumo + " W"}}
+      </mat-card-content>
     </mat-card>
     <br>
     <button mat-raised-button color="primary" (click)="exportToText()">Exportar</button>

@@ -8,13 +8,13 @@ import axios from 'axios';
 })
 export class BuildsComponent implements OnInit{
   procesadores: { precio: number; modelo: string; tienda: string; consumo: string}[] = [];
-  motherboard: { precio: number; modelo: string; tienda: string; }[] = [];
-  ram: { precio: number; modelo: string; tienda: string; }[] = [];
-  almacenamiento: { precio: number; modelo: string; tienda: string; }[] = [];
-  disipador: { precio: number; modelo: string; tienda: string; }[] = [];
-  fuentedepoder: { precio: number; modelo: string; tienda: string; }[] = [];
-  grafica: { precio: number; modelo: string; tienda: string; }[] = [];
-  gabinetes: { modelo: string; precio: number; tienda: string; }[] = [];
+  motherboard: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  ram: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  almacenamiento: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  disipador: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  fuentedepoder: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  grafica: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  gabinetes: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   precioSeleccionado: number = 0;
   precioSeleccionado2: number = 0;
   precioSeleccionado3: number = 0;
@@ -24,6 +24,13 @@ export class BuildsComponent implements OnInit{
   precioSeleccionado7: number = 0;
   precioSeleccionado8: number = 0;
   consumoSeleccionado: number = 0;
+  consumoSeleccionado2: number = 0;
+  consumoSeleccionado3: number = 0;
+  consumoSeleccionado4: number = 0;
+  consumoSeleccionado5: number = 0;
+  consumoSeleccionado6: number = 0;
+  consumoSeleccionado7: number = 0;
+  consumoSeleccionado8: number = 0; 
   modeloSeleccionado: any;
   modeloSeleccionado2: any;
   modeloSeleccionado3: any;
@@ -119,10 +126,11 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/motherboards')
       .then((response) => {
         this.motherboard = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
+            consumo: item.consumo,
           })
         );
         this.precioSeleccionado2 = 0;
@@ -132,7 +140,7 @@ export class BuildsComponent implements OnInit{
       });
   }
 
-  setPrecioSeleccionado2(modelo: string) {
+  setPrecioSeleccionado2(modelo: any) {
     const motherboardSeleccionada = this.motherboard.find(
       (item) => item.modelo === modelo
     );
@@ -140,8 +148,10 @@ export class BuildsComponent implements OnInit{
       this.precioSeleccionado2 = motherboardSeleccionada.precio;
       this.modeloSeleccionado2 = motherboardSeleccionada.modelo;
       this.tiendaSeleccionada2 = motherboardSeleccionada.tienda;
+      this.consumoSeleccionado2 = motherboardSeleccionada.consumo;
     }
     this.sumatoriaPrecios();
+    this.sumatoriaConsumo();
   }
 
   recoverRam() {
@@ -149,10 +159,11 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/rams')
       .then((response) => {
         this.ram = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
+            consumo: item.consumo,
           })
         );
         this.precioSeleccionado3 = 0;
@@ -168,8 +179,10 @@ export class BuildsComponent implements OnInit{
       this.precioSeleccionado3 = ramSeleccionada.precio;
       this.modeloSeleccionado3 = ramSeleccionada.modelo;
       this.tiendaSeleccionada3 = ramSeleccionada.tienda;
+      this.consumoSeleccionado3 = ramSeleccionada.consumo;
     }
     this.sumatoriaPrecios();
+    this.sumatoriaConsumo();
   }
 
   recoverAlmacenamiento() {
@@ -177,10 +190,11 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/almacenamientos')
       .then((response) => {
         this.almacenamiento = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
+            consumo: item.consumo,
           })
         );
         this.precioSeleccionado4 = 0;
@@ -198,8 +212,10 @@ export class BuildsComponent implements OnInit{
       this.precioSeleccionado4 = almacenamientoSeleccionado.precio;
       this.modeloSeleccionado4 = almacenamientoSeleccionado.modelo;
       this.tiendaSeleccionada4 = almacenamientoSeleccionado.tienda;
+      this.consumoSeleccionado4 = almacenamientoSeleccionado.consumo;
     }
     this.sumatoriaPrecios();
+    this.sumatoriaConsumo();
   }
 
   recoverDisipador() {
@@ -207,10 +223,11 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/disipadores')
       .then((response) => {
         this.disipador = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any}) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number;}) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
+            consumo: item.consumo,
           })
         );
         this.precioSeleccionado5 = 0;
@@ -228,8 +245,10 @@ export class BuildsComponent implements OnInit{
       this.precioSeleccionado5 = disipadorSeleccionado.precio;
       this.modeloSeleccionado5 = disipadorSeleccionado.modelo;
       this.tiendaSeleccionada5 = disipadorSeleccionado.tienda;
+      this.consumoSeleccionado5 = disipadorSeleccionado.consumo;
     }
     this.sumatoriaPrecios();
+    this.sumatoriaConsumo();
   }
 
   recoverFuente() {
@@ -237,10 +256,11 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/fuentes')
       .then((response) => {
         this.fuentedepoder = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
+            consumo: item.consumo,
           })
         );
         this.precioSeleccionado6 = 0;
@@ -258,8 +278,10 @@ export class BuildsComponent implements OnInit{
       this.precioSeleccionado6 = fuenteSeleccionado.precio;
       this.modeloSeleccionado6 =  fuenteSeleccionado.modelo;
       this.tiendaSeleccionada6 = fuenteSeleccionado.tienda;
+      this.consumoSeleccionado6 = fuenteSeleccionado.consumo;
     }
     this.sumatoriaPrecios();
+    this.sumatoriaConsumo();
   }
 
   recoverGrafica() {
@@ -267,10 +289,11 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/graficas')
       .then((response) => {
         this.grafica = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number;}) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
+            consumo: item.consumo,
           })
         );
         this.precioSeleccionado7 = 0;
@@ -288,18 +311,21 @@ export class BuildsComponent implements OnInit{
       this.precioSeleccionado7 = graficaSeleccionado.precio;
       this.modeloSeleccionado7 = graficaSeleccionado.modelo;
       this.tiendaSeleccionada7 = graficaSeleccionado.tienda;
+      this.consumoSeleccionado7 = graficaSeleccionado.consumo;
     }
     this.sumatoriaPrecios();
+    this.sumatoriaConsumo();
   }
 
   recoverGabinetes() {
     axios
       .get('https://nodemysql12.duckdns.org:443/gabinetes')
       .then((response) => {
-        this.gabinetes = response.data.map((item: { modelo: any; precio: number; tienda: any }) => ({
+        this.gabinetes = response.data.map((item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
           modelo: item.modelo,
           precio: item.precio,
           tienda: item.tienda,
+          consumo: item.consumo,
         }));
         this.precioSeleccionado8 = 0;
       })
@@ -316,8 +342,10 @@ export class BuildsComponent implements OnInit{
       this.precioSeleccionado8 = gabineteSeleccionado.precio;
       this.modeloSeleccionado8 = gabineteSeleccionado.modelo;
       this.tiendaSeleccionada8 = gabineteSeleccionado.tienda;
+      this.consumoSeleccionado8 = gabineteSeleccionado.consumo;
     }
     this.sumatoriaPrecios();
+    this.sumatoriaConsumo();
   }
 
   sumatoriaPrecios() {
@@ -335,8 +363,15 @@ export class BuildsComponent implements OnInit{
 
   sumatoriaConsumo() {
     this.sumaConsumo =
-      this.consumoSeleccionado
-    console.log(this.consumoSeleccionado + ' W');
+      parseInt(this.consumoSeleccionado.toString()) +
+      parseInt(this.consumoSeleccionado2.toString()) +
+      parseInt(this.consumoSeleccionado3.toString()) +
+      parseInt(this.consumoSeleccionado4.toString()) +
+      parseInt(this.consumoSeleccionado5.toString()) +
+      parseInt(this.consumoSeleccionado6.toString()) +
+      parseInt(this.consumoSeleccionado7.toString()) +
+      parseInt(this.consumoSeleccionado8.toString());
+    console.log(this.sumaConsumo + ' W');
   }
 
   exportToText() {
@@ -350,7 +385,8 @@ export class BuildsComponent implements OnInit{
     const text8 = `Gabinete: ${this.modeloSeleccionado8}, $${this.precioSeleccionado8}, ${this.tiendaSeleccionada8}`;
     const text9 = `--------------------------------------------------------------------`;
     const text10 = `Total: $${this.sumaPrecios}`
-    const allText = [text, text2, text3, text4, text5, text6, text7, text8, text9, text10].join('\n');
+    const text11 = `Consumo: ${this.sumaConsumo} W`
+    const allText = [text, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11].join('\n');
     const element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(allText));
     element.setAttribute('download', 'armado.txt');
