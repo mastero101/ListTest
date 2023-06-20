@@ -8,14 +8,15 @@ import axios from 'axios';
 })
 export class BuildsComponent implements OnInit{
   procesadores: { precio: number; modelo: string; tienda: string; consumo: string;  socket: string}[] = [];
-  motherboard: { precio: number; modelo: string; tienda: string; consumo: number;  socket: string}[] = [];
-  ram: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  motherboard: { precio: number; modelo: string; tienda: string; consumo: number;  socket: string; rams: any;}[] = [];
+  ram: { precio: number; modelo: string; tienda: string; consumo: number; socket: any; rams: any;}[] = [];
   almacenamiento: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   disipador: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   fuentedepoder: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   grafica: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   gabinetes: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
-  motherboardFiltradas: { precio: number; modelo: string; tienda: string; consumo: number; socket: string }[] = [];
+  motherboardFiltradas: { precio: number; modelo: string; tienda: string; consumo: number; socket: string; rams: any;}[] = [];
+  ramFiltradas: { precio: number; modelo: string; tienda: string; consumo: number; socket: any; rams: any; }[] = [];
   precioSeleccionado: number = 0;
   precioSeleccionado2: number = 0;
   precioSeleccionado3: number = 0;
@@ -135,12 +136,13 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/motherboards')
       .then((response) => {
         this.motherboard = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; consumo: number; socket: any; }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; socket: any; rams: any;}) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             consumo: item.consumo,
             socket: item.socket,
+            rams: item.rams,
           })
         );
         this.precioSeleccionado2 = 0;
@@ -159,6 +161,9 @@ export class BuildsComponent implements OnInit{
       this.modeloSeleccionado2 = motherboardSeleccionada.modelo;
       this.tiendaSeleccionada2 = motherboardSeleccionada.tienda;
       this.consumoSeleccionado2 = motherboardSeleccionada.consumo;
+
+      // Filtrar placas madre según el socket del procesador
+      this.ramFiltradas = this.ram.filter(ram => ram.rams === motherboardSeleccionada.rams);
     }
     this.sumatoriaPrecios();
     this.sumatoriaConsumo();
@@ -169,11 +174,13 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/rams')
       .then((response) => {
         this.ram = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; socket: any; rams: any;}) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             consumo: item.consumo,
+            socket: item.socket,
+            rams: item.rams,
           })
         );
         this.precioSeleccionado3 = 0;

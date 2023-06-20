@@ -36,15 +36,15 @@
     <mat-form-field appearance="fill">
       <mat-label>Ram</mat-label>
       <mat-select (selectionChange)="setPrecioSeleccionado3($event.value)">
-        <mat-option class="extend" *ngFor="let ram of ram" [value]="ram.modelo">{{ ram.modelo }}</mat-option>
+        <mat-option class="extend" *ngFor="let ram of ramFiltradas" [value]="ram.modelo">{{ ram.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
     <p *ngIf="precioSeleccionado3">
-        <span style="text-align: right; margin-right: 17.5em">
-        {{ precioSeleccionado3|currency }}
+      <span style="text-align: right; margin-right: 17.5em">
+        {{ precioSeleccionado3 | currency }}
       </span>
-        {{ consumoSeleccionado3 + " W"}}
-        {{ tiendaSeleccionada3 }}
+      {{ consumoSeleccionado3 + " W" }}
+      {{ tiendaSeleccionada3 }}
     </p>
   </mat-card>
   <mat-card>
