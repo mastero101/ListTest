@@ -5,7 +5,7 @@
         <mat-option *ngFor="let procesador of procesadores" [value]="procesador">{{ procesador.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>
+    <p *ngIf="precioSeleccionado">
       <span style="text-align: right; margin-right: 17em">
         {{ precioSeleccionado|currency }}
       </span>
@@ -24,7 +24,7 @@
         <mat-option *ngFor="let motherboard of motherboard" [value]="motherboard.modelo">{{ motherboard.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>
+    <p *ngIf="precioSeleccionado2">
       <span style="text-align: right; margin-right: 17.5em">
       {{ precioSeleccionado2|currency }}
     </span>
@@ -39,7 +39,7 @@
         <mat-option class="extend" *ngFor="let ram of ram" [value]="ram.modelo">{{ ram.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>
+    <p *ngIf="precioSeleccionado3">
         <span style="text-align: right; margin-right: 17.5em">
         {{ precioSeleccionado3|currency }}
       </span>
@@ -54,7 +54,7 @@
         <mat-option class="extend" *ngFor="let almacenamiento of almacenamiento" [value]="almacenamiento.modelo">{{ almacenamiento.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p>
+    <p *ngIf="precioSeleccionado4">
       <span style="text-align: right; margin-right: 18.5em">
       {{ precioSeleccionado4|currency }}
     </span>
@@ -69,7 +69,7 @@
           <mat-option *ngFor="let disipador of disipador" [value]="disipador.modelo">{{ disipador.modelo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p>
+      <p *ngIf="precioSeleccionado5">
         <span style="text-align: right; margin-right: 18.5em">
         {{ precioSeleccionado5|currency }}
       </span>
@@ -84,7 +84,7 @@
           <mat-option class="extend" *ngFor="let fuentedepoder of fuentedepoder" [value]="fuentedepoder.modelo">{{ fuentedepoder.modelo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p>
+      <p *ngIf="precioSeleccionado6">
         <span style="text-align: right; margin-right: 18.5em">
         {{ precioSeleccionado6|currency }}
       </span>
@@ -99,7 +99,7 @@
           <mat-option class="extend" *ngFor="let grafica of grafica" [value]="grafica.modelo">{{ grafica.modelo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p>
+      <p *ngIf="precioSeleccionado7">
         <span style="text-align: right; margin-right: 16.5em">
         {{ precioSeleccionado7|currency }}
       </span>
@@ -114,7 +114,7 @@
           <mat-option *ngFor="let gabinete of gabinetes" [value]="gabinete.modelo">{{ gabinete.modelo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p>
+      <p *ngIf="precioSeleccionado8">
         <span style="text-align: right; margin-right: 18.5em">
         {{ precioSeleccionado8|currency }}
       </span>
