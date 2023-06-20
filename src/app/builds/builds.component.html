@@ -21,7 +21,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Placa Madre</mat-label>
       <mat-select (selectionChange)="setPrecioSeleccionado2($event.value)">
-        <mat-option *ngFor="let motherboard of motherboard" [value]="motherboard.modelo">{{ motherboard.modelo }}</mat-option>
+        <mat-option *ngFor="let motherboard of motherboardFiltradas" [value]="motherboard.modelo">{{ motherboard.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
     <p *ngIf="precioSeleccionado2">
@@ -100,7 +100,7 @@
         </mat-select>
       </mat-form-field>
       <p *ngIf="precioSeleccionado7">
-        <span style="text-align: right; margin-right: 16.5em">
+        <span style="text-align: right; margin-right: 17em">
         {{ precioSeleccionado7|currency }}
       </span>
         {{ consumoSeleccionado7 + " W"}}
@@ -115,7 +115,7 @@
         </mat-select>
       </mat-form-field>
       <p *ngIf="precioSeleccionado8">
-        <span style="text-align: right; margin-right: 18.5em">
+        <span style="text-align: right; margin-right: 19em">
         {{ precioSeleccionado8|currency }}
       </span>
         {{ consumoSeleccionado8 + " W"}}

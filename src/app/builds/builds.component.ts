@@ -7,14 +7,15 @@ import axios from 'axios';
   styleUrls: ['./builds.component.scss']
 })
 export class BuildsComponent implements OnInit{
-  procesadores: { precio: number; modelo: string; tienda: string; consumo: string}[] = [];
-  motherboard: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  procesadores: { precio: number; modelo: string; tienda: string; consumo: string;  socket: string}[] = [];
+  motherboard: { precio: number; modelo: string; tienda: string; consumo: number;  socket: string}[] = [];
   ram: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   almacenamiento: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   disipador: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   fuentedepoder: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   grafica: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   gabinetes: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  motherboardFiltradas: { precio: number; modelo: string; tienda: string; consumo: number; socket: string }[] = [];
   precioSeleccionado: number = 0;
   precioSeleccionado2: number = 0;
   precioSeleccionado3: number = 0;
@@ -95,11 +96,12 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/procesadores')
       .then((response) => {
         this.procesadores = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; socket: any; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             consumo: item.consumo,
+            socket: item.socket,
           })
         );
       })
@@ -114,23 +116,31 @@ export class BuildsComponent implements OnInit{
       this.modeloSeleccionado = procesadorSeleccionado.modelo;
       this.tiendaSeleccionada = procesadorSeleccionado.tienda;
       this.consumoSeleccionado = procesadorSeleccionado.consumo;
-      this.sumatoriaPrecios();
-      this.sumatoriaConsumo();
+      
+      // Filtrar placas madre según el socket del procesador
+      this.motherboardFiltradas = this.motherboard.filter(motherboard => motherboard.socket === procesadorSeleccionado.socket);
+      
+      // Reiniciar el valor seleccionado de la placa madre
+      this.precioSeleccionado2 = 0;
     } else {
       this.precioSeleccionado = 0;
     }
-  }
+    
+    this.sumatoriaPrecios();
+    this.sumatoriaConsumo();
+  }  
 
   recovertMotherboard() {
     axios
       .get('https://nodemysql12.duckdns.org:443/motherboards')
       .then((response) => {
         this.motherboard = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; socket: any; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             consumo: item.consumo,
+            socket: item.socket,
           })
         );
         this.precioSeleccionado2 = 0;
