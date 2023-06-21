@@ -124,10 +124,11 @@
     </mat-card>
     <mat-card>
       <mat-card-content>
+        <div *ngIf="mostrarAdvertencia" class="advertencia">¡Advertencia Fuente Insuficiente!</div>
         <span style="text-align: right; margin-right: 11.5em">
-        Total: {{ sumaPrecios|currency }}
+        Total: {{ sumaPrecios | currency }}
         </span>
-        {{sumaConsumo + " W"}}
+        {{ sumaConsumo + " W" }}
       </mat-card-content>
     </mat-card>
     <br>

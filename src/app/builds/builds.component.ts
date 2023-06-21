@@ -12,7 +12,7 @@ export class BuildsComponent implements OnInit{
   ram: { precio: number; modelo: string; tienda: string; consumo: number; socket: any; rams: any;}[] = [];
   almacenamiento: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   disipador: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
-  fuentedepoder: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
+  fuentedepoder: { precio: number; modelo: string; tienda: string; consumo: number; potencia: number;}[] = [];
   grafica: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   gabinetes: { precio: number; modelo: string; tienda: string; consumo: number}[] = [];
   motherboardFiltradas: { precio: number; modelo: string; tienda: string; consumo: number; socket: string; rams: any;}[] = [];
@@ -49,6 +49,7 @@ export class BuildsComponent implements OnInit{
   tiendaSeleccionada6: any;
   tiendaSeleccionada7: any;
   tiendaSeleccionada8: any;
+  potenciaSeleccionada: any;
   sumaPrecios: number = 0;
   sumaConsumo: number = 0;
   modelo: any;
@@ -61,8 +62,8 @@ export class BuildsComponent implements OnInit{
   idInit: number = 0;
   idInit2: any;
   elementoRecuperado2: any;
+  mostrarAdvertencia: boolean = false;
   
-
   constructor() {}
 
   ngOnInit(): void {
@@ -273,11 +274,12 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/fuentes')
       .then((response) => {
         this.fuentedepoder = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; consumo: number; }) => ({
+          (item: { modelo: any; precio: number; tienda: any; consumo: number; potencia: number;}) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             consumo: item.consumo,
+            potencia: item.potencia,
           })
         );
         this.precioSeleccionado6 = 0;
@@ -296,7 +298,9 @@ export class BuildsComponent implements OnInit{
       this.modeloSeleccionado6 =  fuenteSeleccionado.modelo;
       this.tiendaSeleccionada6 = fuenteSeleccionado.tienda;
       this.consumoSeleccionado6 = fuenteSeleccionado.consumo;
+      this.potenciaSeleccionada = fuenteSeleccionado.potencia;
     }
+    console.log(this.potenciaSeleccionada);
     this.sumatoriaPrecios();
     this.sumatoriaConsumo();
   }
@@ -389,6 +393,7 @@ export class BuildsComponent implements OnInit{
       parseInt(this.consumoSeleccionado7.toString()) +
       parseInt(this.consumoSeleccionado8.toString());
     console.log(this.sumaConsumo + ' W');
+    this.mostrarAdvertencia = this.potenciaSeleccionada*0.80 <= this.sumaConsumo;
   }
 
   exportToText() {
