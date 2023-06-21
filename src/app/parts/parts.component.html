@@ -8,7 +8,7 @@
         <label for="tipo">Componente:</label>
         <mat-form-field appearance="fill" class="form-field">
           <mat-label>Componente</mat-label>
-          <mat-select formControlName="tipo">
+          <mat-select formControlName="tipo" (selectionChange)="onComponenteChange($event)">
             <mat-option value="procesador">Procesador</mat-option>
             <mat-option value="disipador">Disipador</mat-option>
             <mat-option value="motherboard">Motherboard</mat-option>
@@ -19,7 +19,7 @@
             <mat-option value="gabinete">Gabinete</mat-option>
           </mat-select>
         </mat-form-field>
-    </div> 
+      </div>
 
     <div class="form-group">
         <label for="modelo">Modelo:</label>
@@ -72,6 +72,36 @@
             <mat-error *ngIf="registroForm.get('consumo')?.invalid && registroForm.get('consumo')?.touched">
             El Consumo es requerido.
             </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="mostrarSocket" class="form-group">
+        <label for="socket">Socket:</label>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Socket</mat-label>
+          <mat-select formControlName="socket">
+            <mat-option value="LGA1700">LGA1700</mat-option>
+            <mat-option value="AM4">AM4</mat-option>
+            <mat-option value="AM5">AM5</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="mostrarRam" class="form-group">
+        <label for="rams">Tipo de Ram:</label>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Tipo de Ram</mat-label>
+          <mat-select formControlName="rams">
+            <mat-option value="DDR4">DDR4</mat-option>
+            <mat-option value="DDR5">DDR5</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="mostrarPotencia" class="form-group">
+        <label for="potencia">Potencia:</label>
+        <mat-form-field appearance="fill" class="form-field">
+            <input matInput type="number" placeholder="Potencia" formControlName="potencia">
         </mat-form-field>
     </div>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import axios from 'axios';
 
 interface Registro {
@@ -9,6 +9,9 @@ interface Registro {
   url: string;
   tienda: string;
   consumo: string;
+  socket: string;
+  rams: string;
+  potencia: string;
 }
 
 @Component({
@@ -21,6 +24,14 @@ export class PartsComponent {
   registroForm: FormGroup = new FormGroup({});
   idInit: number = 0;;
   idInit2: any;
+  componenteControl = new FormControl();
+  tuFormulario: FormGroup = this.formBuilder.group({
+    tipo: [''],
+    socket: ['']
+  });
+  mostrarSocket: boolean = false;
+  mostrarRam: boolean = false;
+  mostrarPotencia: boolean = false;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -29,9 +40,12 @@ export class PartsComponent {
       tipo: ['', Validators.required],
       modelo: ['', Validators.required],
       precio: ['', Validators.required],
-      url: ['', Validators.required],
+      url: ['',],
       tienda: ['', Validators.required],
       consumo: ['', Validators.required],
+      socket: [''],
+      rams: [''],
+      potencia: [''],
     });
     this.recoverid();
   }
@@ -79,6 +93,13 @@ export class PartsComponent {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  onComponenteChange(event: any) {
+    const selectedComponente = event.value;
+    this.mostrarSocket = selectedComponente === 'procesador' || selectedComponente === 'motherboard';
+    this.mostrarRam = selectedComponente === 'motherboard' || selectedComponente === 'ram';
+    this.mostrarPotencia = selectedComponente === 'psu';
   }
 
 }
