@@ -13,7 +13,7 @@
         {{ consumoSeleccionado + " W"}}
       </span>
       <span>
-        {{ tiendaSeleccionada }}
+        <a [href]="urlSeleccionada">{{ tiendaSeleccionada }}</a>
       </span>
     </p>
   </mat-card>
@@ -29,7 +29,7 @@
       {{ precioSeleccionado2|currency }}
     </span>
       {{ consumoSeleccionado2 + " W"}}
-      {{ tiendaSeleccionada2 }}
+      <a [href]="urlSeleccionada2">{{ tiendaSeleccionada2 }}</a>
     </p>
   </mat-card>
   <mat-card>
@@ -44,7 +44,7 @@
         {{ precioSeleccionado3 | currency }}
       </span>
       {{ consumoSeleccionado3 + " W" }}
-      {{ tiendaSeleccionada3 }}
+      <a [href]="urlSeleccionada3">{{ tiendaSeleccionada3 }}</a>
     </p>
   </mat-card>
   <mat-card>
@@ -59,7 +59,7 @@
       {{ precioSeleccionado4|currency }}
     </span>
       {{ consumoSeleccionado4 + " W"}}
-      {{ tiendaSeleccionada4 }}
+      <a [href]="urlSeleccionada4">{{ tiendaSeleccionada4 }}</a>
     </p>
   </mat-card>
   <mat-card>
@@ -74,7 +74,7 @@
         {{ precioSeleccionado5|currency }}
       </span>
         {{ consumoSeleccionado5 + " W"}}
-        {{ tiendaSeleccionada5 }}
+        <a [href]="urlSeleccionada5">{{ tiendaSeleccionada5 }}</a>
       </p>
     </mat-card>
     <mat-card>
@@ -89,7 +89,7 @@
         {{ precioSeleccionado6|currency }}
       </span>
         {{ consumoSeleccionado6 + " W"}}
-        {{ tiendaSeleccionada6 }}
+        <a [href]="urlSeleccionada6">{{ tiendaSeleccionada6 }}</a>
       </p>
     </mat-card>
     <mat-card>
@@ -104,7 +104,7 @@
         {{ precioSeleccionado7|currency }}
       </span>
         {{ consumoSeleccionado7 + " W"}}
-        {{ tiendaSeleccionada7 }}
+        <a [href]="urlSeleccionada7">{{ tiendaSeleccionada7 }}</a>
       </p>
     </mat-card>
     <mat-card>
@@ -115,11 +115,11 @@
         </mat-select>
       </mat-form-field>
       <p *ngIf="precioSeleccionado8">
-        <span style="text-align: right; margin-right: 19em">
+        <span style="text-align: right; margin-right: 18em">
         {{ precioSeleccionado8|currency }}
       </span>
         {{ consumoSeleccionado8 + " W"}}
-        {{ tiendaSeleccionada8 }}
+        <a [href]="urlSeleccionada8">{{ tiendaSeleccionada8 }}</a>
       </p>
     </mat-card>
     <mat-card>
