@@ -88,7 +88,7 @@ export class BuildsComponent implements OnInit{
 
   recoverid() {
     axios
-      .get(`https://nodemysql12.duckdns.org:443/`)
+      .get(`https://pruebanodejsscript21.azurewebsites.net/`)
       .then((response) => {
         this.idRecuperado = response.data;
         this.idInit = response.data[response.data.length - 1].id;
@@ -103,7 +103,7 @@ export class BuildsComponent implements OnInit{
 
   recoverProcesadores() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/procesadores')
+      .get('https://pruebanodejsscript21.azurewebsites.net/procesadores')
       .then((response) => {
         this.procesadores = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; }) => ({
@@ -144,7 +144,7 @@ export class BuildsComponent implements OnInit{
 
   recovertMotherboard() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/motherboards')
+      .get('https://pruebanodejsscript21.azurewebsites.net/motherboards')
       .then((response) => {
         this.motherboard = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; rams: any;}) => ({
@@ -184,7 +184,7 @@ export class BuildsComponent implements OnInit{
 
   recoverRam() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/rams')
+      .get('https://pruebanodejsscript21.azurewebsites.net/rams')
       .then((response) => {
         this.ram = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any ;consumo: number; socket: any; rams: any;}) => ({
@@ -219,7 +219,7 @@ export class BuildsComponent implements OnInit{
 
   recoverAlmacenamiento() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/almacenamientos')
+      .get('https://pruebanodejsscript21.azurewebsites.net/almacenamientos')
       .then((response) => {
         this.almacenamiento = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; }) => ({
@@ -254,7 +254,7 @@ export class BuildsComponent implements OnInit{
 
   recoverDisipador() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/disipadores')
+      .get('https://pruebanodejsscript21.azurewebsites.net/disipadores')
       .then((response) => {
         this.disipador = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number;}) => ({
@@ -289,7 +289,7 @@ export class BuildsComponent implements OnInit{
 
   recoverFuente() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/fuentes')
+      .get('https://pruebanodejsscript21.azurewebsites.net/fuentes')
       .then((response) => {
         this.fuentedepoder = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; potencia: number;}) => ({
@@ -327,7 +327,7 @@ export class BuildsComponent implements OnInit{
 
   recoverGrafica() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/graficas')
+      .get('https://pruebanodejsscript21.azurewebsites.net/graficas')
       .then((response) => {
         this.grafica = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number;}) => ({
@@ -362,7 +362,7 @@ export class BuildsComponent implements OnInit{
 
   recoverGabinetes() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/gabinetes')
+      .get('https://pruebanodejsscript21.azurewebsites.net/gabinetes')
       .then((response) => {
         this.gabinetes = response.data.map((item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; }) => ({
           modelo: item.modelo,
