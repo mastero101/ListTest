@@ -417,7 +417,7 @@ export class BuildsComponent implements OnInit{
       parseInt(this.consumoSeleccionado7.toString()) +
       parseInt(this.consumoSeleccionado8.toString());
     console.log(this.sumaConsumo + ' W');
-    this.mostrarAdvertencia = this.potenciaSeleccionada*0.80 <= this.sumaConsumo;
+    this.mostrarAdvertencia = this.potenciaSeleccionada*0.81 <= this.sumaConsumo;
   }
 
   exportToText() {

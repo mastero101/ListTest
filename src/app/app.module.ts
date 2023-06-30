@@ -23,6 +23,7 @@ import { RegisterComponent } from './register/register.component';
 import { PartsComponent } from './parts/parts.component';
 import { BuildsComponent } from './builds/builds.component';
 import { EditpartsComponent } from './editparts/editparts.component';
+import { ChatgptComponent } from './chatgpt/chatgpt.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { EditpartsComponent } from './editparts/editparts.component';
     PartsComponent,
     BuildsComponent,
     EditpartsComponent,
+    ChatgptComponent,
   ],
   imports: [
     BrowserModule,
