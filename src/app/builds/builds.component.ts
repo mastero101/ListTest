@@ -88,7 +88,7 @@ export class BuildsComponent implements OnInit{
 
   recoverid() {
     axios
-      .get(`https://pruebanodejsscript21.azurewebsites.net/`)
+      .get(`https://nodemysql12.duckdns.org:443/`)
       .then((response) => {
         this.idRecuperado = response.data;
         this.idInit = response.data[response.data.length - 1].id;
@@ -103,7 +103,7 @@ export class BuildsComponent implements OnInit{
 
   recoverProcesadores() {
     axios
-      .get('https://pruebanodejsscript21.azurewebsites.net/procesadores')
+      .get('https://nodemysql12.duckdns.org:443/procesadores')
       .then((response) => {
         this.procesadores = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; }) => ({
@@ -144,7 +144,7 @@ export class BuildsComponent implements OnInit{
 
   recovertMotherboard() {
     axios
-      .get('https://pruebanodejsscript21.azurewebsites.net/motherboards')
+      .get('https://nodemysql12.duckdns.org:443/motherboards')
       .then((response) => {
         this.motherboard = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; rams: any;}) => ({
@@ -184,7 +184,7 @@ export class BuildsComponent implements OnInit{
 
   recoverRam() {
     axios
-      .get('https://pruebanodejsscript21.azurewebsites.net/rams')
+      .get('https://nodemysql12.duckdns.org:443/rams')
       .then((response) => {
         this.ram = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any ;consumo: number; socket: any; rams: any;}) => ({
@@ -219,7 +219,7 @@ export class BuildsComponent implements OnInit{
 
   recoverAlmacenamiento() {
     axios
-      .get('https://pruebanodejsscript21.azurewebsites.net/almacenamientos')
+      .get('https://nodemysql12.duckdns.org:443/almacenamientos')
       .then((response) => {
         this.almacenamiento = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; }) => ({
@@ -254,7 +254,7 @@ export class BuildsComponent implements OnInit{
 
   recoverDisipador() {
     axios
-      .get('https://pruebanodejsscript21.azurewebsites.net/disipadores')
+      .get('https://nodemysql12.duckdns.org:443/disipadores')
       .then((response) => {
         this.disipador = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number;}) => ({
@@ -289,7 +289,7 @@ export class BuildsComponent implements OnInit{
 
   recoverFuente() {
     axios
-      .get('https://pruebanodejsscript21.azurewebsites.net/fuentes')
+      .get('https://nodemysql12.duckdns.org:443/fuentes')
       .then((response) => {
         this.fuentedepoder = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; potencia: number;}) => ({
@@ -327,7 +327,7 @@ export class BuildsComponent implements OnInit{
 
   recoverGrafica() {
     axios
-      .get('https://pruebanodejsscript21.azurewebsites.net/graficas')
+      .get('https://nodemysql12.duckdns.org:443/graficas')
       .then((response) => {
         this.grafica = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number;}) => ({
@@ -362,7 +362,7 @@ export class BuildsComponent implements OnInit{
 
   recoverGabinetes() {
     axios
-      .get('https://pruebanodejsscript21.azurewebsites.net/gabinetes')
+      .get('https://nodemysql12.duckdns.org:443/gabinetes')
       .then((response) => {
         this.gabinetes = response.data.map((item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; }) => ({
           modelo: item.modelo,
@@ -432,7 +432,7 @@ export class BuildsComponent implements OnInit{
     const text9 = `--------------------------------------------------------------------`;
     const text10 = `Total: $${this.sumaPrecios}`
     const text11 = `Consumo: ${this.sumaConsumo} W`
-    const allText = [text, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11].join('\n');
+    const allText = [text, text2, text3, text4, text5, text6, text7, text8,text9, text10, text11].join('\n\n');
     const element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(allText));
     element.setAttribute('download', 'armado.txt');

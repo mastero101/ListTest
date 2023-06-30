@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./chatgpt.component.scss']
 })
 export class ChatgptComponent {
-  apikey = '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';
+  apikey = '';
 }
