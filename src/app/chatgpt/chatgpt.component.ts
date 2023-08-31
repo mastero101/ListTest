@@ -8,7 +8,6 @@ import * as configurations from './configurations.json'; // Importa el JSON de c
   styleUrls: ['./chatgpt.component.scss']
 })
 export class ChatgptComponent {
-  apikey = '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';
   messageHistory: string[] = []; // Historial de mensajes
   newMessage: string = '';
 

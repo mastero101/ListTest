@@ -6,12 +6,34 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OpenAiService {
-  private apiKey = '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';
   private apiUrl = 'https://api.openai.com/v1/chat/completions';
+  private apiKey: string | null = null; // Store the API key here
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.fetchApiKey(); // Fetch the API key when the service is created
+  }
+
+  private async fetchApiKey(): Promise<void> {
+    try {
+      const response = await this.http.get<any[]>('https://masteros.cloud/apikey').toPromise();
+      if (Array.isArray(response)) {
+        const user = response.find(item => item.id === 2);
+
+        if (user) {
+          this.apiKey = user.username; // Store the API key
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching API key:', error);
+    }
+  }
 
   sendPrompt(messages: string[]): Observable<any> {
+    if (!this.apiKey) {
+      console.error('API key not found');
+      return new Observable();
+    }
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.apiKey}`
