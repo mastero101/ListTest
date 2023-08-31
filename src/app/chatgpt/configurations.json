@@ -1,0 +1,18 @@
+[
+    {
+      "budget": 15000,
+      "name": "Configuración 1",
+      "processor": "Ryzen 5 5600",
+      "motherboard": "MSI B550M PRO-VDH WIFI",
+      "ram": "G.Skill Flare X DDR4, 3200MHz, 16GB",
+      "storage": "Acer FA100 NVMe 512GB PCI Express 3.0",
+      "cooling": "AMD Stock Cooler",
+      "power_supply": "MSI MAG A650BN 80 PLUS Bronze, 650W",
+      "graphics_card": "Sapphire Pulse RX 6700 XT 12GB",
+      "cabinet": "XPG Invader",
+      "total_price": 14986,
+      "power_consumption": 474
+    }
+]
+
+  

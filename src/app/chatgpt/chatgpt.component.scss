@@ -1,0 +1,51 @@
+.chat-container {
+    width: 300px;
+    margin: 20px auto;
+    margin-top: 5em;
+    display: flex;
+    flex-direction: column; /* Cambiamos a flexbox con dirección vertical */
+  }
+  
+  mat-list {
+    padding: 0;
+  }
+  
+  mat-list-item {
+    padding: 0px;
+    border-bottom: none;
+    max-height: none; /* Elimina la restricción de altura */
+    overflow-y: auto;
+    display: flex;
+  }
+
+  
+  .message-container {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column; /* Cambiamos a flexbox con dirección vertical */
+  }
+
+  .message-container.hidden {
+    display: none;
+  }
+
+  .message-content {
+    white-space: pre-line;
+    overflow-wrap: break-word;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    flex: 1; /* Esto permitirá que el mensaje se expanda verticalmente */
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
