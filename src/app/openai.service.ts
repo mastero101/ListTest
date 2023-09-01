@@ -45,7 +45,7 @@ export class OpenAiService {
     const data = {
       messages: openAiMessages,
       model: 'gpt-3.5-turbo', // specify the model name here
-      max_tokens: 150 // Ajusta este valor según tus necesidades
+      max_tokens: 200 // Ajusta este valor según tus necesidades
     };
 
     return this.http.post(this.apiUrl, data, { headers });
