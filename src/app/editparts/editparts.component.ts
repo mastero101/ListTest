@@ -101,6 +101,17 @@ export class EditpartsComponent {
       });
   }
 
+  confirmarEliminacion() {
+    const confirmacion = window.confirm('¿Estás seguro de que deseas eliminar?');
+    if (confirmacion) {
+      // El usuario ha confirmado, ejecuta la función de eliminación
+      this.delete();
+    } else {
+      // El usuario ha cancelado la eliminación
+      alert('El usuario ha cancelado la eliminación')
+    }
+  }
+
   delete() {
     const data = this.registroForm.value;
     
