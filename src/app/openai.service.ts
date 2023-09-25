@@ -39,12 +39,12 @@ export class OpenAiService {
       'Authorization': `Bearer ${this.apiKey}`
     });
 
-    // Convert your messages into OpenAI API format
+    // Convertir mensajes al formato de OpenAIAPI
     const openAiMessages = messages.map(message => ({ role: 'user', content: message }));
 
     const data = {
       messages: openAiMessages,
-      model: 'gpt-3.5-turbo', // specify the model name here
+      model: 'gpt-3.5-turbo', // Especifica el nombre del modelo a usar
       max_tokens: 300 // Ajusta este valor según tus necesidades
     };
 

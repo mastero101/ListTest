@@ -5,16 +5,21 @@
         <mat-option *ngFor="let procesador of procesadores" [value]="procesador">{{ procesador.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p *ngIf="precioSeleccionado">
-      <span style="text-align: right; margin-right: 17em">
-        {{ precioSeleccionado|currency }}
-      </span>
-      <span>
-        {{ consumoSeleccionado + " W"}}
-      </span>
-      <span>
-        <a [href]="urlSeleccionada">{{ tiendaSeleccionada }}</a>
-      </span>
+    <p *ngIf="precioSeleccionado" class="card-container">
+      <mat-card style="width: 7em; height: 7em;">
+        <span>
+          <img src="https://www.cyberpuerta.mx/img/product/M/CP-INTEL-BX8071513600KF-7c0b3e.jpg" style="width: 70px; height: 70px;">
+        </span>
+      </mat-card>
+      <mat-card style="width: 30em; margin-right: 2em;">
+        <span style="margin-top: 0.4em;">
+          {{ precioSeleccionado|currency }}
+        </span>
+        <span>
+          {{ consumoSeleccionado + " W"}}
+          <a [href]="urlSeleccionada">{{ tiendaSeleccionada }}</a>
+        </span>
+      </mat-card>
     </p>
   </mat-card>
   <mat-card>
@@ -24,12 +29,19 @@
         <mat-option *ngFor="let motherboard of motherboardFiltradas" [value]="motherboard.modelo">{{ motherboard.modelo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <p *ngIf="precioSeleccionado2">
-      <span style="text-align: right; margin-right: 17.5em">
-      {{ precioSeleccionado2|currency }}
-    </span>
-      {{ consumoSeleccionado2 + " W"}}
-      <a [href]="urlSeleccionada2">{{ tiendaSeleccionada2 }}</a>
+    <p *ngIf="precioSeleccionado2" class="card-container">
+      <mat-card style="width: 7em; height: 7em;">
+        <span>
+          <img src="https://www.cyberpuerta.mx/img/product/M/CP-INTEL-BX8071513600KF-7c0b3e.jpg" style="width: 70px; height: 70px;">
+        </span>
+      </mat-card>
+      <mat-card style="width: 30em; margin-right: 2em;">
+        <span style="margin-top: 0.4em;">
+          {{ precioSeleccionado2|currency }}
+        </span>
+          {{ consumoSeleccionado2 + " W"}}
+          <a [href]="urlSeleccionada2">{{ tiendaSeleccionada2 }}</a>
+      </mat-card>
     </p>
   </mat-card>
   <mat-card>

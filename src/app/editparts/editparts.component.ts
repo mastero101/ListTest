@@ -101,6 +101,24 @@ export class EditpartsComponent {
       });
   }
 
+  delete() {
+    const data = this.registroForm.value;
+    
+    // Realiza la solicitud Delete utilizando Axios
+    console.log(data);
+    axios.delete(`https://nodemysql12.duckdns.org:443/${data.id}`, data)
+      .then((response) => {
+        // Maneja la respuesta exitosa de la inserción en la base de datos
+        console.log('Datos eliminados exitosamente:', response.data);
+        alert('Articulo Eliminado')
+      })
+      .catch((error) => {
+        // Maneja el error en caso de que la inserción falle
+        console.error('Error al eliminar los datos:', error);
+        // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales según tus necesidades
+      });
+  }
+
   recoverProcesadores() {
     axios
       .get('https://nodemysql12.duckdns.org:443/')
