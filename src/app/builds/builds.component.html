@@ -1,4 +1,7 @@
 <mat-card class="first">
+    <mat-card *ngIf="selectedImage" class="full-size-image-container">
+      <img [src]="selectedImage" alt="Imagen seleccionada" (click)="closeImage()">
+    </mat-card>
     <mat-form-field appearance="fill">
       <mat-label>Procesador</mat-label>
       <mat-select (selectionChange)="setPrecioSeleccionado($event.value)">
@@ -8,7 +11,7 @@
     <p *ngIf="precioSeleccionado" class="card-container">
       <mat-card style="width: 7em; height: 7em;">
         <span>
-          <img src="{{ imgSeleccionada }}" style="width: 70px; height: 70px;">
+          <img src="{{ imgSeleccionada }}" style="width: 70px; height: 70px;" (click)="openImage(imgSeleccionada)">
         </span>
       </mat-card>
       <mat-card style="width: 30em; margin-right: 2em;">
@@ -32,7 +35,7 @@
     <p *ngIf="precioSeleccionado2" class="card-container">
       <mat-card style="width: 7em; height: 7em;">
         <span>
-          <img src="{{ imgSeleccionada2 }}" style="width: 70px; height: 70px;">
+          <img src="{{ imgSeleccionada2 }}" style="width: 70px; height: 70px;" (click)="openImage(imgSeleccionada2)">
         </span>
       </mat-card>
       <mat-card style="width: 30em; margin-right: 2em;">
@@ -54,7 +57,7 @@
     <p *ngIf="precioSeleccionado3" class="card-container">
       <mat-card style="width: 7em; height: 7em;">
         <span>
-          <img src="{{ imgSeleccionada3 }}" style="width: 70px; height: 70px;">
+          <img src="{{ imgSeleccionada3 }}" style="width: 70px; height: 70px;" (click)="openImage(imgSeleccionada3)">
         </span>
       </mat-card>
       <mat-card style="width: 30em; margin-right: 2em;">
@@ -76,7 +79,7 @@
     <p *ngIf="precioSeleccionado4" class="card-container">
       <mat-card style="width: 7em; height: 7em;">
         <span>
-          <img src="{{ imgSeleccionada4 }}" style="width: 70px; height: 70px;">
+          <img src="{{ imgSeleccionada4 }}" style="width: 70px; height: 70px;" (click)="openImage(imgSeleccionada4)">
         </span>
       </mat-card>
       <mat-card style="width: 30em; margin-right: 2em;">
@@ -98,7 +101,7 @@
       <p *ngIf="precioSeleccionado5" class="card-container">
         <mat-card style="width: 7em; height: 7em;">
           <span>
-            <img src="{{ imgSeleccionada5 }}" style="width: 70px; height: 70px;">
+            <img src="{{ imgSeleccionada5 }}" style="width: 70px; height: 70px;" (click)="openImage(imgSeleccionada5)">
           </span>
         </mat-card>
         <mat-card style="width: 30em; margin-right: 2em;">
@@ -120,7 +123,7 @@
       <p *ngIf="precioSeleccionado6" class="card-container">
         <mat-card style="width: 7em; height: 7em;">
           <span>
-            <img src="{{ imgSeleccionada6 }}" style="width: 70px; height: 70px;">
+            <img src="{{ imgSeleccionada6 }}" style="width: 70px; height: 70px;" (click)="openImage(imgSeleccionada6)">
           </span>
         </mat-card>
         <mat-card style="width: 30em; margin-right: 2em;">
@@ -142,7 +145,7 @@
       <p *ngIf="precioSeleccionado7" class="card-container">
         <mat-card style="width: 7em; height: 7em;">
           <span>
-            <img src="{{ imgSeleccionada7 }}" style="width: 70px; height: 70px;">
+            <img src="{{ imgSeleccionada7 }}" style="width: 70px; height: 70px;" (click)="openImage(imgSeleccionada7)">
           </span>
         </mat-card>
         <mat-card style="width: 30em; margin-right: 2em;">
@@ -164,7 +167,7 @@
       <p *ngIf="precioSeleccionado8" class="card-container">
         <mat-card style="width: 7em; height: 7em;">
           <span>
-            <img src="{{ imgSeleccionada8 }}" style="width: 70px; height: 70px;">
+            <img src="{{ imgSeleccionada8 }}" style="width: 70px; height: 70px;" (click)="openImage(imgSeleccionada8)">
           </span>
         </mat-card>
         <mat-card style="width: 30em; margin-right: 2em;">

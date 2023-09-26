@@ -79,6 +79,7 @@ export class BuildsComponent implements OnInit{
   idInit2: any;
   elementoRecuperado2: any;
   mostrarAdvertencia: boolean = false;
+  selectedImage: string | null = null;
   
   constructor() {}
 
@@ -464,5 +465,13 @@ export class BuildsComponent implements OnInit{
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+  }
+
+  openImage(imageUrl: string) {
+    this.selectedImage = imageUrl;
+  }
+  
+  closeImage() {
+    this.selectedImage = null;
   }
 }
