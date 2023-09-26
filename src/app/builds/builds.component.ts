@@ -8,7 +8,7 @@ import axios from 'axios';
 })
 export class BuildsComponent implements OnInit{
   procesadores: { precio: number; modelo: string; tienda: string; consumo: string;  socket: string}[] = [];
-  motherboard: { precio: number; modelo: string; tienda: string; url: string; consumo: number;  socket: string; rams: any;}[] = [];
+  motherboard: { precio: number; modelo: string; tienda: string; url: string; consumo: number;  socket: string; rams: any; img: any;}[] = [];
   ram: { precio: number; modelo: string; tienda: string; url: string; consumo: number; socket: any; rams: any;}[] = [];
   almacenamiento: { precio: number; modelo: string; tienda: string; url: string; consumo: number}[] = [];
   disipador: { precio: number; modelo: string; tienda: string; url: string; consumo: number}[] = [];
@@ -58,6 +58,8 @@ export class BuildsComponent implements OnInit{
   urlSeleccionada6: any;
   urlSeleccionada7: any;
   urlSeleccionada8: any;
+  imgSeleccionada: any;
+  imgSeleccionada2: any;
   sumaPrecios: number = 0;
   sumaConsumo: number = 0;
   modelo: any;
@@ -106,13 +108,14 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/procesadores')
       .then((response) => {
         this.procesadores = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; }) => ({
+          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; img: any; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             url: item.url,
             consumo: item.consumo,
             socket: item.socket,
+            img: item.img,
           })
         );
       })
@@ -128,6 +131,7 @@ export class BuildsComponent implements OnInit{
       this.tiendaSeleccionada = procesadorSeleccionado.tienda;
       this.consumoSeleccionado = procesadorSeleccionado.consumo;
       this.urlSeleccionada = procesadorSeleccionado.url;
+      this.imgSeleccionada = procesadorSeleccionado.img;
       
       // Filtrar placas madre según el socket del procesador
       this.motherboardFiltradas = this.motherboard.filter(motherboard => motherboard.socket === procesadorSeleccionado.socket);
@@ -147,7 +151,7 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/motherboards')
       .then((response) => {
         this.motherboard = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; rams: any;}) => ({
+          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; rams: any; img: any;}) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
@@ -155,6 +159,7 @@ export class BuildsComponent implements OnInit{
             consumo: item.consumo,
             socket: item.socket,
             rams: item.rams,
+            img: item.img,
           })
         );
         this.precioSeleccionado2 = 0;
@@ -174,6 +179,7 @@ export class BuildsComponent implements OnInit{
       this.tiendaSeleccionada2 = motherboardSeleccionada.tienda;
       this.consumoSeleccionado2 = motherboardSeleccionada.consumo;
       this.urlSeleccionada2 = motherboardSeleccionada.url;
+      this.imgSeleccionada2 = motherboardSeleccionada.img;
 
       // Filtrar placas madre según el socket del procesador
       this.ramFiltradas = this.ram.filter(ram => ram.rams === motherboardSeleccionada.rams);

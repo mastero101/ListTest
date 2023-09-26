@@ -10,6 +10,7 @@ interface Registro {
   url: string;
   tienda: string;
   consumo: string;
+  img: string;
 }
 
 @Component({
@@ -18,7 +19,7 @@ interface Registro {
   styleUrls: ['./editparts.component.scss']
 })
 export class EditpartsComponent {
-  items: { precio: number; tipo: string; modelo: string; tienda: string; url: string; consumo: string }[] = [];
+  items: { precio: number; tipo: string; modelo: string; tienda: string; url: string; consumo: string; img:string;}[] = [];
   registroForm: FormGroup = new FormGroup({});
   modeloBusqueda: any;
   modelo: any;
@@ -33,6 +34,7 @@ export class EditpartsComponent {
       modelo: ['', Validators.required],
       precio: ['', Validators.required],
       url: ['', Validators.required],
+      img: ['', Validators.required],
       tienda: ['', Validators.required],
       consumo: ['', Validators.required],
     });
@@ -60,6 +62,7 @@ export class EditpartsComponent {
         precio: selectedItem.precio,
         tienda: selectedItem.tienda,
         url: selectedItem.url,
+        img: selectedItem.img,
         consumo: selectedItem.consumo,
     });
   }
@@ -135,13 +138,14 @@ export class EditpartsComponent {
       .get('https://nodemysql12.duckdns.org:443/')
       .then((response) => {
         this.items = response.data.map(
-          (item: {id: number; tipo: any; modelo: any; precio: number; tienda: any; url: any; consumo: any;}) => ({
+          (item: {id: number; tipo: any; modelo: any; precio: number; tienda: any; url: any; consumo: any; img:any;}) => ({
             id: item.id,
             tipo: item.tipo,
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             url: item.url,
+            img: item.img,
             consumo: item.consumo,
           })
         );

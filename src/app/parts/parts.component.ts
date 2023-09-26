@@ -7,6 +7,7 @@ interface Registro {
   modelo: string;
   precio: number;
   url: string;
+  img: string;
   tienda: string;
   consumo: string;
   socket: string;
@@ -41,6 +42,7 @@ export class PartsComponent {
       modelo: ['', Validators.required],
       precio: ['', Validators.required],
       url: ['',],
+      img: ['', Validators.required],
       tienda: ['', Validators.required],
       consumo: ['', Validators.required],
       socket: [''],

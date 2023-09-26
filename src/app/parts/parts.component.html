@@ -52,6 +52,16 @@
     </div>
 
     <div class="form-group">
+      <label for="img">Imagen:</label>
+      <mat-form-field appearance="fill" class="form-field">
+          <input matInput placeholder="URL" formControlName="img">
+          <mat-error *ngIf="registroForm.get('img')?.invalid && registroForm.get('img')?.touched">
+          La URL del producto es requerida.
+          </mat-error>
+      </mat-form-field>
+  </div>
+
+    <div class="form-group">
         <label for="tienda">Tienda:</label>
         <mat-form-field appearance="fill" class="form-field">
           <mat-label>Tienda</mat-label>
