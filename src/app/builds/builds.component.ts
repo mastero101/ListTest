@@ -9,12 +9,12 @@ import axios from 'axios';
 export class BuildsComponent implements OnInit{
   procesadores: { precio: number; modelo: string; tienda: string; consumo: string;  socket: string}[] = [];
   motherboard: { precio: number; modelo: string; tienda: string; url: string; consumo: number;  socket: string; rams: any; img: any;}[] = [];
-  ram: { precio: number; modelo: string; tienda: string; url: string; consumo: number; socket: any; rams: any;}[] = [];
-  almacenamiento: { precio: number; modelo: string; tienda: string; url: string; consumo: number}[] = [];
-  disipador: { precio: number; modelo: string; tienda: string; url: string; consumo: number}[] = [];
-  fuentedepoder: { precio: number; modelo: string; tienda: string; url: string; consumo: number; potencia: number;}[] = [];
-  grafica: { precio: number; modelo: string; tienda: string; url: string; consumo: number}[] = [];
-  gabinetes: { precio: number; modelo: string; tienda: string; url: string; consumo: number}[] = [];
+  ram: { precio: number; modelo: string; tienda: string; url: string; consumo: number; socket: any; rams: any; img: any;}[] = [];
+  almacenamiento: { precio: number; modelo: string; tienda: string; url: string; consumo: number; img: any;}[] = [];
+  disipador: { precio: number; modelo: string; tienda: string; url: string; consumo: number; img: any;}[] = [];
+  fuentedepoder: { precio: number; modelo: string; tienda: string; url: string; consumo: number; potencia: number; img: any;}[] = [];
+  grafica: { precio: number; modelo: string; tienda: string; url: string; consumo: number; img: any;}[] = [];
+  gabinetes: { precio: number; modelo: string; tienda: string; url: string; consumo: number; img: any;}[] = [];
   motherboardFiltradas: { precio: number; modelo: string; tienda: string; url: string; consumo: number; socket: string; rams: any;}[] = [];
   ramFiltradas: { precio: number; modelo: string; tienda: string; url: string; consumo: number; socket: any; rams: any; }[] = [];
   precioSeleccionado: number = 0;
@@ -60,6 +60,12 @@ export class BuildsComponent implements OnInit{
   urlSeleccionada8: any;
   imgSeleccionada: any;
   imgSeleccionada2: any;
+  imgSeleccionada3: any;
+  imgSeleccionada4: any;
+  imgSeleccionada5: any;
+  imgSeleccionada6: any;
+  imgSeleccionada7: any;
+  imgSeleccionada8: any;
   sumaPrecios: number = 0;
   sumaConsumo: number = 0;
   modelo: any;
@@ -193,11 +199,12 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/rams')
       .then((response) => {
         this.ram = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; url: any ;consumo: number; socket: any; rams: any;}) => ({
+          (item: { modelo: any; precio: number; tienda: any; url: any ;consumo: number; socket: any; rams: any; img: any; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             url: item.url,
+            img: item.img,
             consumo: item.consumo,
             socket: item.socket,
             rams: item.rams,
@@ -218,6 +225,7 @@ export class BuildsComponent implements OnInit{
       this.tiendaSeleccionada3 = ramSeleccionada.tienda;
       this.consumoSeleccionado3 = ramSeleccionada.consumo;
       this.urlSeleccionada3 = ramSeleccionada.url;
+      this.imgSeleccionada3 = ramSeleccionada.img;
     }
     this.sumatoriaPrecios();
     this.sumatoriaConsumo();
@@ -228,11 +236,12 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/almacenamientos')
       .then((response) => {
         this.almacenamiento = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; }) => ({
+          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any; }) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             url: item.url,
+            img: item.img,
             consumo: item.consumo,
           })
         );
@@ -253,6 +262,7 @@ export class BuildsComponent implements OnInit{
       this.tiendaSeleccionada4 = almacenamientoSeleccionado.tienda;
       this.consumoSeleccionado4 = almacenamientoSeleccionado.consumo;
       this.urlSeleccionada4 = almacenamientoSeleccionado.url;
+      this.imgSeleccionada4 = almacenamientoSeleccionado.img;
     }
     this.sumatoriaPrecios();
     this.sumatoriaConsumo();
@@ -263,11 +273,12 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/disipadores')
       .then((response) => {
         this.disipador = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number;}) => ({
+          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any;}) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             url: item.url,
+            img: item.img,
             consumo: item.consumo,
           })
         );
@@ -288,6 +299,7 @@ export class BuildsComponent implements OnInit{
       this.tiendaSeleccionada5 = disipadorSeleccionado.tienda;
       this.consumoSeleccionado5 = disipadorSeleccionado.consumo;
       this.urlSeleccionada5 = disipadorSeleccionado.url;
+      this.imgSeleccionada5 = disipadorSeleccionado.img;
     }
     this.sumatoriaPrecios();
     this.sumatoriaConsumo();
@@ -298,11 +310,12 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/fuentes')
       .then((response) => {
         this.fuentedepoder = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; potencia: number;}) => ({
+          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; potencia: number; img: any;}) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             url: item.url,
+            img: item.img,
             consumo: item.consumo,
             potencia: item.potencia,
           })
@@ -325,6 +338,7 @@ export class BuildsComponent implements OnInit{
       this.consumoSeleccionado6 = fuenteSeleccionado.consumo;
       this.potenciaSeleccionada = fuenteSeleccionado.potencia;
       this.urlSeleccionada6 = fuenteSeleccionado.url;
+      this.imgSeleccionada6 = fuenteSeleccionado.img;
     }
     console.log(this.potenciaSeleccionada);
     this.sumatoriaPrecios();
@@ -336,11 +350,12 @@ export class BuildsComponent implements OnInit{
       .get('https://nodemysql12.duckdns.org:443/graficas')
       .then((response) => {
         this.grafica = response.data.map(
-          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number;}) => ({
+          (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any;}) => ({
             modelo: item.modelo,
             precio: item.precio,
             tienda: item.tienda,
             url: item.url,
+            img: item.img,
             consumo: item.consumo,
           })
         );
@@ -361,6 +376,7 @@ export class BuildsComponent implements OnInit{
       this.tiendaSeleccionada7 = graficaSeleccionado.tienda;
       this.consumoSeleccionado7 = graficaSeleccionado.consumo;
       this.urlSeleccionada7 = graficaSeleccionado.url;
+      this.imgSeleccionada7 = graficaSeleccionado.img;
     }
     this.sumatoriaPrecios();
     this.sumatoriaConsumo();
@@ -370,11 +386,12 @@ export class BuildsComponent implements OnInit{
     axios
       .get('https://nodemysql12.duckdns.org:443/gabinetes')
       .then((response) => {
-        this.gabinetes = response.data.map((item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; }) => ({
+        this.gabinetes = response.data.map((item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any;}) => ({
           modelo: item.modelo,
           precio: item.precio,
           tienda: item.tienda,
           url: item.url,
+          img: item.img,
           consumo: item.consumo,
         }));
         this.precioSeleccionado8 = 0;
@@ -394,6 +411,7 @@ export class BuildsComponent implements OnInit{
       this.tiendaSeleccionada8 = gabineteSeleccionado.tienda;
       this.consumoSeleccionado8 = gabineteSeleccionado.consumo;
       this.urlSeleccionada8 = gabineteSeleccionado.url;
+      this.imgSeleccionada8 = gabineteSeleccionado.img;
     }
     this.sumatoriaPrecios();
     this.sumatoriaConsumo();
