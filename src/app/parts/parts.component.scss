@@ -18,8 +18,8 @@
 }
 
 button {
-  margin-top: 1em;
-  margin-left: 11.5em;
+  margin-top: -1em;
+  margin-left: 9.5em;
   @media screen and (min-width: 768px) {
       margin-left: 50em;
   }
@@ -27,7 +27,8 @@ button {
 
 .submit {
   margin-top: 1em;
-  margin-left: 12em;
+  margin-left: 10em;
+  margin-bottom: 2em;
   @media screen and (min-width: 768px) {
       margin-left: 50.5em;
   }
