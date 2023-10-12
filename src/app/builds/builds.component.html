@@ -1,6 +1,6 @@
 <mat-card class="first">
     <mat-card *ngIf="selectedImage" class="full-size-image-container">
-      <img [src]="selectedImage" alt="Imagen seleccionada" (click)="closeImage()">
+      <img [src]="selectedImage" alt="Imagen seleccionada" (click)="closeImage()" style="width: 100%; height: 100%;">
     </mat-card>
     <mat-form-field appearance="fill">
       <mat-label>Procesador</mat-label>
