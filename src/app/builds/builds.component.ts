@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable'
+
 @Component({
   selector: 'app-builds',
   templateUrl: './builds.component.html',
@@ -465,6 +468,28 @@ export class BuildsComponent implements OnInit{
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+  }
+
+  downloadPDF(){
+    const doc = new jsPDF()
+
+    autoTable(doc, {
+      head: [['','Componente', 'Precio', 'Tienda', 'Consumo']],
+      body: [
+        ['Procesador ', this.modeloSeleccionado, "$" + this.precioSeleccionado, this.tiendaSeleccionada, this.consumoSeleccionado + " W"],
+        ['Placa Madre ', this.modeloSeleccionado2, "$" + this.precioSeleccionado2, this.tiendaSeleccionada2, this.consumoSeleccionado2 + " W"],
+        ['Ram ', this.modeloSeleccionado3, "$" + this.precioSeleccionado3, this.tiendaSeleccionada3, this.consumoSeleccionado3 + " W"],
+        ['Almacenamiento ', this.modeloSeleccionado4, "$" + this.precioSeleccionado4, this.tiendaSeleccionada4, this.consumoSeleccionado4 + " W"],
+        ['Enfriamiento ', this.modeloSeleccionado5, "$" + this.precioSeleccionado5, this.tiendaSeleccionada5, this.consumoSeleccionado5 + " W"],
+        ['Fuente ', this.modeloSeleccionado6, "$" + this.precioSeleccionado6, this.tiendaSeleccionada6, '', '' ],
+        ['Gráfica ', this.modeloSeleccionado7, "$" + this.precioSeleccionado7, this.tiendaSeleccionada7, this.consumoSeleccionado7 + " W"],
+        ['Gabinete ', this.modeloSeleccionado8, "$" + this.precioSeleccionado8, this.tiendaSeleccionada8, this.consumoSeleccionado8 + " W"],
+        ['', 'Total: ', "$" + this.sumaPrecios],
+        ['', '', '', 'Consumo -', this.sumaConsumo + ' W']
+      ],
+    })
+
+    doc.save('Cotizacion' + ' ' + (this.sumaPrecios / 1000).toFixed(0) + 'K' + '.pdf');
   }
 
   openImage(imageUrl: string) {
