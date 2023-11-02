@@ -474,7 +474,7 @@ export class BuildsComponent implements OnInit{
     const doc = new jsPDF()
 
     autoTable(doc, {
-      head: [['','Componente', 'Precio', 'Tienda', 'Consumo']],
+      head: [[' ','Componente', 'Precio', 'Tienda', 'Consumo']],
       body: [
         ['Procesador ', this.modeloSeleccionado, "$" + this.precioSeleccionado, this.tiendaSeleccionada, this.consumoSeleccionado + " W"],
         ['Placa Madre ', this.modeloSeleccionado2, "$" + this.precioSeleccionado2, this.tiendaSeleccionada2, this.consumoSeleccionado2 + " W"],
