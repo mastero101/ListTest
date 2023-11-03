@@ -508,7 +508,7 @@ export class BuildsComponent implements OnInit{
     };
 
     const tableData = [
-      ['', 'Componente', 'Precios', 'Tienda', 'Consumo'],
+      ['', 'Componente', 'Precio', 'Tienda', 'Consumo'],
       ['Procesador', this.modeloSeleccionado, formatNumber(this.precioSeleccionado), this.tiendaSeleccionada, this.consumoSeleccionado + " W"],
       ['Placa Madre', this.modeloSeleccionado2, formatNumber(this.precioSeleccionado2), this.tiendaSeleccionada2, this.consumoSeleccionado2 + " W"],
       ['Ram', this.modeloSeleccionado3, formatNumber(this.precioSeleccionado3), this.tiendaSeleccionada3, this.consumoSeleccionado3 + " W"],
