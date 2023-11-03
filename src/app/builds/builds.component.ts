@@ -470,8 +470,6 @@ export class BuildsComponent implements OnInit{
     document.body.removeChild(element);
   }
 
-
-
   downloadPDF(){
     const doc = new jsPDF()
 
