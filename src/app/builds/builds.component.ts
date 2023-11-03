@@ -476,18 +476,23 @@ export class BuildsComponent implements OnInit{
     autoTable(doc, {
       head: [['','Componente', 'Precio', 'Tienda', 'Consumo']],
       body: [
-        ['Procesador ', this.modeloSeleccionado, "$" + this.precioSeleccionado, ' ', this.consumoSeleccionado + " W"],
-        ['Placa Madre ', this.modeloSeleccionado2, "$" + this.precioSeleccionado2, this.tiendaSeleccionada2, this.consumoSeleccionado2 + " W"],
-        ['Ram ', this.modeloSeleccionado3, "$" + this.precioSeleccionado3, this.tiendaSeleccionada3, this.consumoSeleccionado3 + " W"],
-        ['Almacenamiento ', this.modeloSeleccionado4, "$" + this.precioSeleccionado4, this.tiendaSeleccionada4, this.consumoSeleccionado4 + " W"],
-        ['Enfriamiento ', this.modeloSeleccionado5, "$" + this.precioSeleccionado5, this.tiendaSeleccionada5, this.consumoSeleccionado5 + " W"],
-        ['Fuente ', this.modeloSeleccionado6, "$" + this.precioSeleccionado6, this.tiendaSeleccionada6, '', '' ],
-        ['Gráfica ', this.modeloSeleccionado7, "$" + this.precioSeleccionado7, this.tiendaSeleccionada7, this.consumoSeleccionado7 + " W"],
-        ['Gabinete ', this.modeloSeleccionado8, "$" + this.precioSeleccionado8, this.tiendaSeleccionada8, this.consumoSeleccionado8 + " W"],
-        ['', 'Total: ', "$" + this.sumaPrecios],
+        ['Procesador ', this.modeloSeleccionado, "$" + formatNumber(this.precioSeleccionado), this.tiendaSeleccionada, this.consumoSeleccionado + " W"],
+        ['Placa Madre ', this.modeloSeleccionado2, "$" + formatNumber(this.precioSeleccionado2), this.tiendaSeleccionada2, this.consumoSeleccionado2 + " W"],
+        ['Ram ', this.modeloSeleccionado3, "$" + formatNumber(this.precioSeleccionado3), this.tiendaSeleccionada3, this.consumoSeleccionado3 + " W"],
+        ['Almacenamiento ', this.modeloSeleccionado4, "$" + formatNumber(this.precioSeleccionado4), this.tiendaSeleccionada4, this.consumoSeleccionado4 + " W"],
+        ['Enfriamiento ', this.modeloSeleccionado5, "$" + formatNumber(this.precioSeleccionado5), this.tiendaSeleccionada5, this.consumoSeleccionado5 + " W"],
+        ['Fuente ', this.modeloSeleccionado6, "$" + formatNumber(this.precioSeleccionado6), this.tiendaSeleccionada6, '', '' ],
+        ['Gráfica ', this.modeloSeleccionado7, "$" + formatNumber(this.precioSeleccionado7), this.tiendaSeleccionada7, this.consumoSeleccionado7 + " W"],
+        ['Gabinete ', this.modeloSeleccionado8, "$" + formatNumber(this.precioSeleccionado8), this.tiendaSeleccionada8, this.consumoSeleccionado8 + " W"],
+        ['', 'Total: ', "$" + formatNumber(this.sumaPrecios)],
         ['', '', '', 'Consumo -', this.sumaConsumo + ' W']
       ],
     });
+
+    // Formatear el número con separador de miles
+    function formatNumber(number: number) {
+      return number.toLocaleString('en-US', { minimumFractionDigits: 0 });
+    }
     
     doc.setFontSize(15);
     doc.setTextColor(200, 200, 200); 
