@@ -501,6 +501,41 @@ export class BuildsComponent implements OnInit{
     doc.save('Cotizacion' + ' ' + (this.sumaPrecios / 1000).toFixed(0) + 'K' + '.pdf');
   }
 
+  downloadCSV() {
+    const formatNumber = (number: number) => {
+      // Formatear el número como moneda
+      return '$ ' + new Intl.NumberFormat('en-US').format(number);
+    };
+
+    const tableData = [
+      ['', 'Componente', 'Precio', 'Tienda', 'Consumo'],
+      ['Procesador', this.modeloSeleccionado, formatNumber(this.precioSeleccionado), this.tiendaSeleccionada, this.consumoSeleccionado + " W"],
+      ['Placa Madre', this.modeloSeleccionado2, formatNumber(this.precioSeleccionado2), this.tiendaSeleccionada2, this.consumoSeleccionado2 + " W"],
+      ['Ram', this.modeloSeleccionado3, formatNumber(this.precioSeleccionado3), this.tiendaSeleccionada3, this.consumoSeleccionado3 + " W"],
+      ['Almacenamiento', this.modeloSeleccionado4, formatNumber(this.precioSeleccionado4), this.tiendaSeleccionada4, this.consumoSeleccionado4 + " W"],
+      ['Enfriamiento', this.modeloSeleccionado5, formatNumber(this.precioSeleccionado5), this.tiendaSeleccionada5, this.consumoSeleccionado5 + " W"],
+      ['Fuente', this.modeloSeleccionado6, formatNumber(this.precioSeleccionado6), this.tiendaSeleccionada6, ''],
+      ['Gráfica', this.modeloSeleccionado7, formatNumber(this.precioSeleccionado7), this.tiendaSeleccionada7, this.consumoSeleccionado7 + " W"],
+      ['Gabinete', this.modeloSeleccionado8, formatNumber(this.precioSeleccionado8), this.tiendaSeleccionada8, this.consumoSeleccionado8 + " W"],
+      ['', 'Total:', formatNumber(this.sumaPrecios)],
+      ['', '', '', 'Consumo -', this.sumaConsumo + ' W'],
+    ];
+
+    // Convierte los datos en formato CSV
+    const csvData = tableData.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+  
+    // Crea un enlace de descarga para el archivo CSV
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'Cotizacion' + ' ' + (this.sumaPrecios / 1000).toFixed(0) + 'K' + '.csv'
+      document.body.appendChild(a);
+      a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
   openImage(imageUrl: string) {
     this.selectedImage = imageUrl;
   }
