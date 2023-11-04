@@ -515,7 +515,7 @@ export class BuildsComponent implements OnInit{
       ['Almacenamiento', this.modeloSeleccionado4, formatNumber(this.precioSeleccionado4), this.tiendaSeleccionada4, this.consumoSeleccionado4 + " W"],
       ['Enfriamiento', this.modeloSeleccionado5, formatNumber(this.precioSeleccionado5), this.tiendaSeleccionada5, this.consumoSeleccionado5 + " W"],
       ['Fuente', this.modeloSeleccionado6, formatNumber(this.precioSeleccionado6), this.tiendaSeleccionada6, ''],
-      ['Gráfica', this.modeloSeleccionado7, formatNumber(this.precioSeleccionado7), this.tiendaSeleccionada7, this.consumoSeleccionado7 + " W"],
+      ['Grafica', this.modeloSeleccionado7, formatNumber(this.precioSeleccionado7), this.tiendaSeleccionada7, this.consumoSeleccionado7 + " W"],
       ['Gabinete', this.modeloSeleccionado8, formatNumber(this.precioSeleccionado8), this.tiendaSeleccionada8, this.consumoSeleccionado8 + " W"],
       ['', 'Total:', formatNumber(this.sumaPrecios)],
       ['', '', '', 'Consumo -', this.sumaConsumo + ' W'],
