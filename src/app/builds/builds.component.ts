@@ -463,7 +463,7 @@ export class BuildsComponent implements OnInit{
     const allText = [text, text2, text3, text4, text5, text6, text7, text8,text9, text10, text11].join('\n\n');
     const element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(allText));
-    element.setAttribute('download', 'armado.txt');
+    element.setAttribute('download', ('Cotizacion' + ' ' + (this.sumaPrecios / 1000).toFixed(0) + 'K' + '.txt'));
     element.style.display = 'none';
     document.body.appendChild(element);
     element.click();
@@ -503,7 +503,6 @@ export class BuildsComponent implements OnInit{
 
   downloadCSV() {
     const formatNumber = (number: number) => {
-      // Formatear el número como moneda
       return '$ ' + new Intl.NumberFormat('en-US').format(number);
     };
 
