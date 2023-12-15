@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { OpenAiService } from '../openai.service';
 import * as configurations from './configurations.json'; // Importa el JSON de configuraciones
 
+import { NavbarComponent } from '../navbar/navbar.component';
+
 @Component({
   selector: 'app-chatgpt',
   templateUrl: './chatgpt.component.html',
@@ -11,7 +13,11 @@ export class ChatgptComponent {
   messageHistory: string[] = []; // Historial de mensajes
   newMessage: string = '';
 
-  constructor(private openAiService: OpenAiService) {}
+  constructor(private openAiService: OpenAiService, private navbarComponent: NavbarComponent) {}
+
+  ngOnInit(){
+    this.navbarComponent.showToggleButton = true;
+  }
 
   sendMessage() {
     if (this.newMessage.trim() !== '') {

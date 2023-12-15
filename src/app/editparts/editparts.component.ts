@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import axios from 'axios';
 
+import { NavbarComponent } from '../navbar/navbar.component';
+
 interface Registro {
   id: string;
   tipo: string;
@@ -25,7 +27,7 @@ export class EditpartsComponent {
   modelo: any;
   elementoid: any;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private navbarComponent: NavbarComponent) { }
 
   ngOnInit() {
     this.registroForm = this.formBuilder.group({
@@ -39,6 +41,7 @@ export class EditpartsComponent {
       consumo: ['', Validators.required],
     });
     this.recoverProcesadores();
+    this.navbarComponent.showToggleButton = true;
   }
 
   onSubmit() {

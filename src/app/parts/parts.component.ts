@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import axios from 'axios';
 
+import { NavbarComponent } from '../navbar/navbar.component';
+
 interface Registro {
   tipo: string;
   modelo: string;
@@ -34,7 +36,7 @@ export class PartsComponent {
   mostrarRam: boolean = false;
   mostrarPotencia: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private navbarComponent: NavbarComponent) { }
 
   ngOnInit() {
     this.registroForm = this.formBuilder.group({
@@ -50,6 +52,7 @@ export class PartsComponent {
       potencia: [''],
     });
     this.recoverid();
+    this.navbarComponent.showToggleButton = true;
   }
 
   onSubmit() {

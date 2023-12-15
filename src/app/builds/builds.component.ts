@@ -6,6 +6,7 @@ import autoTable from 'jspdf-autotable'
 
 import { ActivatedRoute } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-builds',
@@ -89,7 +90,7 @@ export class BuildsComponent implements OnInit{
   enlaceCompartir: string = '';
   mostrarCard: boolean = false;
   
-  constructor(private route: ActivatedRoute, private clipboard: Clipboard) {}
+  constructor(private route: ActivatedRoute, private clipboard: Clipboard, private navbarComponent: NavbarComponent) {}
 
   ngOnInit(): void {
     this.recoverid();
@@ -101,6 +102,7 @@ export class BuildsComponent implements OnInit{
     this.recoverFuente();
     this.recoverGrafica();
     this.recoverGabinetes();
+    this.navbarComponent.showToggleButton = true;
   }
 
   recoverid() {

@@ -12,7 +12,7 @@
     </button>   
   </mat-sidenav>
   <mat-sidenav-content>
-    <button mat-icon-button (click)="toggleSidebar()" class="toggle-button">
+    <button mat-icon-button (click)="toggleSidebar()" class="toggle-button" *ngIf="showToggleButton" [disabled]="!showToggleButton">
       <mat-icon>{{ opened ? 'chevron_left' : 'chevron_right' }}</mat-icon>
     </button>
     <router-outlet></router-outlet>

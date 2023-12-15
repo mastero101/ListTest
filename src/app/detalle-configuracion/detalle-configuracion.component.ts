@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import axios from 'axios';
 
 import { ActivatedRoute } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-detalle-configuracion',
@@ -13,7 +14,7 @@ export class DetalleConfiguracionComponent {
   configData: any = {};
   Object = Object;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private navbarComponent: NavbarComponent) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -22,6 +23,7 @@ export class DetalleConfiguracionComponent {
         this.recoverConfiguracion(configId);
       }
     });
+    this.navbarComponent.showToggleButton = false;
   }
 
   recoverConfiguracion(configId: string) {
@@ -30,13 +32,44 @@ export class DetalleConfiguracionComponent {
     axios.get(`https://nodemysql12.duckdns.org:443/recuperar-configuracion/${configId}`)
       .then(response => {
         this.configData = response.data;
+        this.sortConfigData();  // Llama a la función para ordenar los datos
         console.log(this.configData);
       })
       .catch(error => {
         console.error('Error al recuperar configuración', error);
-        // Manejar el error según sea necesario
       });
   }
+
+  sortConfigData() {
+    const order = [
+      'procesador',
+      'placaMadre',
+      'ram',
+      'almacenamiento',
+      'fuente',
+      'grafica',
+      'enfriamiento',
+      'gabinete'
+    ];
+  
+    // Añade un tipo de índice a this.configData
+    const configDataWithIndex: { [key: string]: any } = this.configData;
+  
+    // Ordena las claves según el orden especificado
+    const sortedKeys = Object.keys(configDataWithIndex).sort((a, b) => {
+      return order.indexOf(a) - order.indexOf(b);
+    });
+  
+    // Crea un nuevo objeto con las claves ordenadas
+    const sortedConfigData = sortedKeys.reduce((acc, key) => {
+      acc[key] = configDataWithIndex[key];
+      return acc;
+    }, {} as { [key: string]: any });
+  
+    // Reemplaza el objeto original con el objeto ordenado
+    this.configData = sortedConfigData;
+  }
+  
 
   getTotalPrecio(): number {
     let total = 0;
@@ -56,5 +89,9 @@ export class DetalleConfiguracionComponent {
       }
     }
     return totalConsumo;
+  }
+
+  getRoundedTotalPrecio(): number {
+    return Math.round(this.getTotalPrecio() / 1000);
   }
 }
