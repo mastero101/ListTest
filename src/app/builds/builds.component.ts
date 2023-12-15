@@ -623,7 +623,7 @@ export class BuildsComponent implements OnInit{
   compartirConfiguracion() {
     const jsonConfig = this.buildJSON();
 
-    axios.post('http://127.0.0.1:443/guardar-configuracion', jsonConfig)
+    axios.post('https://nodemysql12.duckdns.org:443/guardar-configuracion', jsonConfig)
       .then(response => {
         console.log('Configuración compartida con éxito');
 
