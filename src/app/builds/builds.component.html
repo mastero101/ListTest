@@ -182,7 +182,7 @@
     <mat-card>
       <mat-card-content>
         <div *ngIf="mostrarAdvertencia" class="advertencia">¡Advertencia Fuente Insuficiente!</div>
-        <span style="text-align: right; margin-right: 11.5em">
+        <span style="text-align: right; margin-right: 10em">
         Total: {{ sumaPrecios | currency }}
         </span>
         {{ sumaConsumo + " W" }}
@@ -192,3 +192,8 @@
     <button mat-raised-button color="primary" (click)="exportToText()">Exportar TXT</button>
     <button mat-raised-button color="primary" style="margin-top: -2em;" (click)="downloadPDF()">Exportar PDF</button>
     <button mat-raised-button color="primary" style="margin-top: -2em;" (click)="downloadCSV()">Exportar CSV</button>
+    <button mat-raised-button color="primary" style="margin-top: -2em;" (click)="compartirConfiguracion()">Compartir URL</button>
+      <mat-card class="compatir-container" *ngIf="mostrarCard">
+        <input matInput [value]="enlaceCompartir" readonly>
+        <button mat-raised-button color="primary" class="copy-button" (click)="copiarAlPortapapeles()">Copiar</button>
+      </mat-card>

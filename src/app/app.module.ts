@@ -25,6 +25,7 @@ import { PartsComponent } from './parts/parts.component';
 import { BuildsComponent } from './builds/builds.component';
 import { EditpartsComponent } from './editparts/editparts.component';
 import { ChatgptComponent } from './chatgpt/chatgpt.component';
+import { DetalleConfiguracionComponent } from './detalle-configuracion/detalle-configuracion.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ChatgptComponent } from './chatgpt/chatgpt.component';
     BuildsComponent,
     EditpartsComponent,
     ChatgptComponent,
+    DetalleConfiguracionComponent,
   ],
   imports: [
     BrowserModule,

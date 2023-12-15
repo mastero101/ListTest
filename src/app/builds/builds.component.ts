@@ -4,6 +4,9 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
 
+import { ActivatedRoute } from '@angular/router';
+import { Clipboard } from '@angular/cdk/clipboard';
+
 @Component({
   selector: 'app-builds',
   templateUrl: './builds.component.html',
@@ -83,8 +86,10 @@ export class BuildsComponent implements OnInit{
   elementoRecuperado2: any;
   mostrarAdvertencia: boolean = false;
   selectedImage: string | null = null;
+  enlaceCompartir: string = '';
+  mostrarCard: boolean = false;
   
-  constructor() {}
+  constructor(private route: ActivatedRoute, private clipboard: Clipboard) {}
 
   ngOnInit(): void {
     this.recoverid();
@@ -542,4 +547,103 @@ export class BuildsComponent implements OnInit{
   closeImage() {
     this.selectedImage = null;
   }
+
+  buildJSON(): any {
+    const config = {
+      procesador: {
+        modelo: this.modeloSeleccionado,
+        precio: this.precioSeleccionado,
+        tienda: this.tiendaSeleccionada,
+        consumo: this.consumoSeleccionado,
+        url: this.urlSeleccionada,
+        img: this.imgSeleccionada,
+      },
+      placaMadre: {
+        modelo: this.modeloSeleccionado2,
+        precio: this.precioSeleccionado2,
+        tienda: this.tiendaSeleccionada2,
+        consumo: this.consumoSeleccionado2,
+        url: this.urlSeleccionada2,
+        img: this.imgSeleccionada2,
+      },
+      ram: {
+        modelo: this.modeloSeleccionado3,
+        precio: this.precioSeleccionado3,
+        tienda: this.tiendaSeleccionada3,
+        consumo: this.consumoSeleccionado3,
+        url: this.urlSeleccionada3,
+        img: this.imgSeleccionada3,
+      },
+      almacenamiento: {
+        modelo: this.modeloSeleccionado4,
+        precio: this.precioSeleccionado4,
+        tienda: this.tiendaSeleccionada4,
+        consumo: this.consumoSeleccionado4,
+        url: this.urlSeleccionada4,
+        img: this.imgSeleccionada4,
+      },
+      enfriamiento: {
+        modelo: this.modeloSeleccionado5,
+        precio: this.precioSeleccionado5,
+        tienda: this.tiendaSeleccionada5,
+        consumo: this.consumoSeleccionado5,
+        url: this.urlSeleccionada5,
+        img: this.imgSeleccionada5,
+      },
+      fuente: {
+        modelo: this.modeloSeleccionado6,
+        precio: this.precioSeleccionado6,
+        tienda: this.tiendaSeleccionada6,
+        consumo: this.consumoSeleccionado6,
+        potencia: this.potenciaSeleccionada,
+        url: this.urlSeleccionada6,
+        img: this.imgSeleccionada6,
+      },
+      grafica: {
+        modelo: this.modeloSeleccionado7,
+        precio: this.precioSeleccionado7,
+        tienda: this.tiendaSeleccionada7,
+        consumo: this.consumoSeleccionado7,
+        url: this.urlSeleccionada7,
+        img: this.imgSeleccionada7,
+      },
+      gabinete: {
+        modelo: this.modeloSeleccionado8,
+        precio: this.precioSeleccionado8,
+        tienda: this.tiendaSeleccionada8,
+        consumo: this.consumoSeleccionado8,
+        url: this.urlSeleccionada8,
+        img: this.imgSeleccionada8,
+      }
+    };
+    console.log(JSON.stringify(config));
+    return config;
+  }
+
+  compartirConfiguracion() {
+    const jsonConfig = this.buildJSON();
+
+    axios.post('http://127.0.0.1:443/guardar-configuracion', jsonConfig)
+      .then(response => {
+        console.log('Configuración compartida con éxito');
+
+        if (response.data.url) {
+          this.enlaceCompartir = response.data.url;
+        } else {
+          console.error('La respuesta del servidor no incluye la URL esperada.');
+        }
+
+      })
+      .catch(error => {
+        console.error('Error al compartir configuración', error);
+
+      });
+    this.mostrarCard = true;
+  }
+
+  // Método para copiar al portapapeles
+  copiarAlPortapapeles() {
+    this.clipboard.copy(this.enlaceCompartir);
+  }
+
 }

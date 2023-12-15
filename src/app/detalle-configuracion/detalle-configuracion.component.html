@@ -1,0 +1,28 @@
+<tbody *ngIf="configData">
+  <h2>Detalles de Configuración</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Componente</th>
+        <th>Precio</th>
+        <th>Tienda</th>
+        <th>Consumo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let key of Object?.keys(configData)">
+        <td>{{ configData[key]?.modelo }}</td>
+        <td>{{ configData[key]?.precio | currency : "USD" : "symbol" }}</td>
+        <td><a [href]="configData[key].url" target="_blank">{{ configData[key].tienda }}</a></td>
+        <td style="text-align: right;">{{ configData[key]?.consumo }} W</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>{{ getTotalPrecio() | currency : "USD" : "symbol" }}</td>
+        <td></td>
+        <td style="text-align: right;">{{ getTotalConsumo()}} W</td>
+      </tr>
+    </tbody>
+  </table>
+</tbody>

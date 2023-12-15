@@ -5,11 +5,13 @@ import { PartsComponent } from './parts/parts.component';
 import { BuildsComponent } from './builds/builds.component';
 import { EditpartsComponent } from './editparts/editparts.component';
 import { ChatgptComponent } from './chatgpt/chatgpt.component';
+import { DetalleConfiguracionComponent } from './detalle-configuracion/detalle-configuracion.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'parts', component: PartsComponent },
   { path: 'builds', component: BuildsComponent },
+  { path: 'builds/:id', component: DetalleConfiguracionComponent },
   { path: 'edit', component: EditpartsComponent},
   { path: 'chatgpt', component: ChatgptComponent},
 ];
