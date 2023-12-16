@@ -18,7 +18,7 @@
         <td style="text-align: right;">{{ configData[key]?.consumo }} W</td>
       </tr>
       <tr>
-        <td></td>
+        <td>{{ formatFechaHora(fechaHora) }}</td>
         <td>{{ getTotalPrecio() | currency : "USD" : "symbol" }}</td>
         <td></td>
         <td style="text-align: right;">{{ getTotalConsumo()}} W</td>

@@ -13,6 +13,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 export class DetalleConfiguracionComponent {
   configData: any = {};
   Object = Object;
+  fechaHora: any;
 
   constructor(private route: ActivatedRoute, private navbarComponent: NavbarComponent) {}
 
@@ -31,9 +32,11 @@ export class DetalleConfiguracionComponent {
     // Haz una solicitud al servidor para recuperar la configuración basada en el ID
     axios.get(`https://nodemysql12.duckdns.org:443/recuperar-configuracion/${configId}`)
       .then(response => {
-        this.configData = response.data;
+        this.configData = response.data.configData;
+        this.fechaHora = response.data.fechaHora;
         this.sortConfigData();  // Llama a la función para ordenar los datos
         console.log(this.configData);
+        console.log(this.fechaHora);
       })
       .catch(error => {
         console.error('Error al recuperar configuración', error);
@@ -69,8 +72,15 @@ export class DetalleConfiguracionComponent {
     // Reemplaza el objeto original con el objeto ordenado
     this.configData = sortedConfigData;
   }
-  
 
+  formatFechaHora(fechaHora: string): string {
+    const fecha = new Date(fechaHora);
+    const formatoFecha = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear().toString().slice(-2)}`;
+    const formatoHora = `${fecha.getHours()}:${(fecha.getMinutes() < 10 ? '0' : '') + fecha.getMinutes()}`;
+
+    return `${formatoFecha} ${formatoHora}`;
+  }
+  
   getTotalPrecio(): number {
     let total = 0;
     if (this.configData) {
