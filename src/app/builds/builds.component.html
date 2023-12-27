@@ -189,8 +189,11 @@
       </mat-card-content>
     </mat-card>
     <br>
-    <button mat-raised-button color="primary" (click)="exportToText()">Exportar TXT</button>
-    <button mat-raised-button color="primary" style="margin-top: -2em;" (click)="downloadPDF()">Exportar PDF</button>
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="exportToText()">Exportar TXT</button>
+      <input type="checkbox" [(ngModel)]="todasLasTiendasSeleccionadas" title="Mostrar todas las tiendas">
+    </div>
+    <button mat-raised-button color="primary" style="margin-top: -3em;" (click)="downloadPDF()">Exportar PDF</button>
     <button mat-raised-button color="primary" style="margin-top: -2em;" (click)="downloadCSV()">Exportar CSV</button>
     <button mat-raised-button color="primary" style="margin-top: -2em;" (click)="compartirConfiguracion()">Compartir URL</button>
       <mat-card class="compatir-container" *ngIf="mostrarCard">

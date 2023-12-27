@@ -89,6 +89,7 @@ export class BuildsComponent implements OnInit{
   selectedImage: string | null = null;
   enlaceCompartir: string = '';
   mostrarCard: boolean = false;
+  todasLasTiendasSeleccionadas: boolean = true;
   
   constructor(private route: ActivatedRoute, private clipboard: Clipboard, private navbarComponent: NavbarComponent) {}
 
@@ -456,25 +457,48 @@ export class BuildsComponent implements OnInit{
   }
 
   exportToText() {
-    const text = `Procesador: ${this.modeloSeleccionado}, $${this.precioSeleccionado}, ${this.tiendaSeleccionada}`;
-    const text2 = `Placa Madre: ${this.modeloSeleccionado2}, $${this.precioSeleccionado2}, ${this.tiendaSeleccionada2}`;
-    const text3 = `Ram: ${this.modeloSeleccionado3}, $${this.precioSeleccionado3}, ${this.tiendaSeleccionada3}`;
-    const text4 = `Almacenamiento: ${this.modeloSeleccionado4}, $${this.precioSeleccionado4}, ${this.tiendaSeleccionada4}`;
-    const text5 = `Enfriamiento: ${this.modeloSeleccionado5}, $${this.precioSeleccionado5}, ${this.tiendaSeleccionada5}`;
-    const text6 = `Fuente: ${this.modeloSeleccionado6}, $${this.precioSeleccionado6}, ${this.tiendaSeleccionada6}`;
-    const text7 = `Grafica: ${this.modeloSeleccionado7}, $${this.precioSeleccionado7}, ${this.tiendaSeleccionada7}`;
-    const text8 = `Gabinete: ${this.modeloSeleccionado8}, $${this.precioSeleccionado8}, ${this.tiendaSeleccionada8}`;
-    const text9 = `--------------------------------------------------------------------`;
-    const text10 = `Total: $${this.sumaPrecios}`
-    const text11 = `Consumo: ${this.sumaConsumo} W`
-    const allText = [text, text2, text3, text4, text5, text6, text7, text8,text9, text10, text11].join('\n\n');
-    const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(allText));
-    element.setAttribute('download', ('Cotizacion' + ' ' + (this.sumaPrecios / 1000).toFixed(0) + 'K' + '.txt'));
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+    if (this.todasLasTiendasSeleccionadas) {
+      const text = `Procesador: ${this.modeloSeleccionado}, $${this.precioSeleccionado}, ${this.tiendaSeleccionada}`;
+      const text2 = `Placa Madre: ${this.modeloSeleccionado2}, $${this.precioSeleccionado2}, ${this.tiendaSeleccionada2}`;
+      const text3 = `Ram: ${this.modeloSeleccionado3}, $${this.precioSeleccionado3}, ${this.tiendaSeleccionada3}`;
+      const text4 = `Almacenamiento: ${this.modeloSeleccionado4}, $${this.precioSeleccionado4}, ${this.tiendaSeleccionada4}`;
+      const text5 = `Enfriamiento: ${this.modeloSeleccionado5}, $${this.precioSeleccionado5}, ${this.tiendaSeleccionada5}`;
+      const text6 = `Fuente: ${this.modeloSeleccionado6}, $${this.precioSeleccionado6}, ${this.tiendaSeleccionada6}`;
+      const text7 = `Grafica: ${this.modeloSeleccionado7}, $${this.precioSeleccionado7}, ${this.tiendaSeleccionada7}`;
+      const text8 = `Gabinete: ${this.modeloSeleccionado8}, $${this.precioSeleccionado8}, ${this.tiendaSeleccionada8}`;
+      const text9 = `--------------------------------------------------------------------`;
+      const text10 = `Total: $${this.sumaPrecios}`
+      const text11 = `Consumo: ${this.sumaConsumo} W`
+      const allText = [text, text2, text3, text4, text5, text6, text7, text8,text9, text10, text11].join('\n\n');
+      const element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(allText));
+      element.setAttribute('download', ('Cotizacion' + ' ' + (this.sumaPrecios / 1000).toFixed(0) + 'K' + '.txt'));
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+    else {
+      const text = `Procesador: ${this.modeloSeleccionado}, $${this.precioSeleccionado}`;
+      const text2 = `Placa Madre: ${this.modeloSeleccionado2}, $${this.precioSeleccionado2}`;
+      const text3 = `Ram: ${this.modeloSeleccionado3}, $${this.precioSeleccionado3}`;
+      const text4 = `Almacenamiento: ${this.modeloSeleccionado4}, $${this.precioSeleccionado4}`;
+      const text5 = `Enfriamiento: ${this.modeloSeleccionado5}, $${this.precioSeleccionado5}`;
+      const text6 = `Fuente: ${this.modeloSeleccionado6}, $${this.precioSeleccionado6}`;
+      const text7 = `Grafica: ${this.modeloSeleccionado7}, $${this.precioSeleccionado7}`;
+      const text8 = `Gabinete: ${this.modeloSeleccionado8}, $${this.precioSeleccionado8}`;
+      const text9 = `--------------------------------------------------------------------`;
+      const text10 = `Total: $${this.sumaPrecios}`
+      const text11 = `Consumo: ${this.sumaConsumo} W`
+      const allText = [text, text2, text3, text4, text5, text6, text7, text8,text9, text10, text11].join('\n\n');
+      const element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(allText));
+      element.setAttribute('download', ('Cotizacion' + ' ' + (this.sumaPrecios / 1000).toFixed(0) + 'K' + '.txt'));
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
   }
 
   downloadPDF(){
