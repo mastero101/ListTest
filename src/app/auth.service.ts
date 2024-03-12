@@ -5,8 +5,8 @@ import axios from 'axios';
   providedIn: 'root'
 })
 export class AuthService {
-  private auth_Url2 = 'https://masteros.cloud';
-  private auth_Url = 'http://localhost:3000'; // Cambia esta URL con la URL real de tu backend
+  private auth_Url = 'https://nodemysql12.duckdns.org:443';
+  private auth_Url2 = 'http://localhost:3000'; // Cambia esta URL con la URL real de tu backend
 
   constructor() { }
 

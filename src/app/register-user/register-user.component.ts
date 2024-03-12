@@ -11,8 +11,8 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class RegisterUserComponent implements OnInit {
   registrationForm: FormGroup = new FormGroup({});
-  endpoint2 = 'https://masteros.cloud'
-  endpoint = 'http://localhost:3000'
+  endpoint = 'https://nodemysql12.duckdns.org:443'
+  endpoint2 = 'http://localhost:3000'
 
   constructor(private formBuilder: FormBuilder, private router: Router) { }
 

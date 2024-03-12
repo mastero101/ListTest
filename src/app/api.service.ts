@@ -5,8 +5,8 @@ import axios from 'axios';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl2 = 'https://masteros.cloud';
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'https://nodemysql12.duckdns.org:443';
+  private baseUrl2 = 'http://localhost:3000';
 
   async getUsuarios() {
     const url = `${this.baseUrl}/usuarios`;

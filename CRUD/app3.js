@@ -31,7 +31,7 @@ const options = {
                     cert: fs.readFileSync('/etc/letsencrypt/live/nodemysql12.duckdns.org-0004/fullchain.pem')
                 };
 
-  
+                
 
 const connection = mysql.createConnection(dbConfig);
 
