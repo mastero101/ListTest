@@ -12,7 +12,7 @@ dotenv.config();
 
 const jwtSecret = process.env.JWT_SECRET;
 const mailersend_apikey = process.env.MAILERSEND_API
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 443;
 
 const app = express();
 
