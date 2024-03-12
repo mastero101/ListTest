@@ -25,12 +25,12 @@ const dbConfig = {
     ssl: process.env.DB_SSL === 'true'
 };
 
-/*
+
 const options = {
                     key: fs.readFileSync('/etc/letsencrypt/live/nodemysql12.duckdns.org-0004/privkey.pem'),
                     cert: fs.readFileSync('/etc/letsencrypt/live/nodemysql12.duckdns.org-0004/fullchain.pem')
                 };
-*/
+
   
 
 const connection = mysql.createConnection(dbConfig);
@@ -405,12 +405,13 @@ app.delete('/:id', (req, res) => {
     });
 });
 
-http.createServer(app).listen(port, () => {
+
+https.createServer(options, app).listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}.`);
 });
 
 /*
-https.createServer(options, app).listen(port, () => {
+http.createServer(app).listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}.`);
 });
 */
