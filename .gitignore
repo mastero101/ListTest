@@ -5,6 +5,8 @@
 /tmp
 /out-tsc
 /bazel-out
+/CRUD/node_modules
+/CRUD/.env
 
 # Node
 /node_modules

@@ -20,23 +20,27 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 
-import { RegisterComponent } from './register/register.component';
 import { PartsComponent } from './parts/parts.component';
 import { BuildsComponent } from './builds/builds.component';
 import { EditpartsComponent } from './editparts/editparts.component';
 import { ChatgptComponent } from './chatgpt/chatgpt.component';
 import { DetalleConfiguracionComponent } from './detalle-configuracion/detalle-configuracion.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileUserComponent } from './profile-user/profile-user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    RegisterComponent,
     PartsComponent,
     BuildsComponent,
     EditpartsComponent,
     ChatgptComponent,
     DetalleConfiguracionComponent,
+    RegisterUserComponent,
+    LoginComponent,
+    ProfileUserComponent,
   ],
   imports: [
     BrowserModule,

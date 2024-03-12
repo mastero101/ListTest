@@ -1,0 +1,67 @@
+<div id="main-content" class="main-content">
+    
+    <div class="padding">
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" id="nombre">
+          <mat-error *ngIf="registrationForm.get('nombre')?.invalid && registrationForm.get('nombre')?.touched">
+            El nombre es requerido.
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Imagen</mat-label>
+          <input matInput formControlName="img" id="img">
+          <mat-error *ngIf="registrationForm.get('img')?.invalid && registrationForm.get('img')?.touched">
+            La imagen es requerida.
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>ID de Usuario</mat-label>
+          <input matInput formControlName="id_usuario" id="id_usuario" readonly>
+          <mat-error *ngIf="registrationForm.get('id_usuario')?.invalid && registrationForm.get('id_usuario')?.touched">
+            El ID de usuario es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Contraseña</mat-label>
+            <input matInput formControlName="password" id="password">
+            <mat-error *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">
+              La contraseña es requerida.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Direccion</mat-label>
+            <input matInput formControlName="direccion" id="direccion" >
+            <mat-error *ngIf="registrationForm.get('direccion')?.invalid && registrationForm.get('direccion')?.touched">
+              La direccion es requerida.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Telefono</mat-label>
+            <input matInput formControlName="telefono" id="telefono">
+            <mat-error *ngIf="registrationForm.get('telefono')?.invalid && registrationForm.get('telefono')?.touched">
+              El telefono es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Correo</mat-label>
+            <input matInput formControlName="correo" id="correo">
+            <mat-error *ngIf="registrationForm.get('correo')?.invalid && registrationForm.get('correo')?.touched">
+              El correo es requerido.
+            </mat-error>
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" style="margin-top: 2em;" type="submit" [disabled]="!registrationForm.valid">
+          Registrar
+        </button>
+      </form>
+    </div>
+  </div>
+  

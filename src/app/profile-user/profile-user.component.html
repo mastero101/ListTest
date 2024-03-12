@@ -1,0 +1,25 @@
+<mat-card id="main-content" class="main-content">
+    <mat-card-header>
+      <div class="profile-image">
+        <img [src]="img" alt="Foto de perfil" />
+      </div>
+      <mat-card-subtitle>Usuario</mat-card-subtitle>
+      <mat-card-title>{{ id_usuario }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Nombre:</mat-label>
+        <input matInput [value]="nombre" readonly>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Dirección:</mat-label>
+        <input matInput [value]="direccion" readonly>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Teléfono:</mat-label>
+        <input matInput [value]="telefono" readonly>
+      </mat-form-field>
+    </mat-card-content>
+    <button mat-raised-button color="warn" style="margin-top: 1em;" (click)="logout()">Cerrar sesión</button>
+  </mat-card>
+  

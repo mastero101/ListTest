@@ -90,10 +90,15 @@ export class BuildsComponent implements OnInit{
   enlaceCompartir: string = '';
   mostrarCard: boolean = false;
   todasLasTiendasSeleccionadas: boolean = true;
+  endpoint: any;
+  endpoint2: any;
   
   constructor(private route: ActivatedRoute, private clipboard: Clipboard, private navbarComponent: NavbarComponent) {}
 
   ngOnInit(): void {
+    this.endpoint2 = 'http://localhost:3000';
+    this.endpoint = 'https://nodemysql12.duckdns.org:443';
+    
     this.recoverid();
     this.recoverProcesadores();
     this.recovertMotherboard();
@@ -108,7 +113,7 @@ export class BuildsComponent implements OnInit{
 
   recoverid() {
     axios
-      .get(`https://nodemysql12.duckdns.org:443/`)
+      .get(this.endpoint)
       .then((response) => {
         this.idRecuperado = response.data;
         this.idInit = response.data[response.data.length - 1].id;
@@ -123,7 +128,7 @@ export class BuildsComponent implements OnInit{
 
   recoverProcesadores() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/procesadores')
+      .get(this.endpoint+'/procesadores')
       .then((response) => {
         this.procesadores = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; img: any; }) => ({
@@ -166,7 +171,7 @@ export class BuildsComponent implements OnInit{
 
   recovertMotherboard() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/motherboards')
+      .get(this.endpoint+'/motherboards')
       .then((response) => {
         this.motherboard = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; rams: any; img: any;}) => ({
@@ -208,7 +213,7 @@ export class BuildsComponent implements OnInit{
 
   recoverRam() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/rams')
+      .get(this.endpoint+'/rams')
       .then((response) => {
         this.ram = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any ;consumo: number; socket: any; rams: any; img: any; }) => ({
@@ -245,7 +250,7 @@ export class BuildsComponent implements OnInit{
 
   recoverAlmacenamiento() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/almacenamientos')
+      .get(this.endpoint+'/almacenamientos')
       .then((response) => {
         this.almacenamiento = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any; }) => ({
@@ -282,7 +287,7 @@ export class BuildsComponent implements OnInit{
 
   recoverDisipador() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/disipadores')
+      .get(this.endpoint+'/disipadores')
       .then((response) => {
         this.disipador = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any;}) => ({
@@ -319,7 +324,7 @@ export class BuildsComponent implements OnInit{
 
   recoverFuente() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/fuentes')
+      .get(this.endpoint+'/fuentes')
       .then((response) => {
         this.fuentedepoder = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; potencia: number; img: any;}) => ({
@@ -359,7 +364,7 @@ export class BuildsComponent implements OnInit{
 
   recoverGrafica() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/graficas')
+      .get(this.endpoint+'/graficas')
       .then((response) => {
         this.grafica = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any;}) => ({
@@ -396,7 +401,7 @@ export class BuildsComponent implements OnInit{
 
   recoverGabinetes() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/gabinetes')
+      .get(this.endpoint+'/gabinetes')
       .then((response) => {
         this.gabinetes = response.data.map((item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any;}) => ({
           modelo: item.modelo,
@@ -649,7 +654,7 @@ export class BuildsComponent implements OnInit{
   compartirConfiguracion() {
     const jsonConfig = this.buildJSON();
 
-    axios.post('https://nodemysql12.duckdns.org:443/guardar-configuracion', jsonConfig)
+    axios.post(this.endpoint+'/guardar-configuracion', jsonConfig)
       .then(response => {
         console.log('Configuración compartida con éxito');
 

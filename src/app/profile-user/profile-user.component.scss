@@ -1,0 +1,35 @@
+.main-content {
+    margin-top: 5em;
+  }
+
+mat-form-field {
+  width: 90%;
+  margin-left: 1em;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.profile-image {
+    display: flex;
+    margin-left: 15%;
+    margin-top: 5em;
+    margin-bottom: 2em;
+  
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  button {
+    margin-left: 5%;
+    margin-bottom: 5%;
+    max-width: 90%;
+    @media screen and (min-width: 768px) {
+        margin-left: 50em;
+    }
+  }
