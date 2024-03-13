@@ -1,4 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,8 +10,14 @@ export class NavbarComponent{
   opened = false;
   darkTheme = false;
   showToggleButton = true;
+  isAuthenticated = false;
 
-  constructor(private changeDetector: ChangeDetectorRef,) {}
+  constructor(private changeDetector: ChangeDetectorRef, private authService: AuthService) {
+    // Suscribirse al cambio en el estado de autenticación
+    this.authService.isAuthenticated.subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+    });
+  }
 
   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ApiService } from '../api.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-profile-user',
@@ -16,7 +17,7 @@ export class ProfileUserComponent implements OnInit{
   direccion: any;
   img: any;
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(private apiService: ApiService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.getUsuarios();
@@ -57,11 +58,7 @@ export class ProfileUserComponent implements OnInit{
   }
 
   logout() {
-    // Eliminar el token JWT del almacenamiento local
-    localStorage.removeItem('token');
-    localStorage.removeItem('id_usuario');
-    
-    // Redirigir al usuario a la página de inicio de sesión
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }
