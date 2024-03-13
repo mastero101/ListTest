@@ -1,6 +1,10 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../auth.service';
 
+import { Router } from '@angular/router';
+
+import { ApiService } from '../api.service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,7 +16,7 @@ export class NavbarComponent{
   showToggleButton = true;
   isAuthenticated = false;
 
-  constructor(private changeDetector: ChangeDetectorRef, private authService: AuthService) {
+  constructor(private changeDetector: ChangeDetectorRef, private router: Router, private authService: AuthService) {
     // Suscribirse al cambio en el estado de autenticación
     this.authService.isAuthenticated.subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;
@@ -29,6 +33,11 @@ export class NavbarComponent{
 
   toggleTheme() {
     this.darkTheme = !this.darkTheme;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }

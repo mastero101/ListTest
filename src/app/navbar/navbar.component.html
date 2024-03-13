@@ -10,9 +10,12 @@
       <a mat-list-item routerLink="/edit" *ngIf="isAuthenticated">Editar Partes</a>
       <a mat-list-item routerLink="/builds">Consultar Partes</a>
     </mat-nav-list>
-    <button mat-icon-button (click)="toggleTheme()" class="toggle-theme-button">
-      <mat-icon>{{ darkTheme ? 'brightness_7' : 'brightness_4' }}</mat-icon>
-    </button>   
+    <button class="close-session" mat-raised-button color="warn" *ngIf="isAuthenticated" (click)="logout()">
+      Cerrar sesión
+    </button>
+      <button class="toggle-theme-button" mat-icon-button (click)="toggleTheme()" >
+        <mat-icon>{{ darkTheme ? 'brightness_7' : 'brightness_4' }}</mat-icon>
+      </button>   
   </mat-sidenav>
   <mat-sidenav-content>
     <button mat-icon-button (click)="toggleSidebar()" class="toggle-button" *ngIf="showToggleButton" [disabled]="!showToggleButton">
