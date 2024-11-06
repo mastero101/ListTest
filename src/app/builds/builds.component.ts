@@ -87,6 +87,15 @@ export class BuildsComponent implements OnInit{
   elementoRecuperado2: any;
   mostrarAdvertencia: boolean = false;
   selectedImage: string | null = null;
+  zoom: number = 1;
+  minZoom: number = 0.5;
+  maxZoom: number = 3;
+  zoomStep: number = 0.1;
+  panX: number = 0;
+  panY: number = 0;
+  isPanning: boolean = false;
+  lastX: number = 0;
+  lastY: number = 0;
   enlaceCompartir: string = '';
   mostrarCard: boolean = false;
   todasLasTiendasSeleccionadas: boolean = true;
@@ -573,10 +582,12 @@ export class BuildsComponent implements OnInit{
 
   openImage(imageUrl: string) {
     this.selectedImage = imageUrl;
+    this.resetZoom();
   }
   
   closeImage() {
     this.selectedImage = null;
+    this.resetZoom();
   }
 
   buildJSON(): any {
@@ -675,6 +686,57 @@ export class BuildsComponent implements OnInit{
   // Método para copiar al portapapeles
   copiarAlPortapapeles() {
     this.clipboard.copy(this.enlaceCompartir);
+  }
+
+  zoomIn() {
+    if (this.zoom < this.maxZoom) {
+      this.zoom += this.zoomStep;
+    }
+  }
+
+  zoomOut() {
+    if (this.zoom > this.minZoom) {
+      this.zoom -= this.zoomStep;
+    }
+  }
+
+  resetZoom() {
+    this.zoom = 1;
+    this.panX = 0;
+    this.panY = 0;
+  }
+
+  onMouseWheel(event: WheelEvent) {
+    event.preventDefault();
+    const delta = event.deltaY * -0.01;
+    const newZoom = this.zoom + delta;
+    
+    if (newZoom >= this.minZoom && newZoom <= this.maxZoom) {
+      this.zoom = newZoom;
+    }
+  }
+
+  startPan(event: MouseEvent) {
+    this.isPanning = true;
+    this.lastX = event.clientX;
+    this.lastY = event.clientY;
+  }
+
+  pan(event: MouseEvent) {
+    if (!this.isPanning) return;
+    
+    const deltaX = event.clientX - this.lastX;
+    const deltaY = event.clientY - this.lastY;
+    
+    this.panX += deltaX;
+    this.panY += deltaY;
+    
+    this.lastX = event.clientX;
+    this.lastY = event.clientY;
+  }
+
+  endPan() {
+    this.isPanning = false;
   }
 
 }

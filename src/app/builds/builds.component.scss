@@ -1,103 +1,306 @@
-mat-card {
-    margin-top: 1em;
-    margin-bottom: 20px;
-    margin-left: 1em;
-    margin-right: 1.2em;
-    margin: 1em;
-    padding: 1em;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// Variables
+$primary-color: #5c3d99;
+$secondary-color: #f8f9fa;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$border-radius: 8px;
+$spacing-unit: 1rem;
+
+// Contenedor principal
+.build-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-unit * 2;
+  background-color: $secondary-color;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1em;
+// Sección de componentes
+.components-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: $spacing-unit * 1.5;
+  margin-bottom: $spacing-unit * 2;
+}
+
+.component-item {
+  background: white;
+  border-radius: $border-radius;
+  padding: $spacing-unit;
+  box-shadow: 0 2px 8px $shadow-color;
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: $spacing-unit;
   }
 
-mat-card.first {
-    margin-top: 4.5em;
-}
-
-mat-option.extend {
-    max-height: fit-content;
-    max-width: fit-content;
-    width: fit-content;
-    height: fit-content;
-}
-
-button {
-    margin-top: 1em;
-    margin-left: 9.5em;
-    margin-bottom: 3.5em;
-    @media screen and (min-width: 768px) {
-        margin-left: 50em;
-    }
-}
-
-button.export {
-    margin-top: 0.1em;
-}
-
-.advertencia {
-    margin-bottom: 1em;
-    background-color: red;
-    color: white;
-    font-weight: bold;
-    padding: 5px;
-    text-align: center;
-  }
-
-  .card-container {
+  .component-details {
     display: flex;
-    margin-top: -2em;
+    gap: $spacing-unit;
+    margin-top: -1.5em;
+
+    .component-image {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $secondary-color;
+      border-radius: $border-radius;
+      
+      img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+        cursor: pointer;
+      }
+    }
+
+    .component-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
+
+      .price {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: $primary-color;
+      }
+
+      .watts {
+        color: #666;
+      }
+
+      .store-link {
+        color: $primary-color;
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// Sección de resumen
+.summary-section {
+  margin: $spacing-unit * 2 0;
+
+  .summary-card {
+    background: white;
+    border-radius: $border-radius;
+    padding: $spacing-unit;
+    box-shadow: 0 2px 8px $shadow-color;
+
+    .warning-message {
+      color: #dc3545;
+      font-weight: bold;
+      margin-bottom: $spacing-unit;
+      text-align: center;
+    }
+
+    .totals {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2rem;
+
+      .total-price {
+        font-weight: bold;
+        color: $primary-color;
+      }
+
+      .total-watts {
+        color: #666;
+      }
+    }
+  }
+}
+
+// Sección de acciones
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-unit * 1.5;
+  margin-top: $spacing-unit * 2;
+
+  .stores-toggle {
+    margin-bottom: $spacing-unit;
   }
 
-  .full-size-image-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8); /* Fondo semitransparente */
+  .export-buttons {
+    display: flex;
+    gap: $spacing-unit;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: $spacing-unit;
+
+    button {
+      min-width: 150px;
+      padding: $spacing-unit * 0.75;
+      border-radius: 25px;
+      
+      mat-icon {
+        margin-right: $spacing-unit * 0.5;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        transition: all 0.2s ease;
+      }
+    }
+  }
+
+  .share-card {
+    width: 100%;
+    max-width: 500px;
+    margin: $spacing-unit auto;
+    padding: $spacing-unit;
+    
+    mat-form-field {
+      width: 100%;
+      
+      input {
+        padding: $spacing-unit * 0.5;
+      }
+      
+      button {
+        margin-left: $spacing-unit * 0.5;
+      }
+    }
+  }
+}
+
+/* Estilos responsive */
+@media (max-width: 768px) {
+  .build-container {
+    padding: 1rem;
+  }
+  
+  .actions-section {
+    padding: 0 $spacing-unit;
+    
+    .export-buttons {
+      flex-direction: column;
+      width: 100%;
+      
+      button {
+        width: 100%;
+      }
+    }
+    
+    .share-card {
+      margin: $spacing-unit;
+    }
+  }
+  
+  .totals-card {
+    margin: 1rem;
+    
+    .totals-content {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+    }
+  }
+}
+  
+// Añadir al archivo CSS existente
+.selected-image-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  max-width: 90vw;
+  max-height: 90vh;
+  background: rgba(0, 0, 0, 0.9);
+  
+  .full-size-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+  }
+}
+  
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 90vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: $primary-color;
+    color: white;
+
+    h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+  }
+
+  .image-container {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    background: #f5f5f5;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Asegura que esté por encima de otros elementos */
-    margin-right: -5em;
-    width: 23.8em; 
-    height: 30em;
+    cursor: move;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.1s ease;
+      will-change: transform;
+    }
   }
 
-  .compartir-container {
-    margin-top: -5em;
-  }
-  
-  input {
-    margin-top: 0.15em;
-    margin-left: 0.6em;
-    width: 95%;
-  }
-  
-  button.copy-button {
-    width: 20%;
-  }
-
-  .button-container {
+  .modal-controls {
     display: flex;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 1em;
+    padding: 1rem;
+    gap: 1rem;
+    background-color: white;
+    border-top: 1px solid #eee;
+
+    span {
+      min-width: 60px;
+      text-align: center;
+    }
+
+    button {
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+      }
+    }
   }
-  
-  .button-container button {
-    white-space: nowrap;
-    margin-right: -3em; 
-    min-width: 9em;
-  }
-  
-  .button-container input {
-    margin-top: -2.5em;
-    margin-left: -3em;
-  }
+}
   
   
