@@ -21,59 +21,144 @@
   <!-- Sección de Recomendaciones -->
   <div class="recommendations-section">
     <h2>Configuraciones Recomendadas</h2>
-    
+
     <div *ngIf="cargando" class="loading">
       <p>Cargando recomendaciones...</p>
     </div>
 
     <div class="recommendations-grid" *ngIf="!cargando">
+
+      <!-- Gama de Entrada -->
+      <div class="build-card" *ngIf="configuracionEntrada">
+        <div class="build-category entry">
+          <span class="category-tag">Gama de Entrada</span>
+          <span class="price-tag">{{ calcularPrecioTotal(configuracionEntrada.configData) | currency:'USD':'symbol'
+            }}</span>
+        </div>
+        <div class="build-content">
+          <div class="components-list">
+            <div class="component-item" *ngIf="configuracionEntrada.configData.procesador">
+              <i class="fas fa-microchip"></i>
+              <span>{{ configuracionEntrada.configData.procesador.modelo }}</span>
+              <span class="component-price">{{ configuracionEntrada.configData.procesador.precio |
+                currency:'USD':'symbol' }}</span>
+            </div>
+            <div class="component-item" *ngIf="configuracionEntrada.configData.placaMadre">
+              <i class="fas fa-laptop-medical"></i>
+              <span>{{ configuracionEntrada.configData.placaMadre.modelo }}</span>
+              <span class="component-price">{{ configuracionEntrada.configData.placaMadre.precio |
+                currency:'USD':'symbol' }}</span>
+            </div>
+            <div class="component-item" *ngIf="configuracionEntrada.configData.ram">
+              <i class="fas fa-memory"></i>
+              <span>{{ configuracionEntrada.configData.ram.modelo }}</span>
+              <span class="component-price">{{ configuracionEntrada.configData.ram.precio | currency:'USD':'symbol'
+                }}</span>
+            </div>
+            <div class="component-item" *ngIf="configuracionEntrada.configData.almacenamiento">
+              <i class="fas fa-hdd"></i>
+              <span>{{ configuracionEntrada.configData.almacenamiento.modelo }}</span>
+              <span class="component-price">{{ configuracionEntrada.configData.almacenamiento.precio |
+                currency:'USD':'symbol' }}</span>
+            </div>
+            <div class="component-item" *ngIf="configuracionEntrada.configData.enfriamiento">
+              <i class="fas fa-fan"></i>
+              <span>{{ configuracionEntrada.configData.enfriamiento.modelo }}</span>
+              <span class="component-price">{{ configuracionEntrada.configData.enfriamiento.precio |
+                currency:'USD':'symbol' }}</span>
+            </div>
+            <div class="component-item" *ngIf="configuracionEntrada.configData.fuente">
+              <i class="fas fa-plug"></i>
+              <span>{{ configuracionEntrada.configData.fuente.modelo }}</span>
+              <span class="component-price">{{ configuracionEntrada.configData.fuente.precio | currency:'USD':'symbol'
+                }}</span>
+            </div>
+            <div class="component-item" *ngIf="configuracionEntrada.configData.grafica">
+              <i class="fas fa-desktop"></i>
+              <span>{{ configuracionEntrada.configData.grafica.modelo }}</span>
+              <span class="component-price">{{ configuracionEntrada.configData.grafica.precio | currency:'USD':'symbol'
+                }}</span>
+            </div>
+            <div class="component-item" *ngIf="configuracionEntrada.configData.gabinete">
+              <i class="fas fa-box"></i>
+              <span>{{ configuracionEntrada.configData.gabinete.modelo }}</span>
+              <span class="component-price">{{ configuracionEntrada.configData.gabinete.precio | currency:'USD':'symbol'
+                }}</span>
+            </div>
+          </div>
+          <div class="build-footer">
+            <div class="build-info">
+              <div class="power-consumption">
+                <i class="fas fa-bolt"></i>
+                Consumo: {{ calcularConsumoTotal(configuracionEntrada.configData) }}W
+              </div>
+              <div class="total-price">
+                Total: {{ calcularPrecioTotal(configuracionEntrada.configData) | currency:'USD':'symbol' }}
+              </div>
+            </div>
+            <button class="btn-view" [routerLink]="['/builds', configuracionEntrada.configId]">
+              Ver configuración completa
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Gama Baja -->
       <div class="build-card" *ngIf="configuracionBaja">
         <div class="build-category">
-          <span class="category-tag">Gama Básica</span>
-          <span class="price-tag">{{ calcularPrecioTotal(configuracionBaja.configData) | currency:'USD':'symbol' }}</span>
+          <span class="category-tag">Gama Baja</span>
+          <span class="price-tag">{{ calcularPrecioTotal(configuracionBaja.configData) | currency:'USD':'symbol'
+            }}</span>
         </div>
         <div class="build-content">
           <div class="components-list">
             <div class="component-item" *ngIf="configuracionBaja.configData.procesador">
               <i class="fas fa-microchip"></i>
               <span>{{ configuracionBaja.configData.procesador.modelo }}</span>
-              <span class="component-price">{{ configuracionBaja.configData.procesador.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionBaja.configData.procesador.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionBaja.configData.placaMadre">
-                <i class="fas fa-laptop-medical"></i>
-                <span>{{ configuracionBaja.configData.placaMadre.modelo }}</span>
-                <span class="component-price">{{ configuracionBaja.configData.placaMadre.precio | currency:'USD':'symbol' }}</span>
+              <i class="fas fa-laptop-medical"></i>
+              <span>{{ configuracionBaja.configData.placaMadre.modelo }}</span>
+              <span class="component-price">{{ configuracionBaja.configData.placaMadre.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionBaja.configData.ram">
-                <i class="fas fa-memory"></i>
-                <span>{{ configuracionBaja.configData.ram.modelo }}</span>
-                <span class="component-price">{{ configuracionBaja.configData.ram.precio | currency:'USD':'symbol' }}</span>
+              <i class="fas fa-memory"></i>
+              <span>{{ configuracionBaja.configData.ram.modelo }}</span>
+              <span class="component-price">{{ configuracionBaja.configData.ram.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionBaja.configData.almacenamiento">
-                <i class="fas fa-hdd"></i>
-                <span>{{ configuracionBaja.configData.almacenamiento.modelo }}</span>
-                <span class="component-price">{{ configuracionBaja.configData.almacenamiento.precio | currency:'USD':'symbol' }}</span>
+              <i class="fas fa-hdd"></i>
+              <span>{{ configuracionBaja.configData.almacenamiento.modelo }}</span>
+              <span class="component-price">{{ configuracionBaja.configData.almacenamiento.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionBaja.configData.enfriamiento">
-                <i class="fas fa-fan"></i>
-                <span>{{ configuracionBaja.configData.enfriamiento.modelo }}</span>
-                <span class="component-price">{{ configuracionBaja.configData.enfriamiento.precio | currency:'USD':'symbol' }}</span>
+              <i class="fas fa-fan"></i>
+              <span>{{ configuracionBaja.configData.enfriamiento.modelo }}</span>
+              <span class="component-price">{{ configuracionBaja.configData.enfriamiento.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionBaja.configData.fuente">
-                <i class="fas fa-plug"></i>
-                <span>{{ configuracionBaja.configData.fuente.modelo }}</span>
-                <span class="component-price">{{ configuracionBaja.configData.fuente.precio | currency:'USD':'symbol' }}</span>
+              <i class="fas fa-plug"></i>
+              <span>{{ configuracionBaja.configData.fuente.modelo }}</span>
+              <span class="component-price">{{ configuracionBaja.configData.fuente.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionBaja.configData.grafica">
               <i class="fas fa-desktop"></i>
               <span>{{ configuracionBaja.configData.grafica.modelo }}</span>
-              <span class="component-price">{{ configuracionBaja.configData.grafica.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionBaja.configData.grafica.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionBaja.configData.gabinete">
-                <i class="fas fa-box"></i>
-                <span>{{ configuracionBaja.configData.gabinete.modelo }}</span>
-                <span class="component-price">{{ configuracionBaja.configData.gabinete.precio | currency:'USD':'symbol' }}</span>
+              <i class="fas fa-box"></i>
+              <span>{{ configuracionBaja.configData.gabinete.modelo }}</span>
+              <span class="component-price">{{ configuracionBaja.configData.gabinete.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
           </div>
           <div class="build-footer">
@@ -97,49 +182,58 @@
       <div class="build-card" *ngIf="configuracionMedia">
         <div class="build-category gaming">
           <span class="category-tag">Gama Media</span>
-          <span class="price-tag">{{ calcularPrecioTotal(configuracionMedia.configData) | currency:'USD':'symbol' }}</span>
+          <span class="price-tag">{{ calcularPrecioTotal(configuracionMedia.configData) | currency:'USD':'symbol'
+            }}</span>
         </div>
         <div class="build-content">
           <div class="components-list">
             <div class="component-item" *ngIf="configuracionMedia.configData.procesador">
               <i class="fas fa-microchip"></i>
               <span>{{ configuracionMedia.configData.procesador.modelo }}</span>
-              <span class="component-price">{{ configuracionMedia.configData.procesador.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionMedia.configData.procesador.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionMedia.configData.placaMadre">
               <i class="fas fa-laptop-medical"></i>
               <span>{{ configuracionMedia.configData.placaMadre.modelo }}</span>
-              <span class="component-price">{{ configuracionMedia.configData.placaMadre.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionMedia.configData.placaMadre.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionMedia.configData.ram">
               <i class="fas fa-memory"></i>
               <span>{{ configuracionMedia.configData.ram.modelo }}</span>
-              <span class="component-price">{{ configuracionMedia.configData.ram.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionMedia.configData.ram.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionMedia.configData.almacenamiento">
               <i class="fas fa-hdd"></i>
               <span>{{ configuracionMedia.configData.almacenamiento.modelo }}</span>
-              <span class="component-price">{{ configuracionMedia.configData.almacenamiento.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionMedia.configData.almacenamiento.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionMedia.configData.enfriamiento">
               <i class="fas fa-fan"></i>
               <span>{{ configuracionMedia.configData.enfriamiento.modelo }}</span>
-              <span class="component-price">{{ configuracionMedia.configData.enfriamiento.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionMedia.configData.enfriamiento.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionMedia.configData.fuente">
               <i class="fas fa-plug"></i>
               <span>{{ configuracionMedia.configData.fuente.modelo }}</span>
-              <span class="component-price">{{ configuracionMedia.configData.fuente.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionMedia.configData.fuente.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionMedia.configData.grafica">
               <i class="fas fa-desktop"></i>
               <span>{{ configuracionMedia.configData.grafica.modelo }}</span>
-              <span class="component-price">{{ configuracionMedia.configData.grafica.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionMedia.configData.grafica.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionMedia.configData.gabinete">
               <i class="fas fa-box"></i>
               <span>{{ configuracionMedia.configData.gabinete.modelo }}</span>
-              <span class="component-price">{{ configuracionMedia.configData.gabinete.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionMedia.configData.gabinete.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
           </div>
           <div class="build-footer">
@@ -163,49 +257,58 @@
       <div class="build-card" *ngIf="configuracionAlta">
         <div class="build-category premium">
           <span class="category-tag">Gama Alta</span>
-          <span class="price-tag">{{ calcularPrecioTotal(configuracionAlta.configData) | currency:'USD':'symbol' }}</span>
+          <span class="price-tag">{{ calcularPrecioTotal(configuracionAlta.configData) | currency:'USD':'symbol'
+            }}</span>
         </div>
         <div class="build-content">
           <div class="components-list">
             <div class="component-item" *ngIf="configuracionAlta.configData.procesador">
               <i class="fas fa-microchip"></i>
               <span>{{ configuracionAlta.configData.procesador.modelo }}</span>
-              <span class="component-price">{{ configuracionAlta.configData.procesador.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionAlta.configData.procesador.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionAlta.configData.placaMadre">
               <i class="fas fa-laptop-medical"></i>
               <span>{{ configuracionAlta.configData.placaMadre.modelo }}</span>
-              <span class="component-price">{{ configuracionAlta.configData.placaMadre.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionAlta.configData.placaMadre.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionAlta.configData.ram">
               <i class="fas fa-memory"></i>
               <span>{{ configuracionAlta.configData.ram.modelo }}</span>
-              <span class="component-price">{{ configuracionAlta.configData.ram.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionAlta.configData.ram.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionAlta.configData.almacenamiento">
               <i class="fas fa-hdd"></i>
               <span>{{ configuracionAlta.configData.almacenamiento.modelo }}</span>
-              <span class="component-price">{{ configuracionAlta.configData.almacenamiento.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionAlta.configData.almacenamiento.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionAlta.configData.enfriamiento">
               <i class="fas fa-fan"></i>
               <span>{{ configuracionAlta.configData.enfriamiento.modelo }}</span>
-              <span class="component-price">{{ configuracionAlta.configData.enfriamiento.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionAlta.configData.enfriamiento.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionAlta.configData.fuente">
               <i class="fas fa-plug"></i>
               <span>{{ configuracionAlta.configData.fuente.modelo }}</span>
-              <span class="component-price">{{ configuracionAlta.configData.fuente.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionAlta.configData.fuente.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionAlta.configData.grafica">
               <i class="fas fa-desktop"></i>
               <span>{{ configuracionAlta.configData.grafica.modelo }}</span>
-              <span class="component-price">{{ configuracionAlta.configData.grafica.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionAlta.configData.grafica.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionAlta.configData.gabinete">
               <i class="fas fa-box"></i>
               <span>{{ configuracionAlta.configData.gabinete.modelo }}</span>
-              <span class="component-price">{{ configuracionAlta.configData.gabinete.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionAlta.configData.gabinete.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
           </div>
           <div class="build-footer">
@@ -229,49 +332,58 @@
       <div class="build-card" *ngIf="configuracionTrabajo">
         <div class="build-category workstation">
           <span class="category-tag">Workstation</span>
-          <span class="price-tag">{{ calcularPrecioTotal(configuracionTrabajo.configData) | currency:'USD':'symbol' }}</span>
+          <span class="price-tag">{{ calcularPrecioTotal(configuracionTrabajo.configData) | currency:'USD':'symbol'
+            }}</span>
         </div>
         <div class="build-content">
           <div class="components-list">
             <div class="component-item" *ngIf="configuracionTrabajo.configData.procesador">
               <i class="fas fa-microchip"></i>
               <span>{{ configuracionTrabajo.configData.procesador.modelo }}</span>
-              <span class="component-price">{{ configuracionTrabajo.configData.procesador.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionTrabajo.configData.procesador.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionTrabajo.configData.placaMadre">
               <i class="fas fa-laptop-medical"></i>
               <span>{{ configuracionTrabajo.configData.placaMadre.modelo }}</span>
-              <span class="component-price">{{ configuracionTrabajo.configData.placaMadre.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionTrabajo.configData.placaMadre.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionTrabajo.configData.ram">
               <i class="fas fa-memory"></i>
               <span>{{ configuracionTrabajo.configData.ram.modelo }}</span>
-              <span class="component-price">{{ configuracionTrabajo.configData.ram.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionTrabajo.configData.ram.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionTrabajo.configData.almacenamiento">
               <i class="fas fa-hdd"></i>
               <span>{{ configuracionTrabajo.configData.almacenamiento.modelo }}</span>
-              <span class="component-price">{{ configuracionTrabajo.configData.almacenamiento.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionTrabajo.configData.almacenamiento.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionTrabajo.configData.enfriamiento">
               <i class="fas fa-fan"></i>
               <span>{{ configuracionTrabajo.configData.enfriamiento.modelo }}</span>
-              <span class="component-price">{{ configuracionTrabajo.configData.enfriamiento.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionTrabajo.configData.enfriamiento.precio |
+                currency:'USD':'symbol' }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionTrabajo.configData.fuente">
               <i class="fas fa-plug"></i>
               <span>{{ configuracionTrabajo.configData.fuente.modelo }}</span>
-              <span class="component-price">{{ configuracionTrabajo.configData.fuente.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionTrabajo.configData.fuente.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionTrabajo.configData.grafica">
               <i class="fas fa-desktop"></i>
               <span>{{ configuracionTrabajo.configData.grafica.modelo }}</span>
-              <span class="component-price">{{ configuracionTrabajo.configData.grafica.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionTrabajo.configData.grafica.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
             <div class="component-item" *ngIf="configuracionTrabajo.configData.gabinete">
               <i class="fas fa-box"></i>
               <span>{{ configuracionTrabajo.configData.gabinete.modelo }}</span>
-              <span class="component-price">{{ configuracionTrabajo.configData.gabinete.precio | currency:'USD':'symbol' }}</span>
+              <span class="component-price">{{ configuracionTrabajo.configData.gabinete.precio | currency:'USD':'symbol'
+                }}</span>
             </div>
           </div>
           <div class="build-footer">
@@ -290,7 +402,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
-

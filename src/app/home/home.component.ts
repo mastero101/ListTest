@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  configuracionEntrada: any = null;
   configuracionBaja: any = null;
   configuracionMedia: any = null;
   configuracionAlta: any = null;
@@ -22,18 +23,20 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      const configIds = ['611', '612', '613', '614'];
-      const [configBaja, configMedia, configAlta, configTrabajo] = await Promise.all([
+      const configIds = ['618', '619', '620', '621', '622'];
+      const [configEntrada, configBaja, configMedia, configAlta, configTrabajo] = await Promise.all([
         this.recuperarConfiguracion(configIds[0]),
         this.recuperarConfiguracion(configIds[1]),
         this.recuperarConfiguracion(configIds[2]),
-        this.recuperarConfiguracion(configIds[3])
+        this.recuperarConfiguracion(configIds[3]),
+        this.recuperarConfiguracion(configIds[4])
       ]);
 
-      this.configuracionBaja = { ...configBaja, configId: configIds[0] };
-      this.configuracionMedia = { ...configMedia, configId: configIds[1] };
-      this.configuracionAlta = { ...configAlta, configId: configIds[2] };
-      this.configuracionTrabajo = { ...configTrabajo, configId: configIds[3] };
+      this.configuracionEntrada = { ...configEntrada, configId: configIds[0] };
+      this.configuracionBaja = { ...configBaja, configId: configIds[1] };
+      this.configuracionMedia = { ...configMedia, configId: configIds[2] };
+      this.configuracionAlta = { ...configAlta, configId: configIds[3] };
+      this.configuracionTrabajo = { ...configTrabajo, configId: configIds[4] };
     } catch (error) {
       console.error('Error al cargar configuraciones:', error);
     } finally {
