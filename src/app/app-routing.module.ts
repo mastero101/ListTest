@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileUserComponent } from './profile-user/profile-user.component';
 
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: 'builds', component: BuildsComponent },
@@ -34,6 +35,9 @@ const routes: Routes = [
   { path: 'profile', 
     component: ProfileUserComponent,
     canActivate: [JwtAuthGuard]
+  },
+  { path: 'home', 
+    component: HomeComponent,
   },
 ];
 

@@ -9,6 +9,7 @@
       <a mat-list-item routerLink="/parts" *ngIf="isAuthenticated">Registrar Partes</a>
       <a mat-list-item routerLink="/edit" *ngIf="isAuthenticated">Editar Partes</a>
       <a mat-list-item routerLink="/builds">Consultar Partes</a>
+      <a mat-list-item routerLink="/home">Recomendaciones</a>
     </mat-nav-list>
     <button class="close-session" mat-raised-button color="warn" *ngIf="isAuthenticated" (click)="logout()">
       Cerrar sesión

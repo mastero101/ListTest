@@ -29,6 +29,7 @@ import { DetalleConfiguracionComponent } from './detalle-configuracion/detalle-c
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileUserComponent } from './profile-user/profile-user.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ProfileUserComponent } from './profile-user/profile-user.component';
     RegisterUserComponent,
     LoginComponent,
     ProfileUserComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
