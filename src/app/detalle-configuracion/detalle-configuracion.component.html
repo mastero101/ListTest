@@ -1,28 +1,127 @@
-<tbody *ngIf="configData">
-  <h2>Detalles de Configuración {{ getRoundedTotalPrecio() + 'K' }}</h2>
+<div class="config-container" *ngIf="configData">
+  <div class="header-section">
+    <div class="title-container">
+      <h1>Detalles de Configuración</h1>
+      <span class="price-tag">{{ getRoundedTotalPrecio() }}K</span>
+    </div>
+    <div class="button-group">
+      <button class="btn-action share" (click)="compartirConfiguracion()">
+        <i class="fas fa-share-alt"></i>
+        <span>Compartir</span>
+      </button>
+      <button class="btn-action pdf" (click)="exportarPDF()">
+        <i class="fas fa-file-pdf"></i>
+        <span>Exportar PDF</span>
+      </button>
+      <button class="btn-action print" (click)="imprimir()">
+        <i class="fas fa-print"></i>
+        <span>Imprimir</span>
+      </button>
+    </div>
+  </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Componente</th>
-        <th>Precio</th>
-        <th>Tienda</th>
-        <th>Consumo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let key of Object?.keys(configData)">
-        <td>{{ configData[key]?.modelo }}</td>
-        <td>{{ configData[key]?.precio | currency : "USD" : "symbol" }}</td>
-        <td><a [href]="configData[key].url" target="_blank">{{ configData[key].tienda }}</a></td>
-        <td style="text-align: right;">{{ configData[key]?.consumo }} W</td>
-      </tr>
-      <tr>
-        <td>{{ formatFechaHora(fechaHora) }}</td>
-        <td>{{ getTotalPrecio() | currency : "USD" : "symbol" }}</td>
-        <td></td>
-        <td style="text-align: right;">{{ getTotalConsumo()}} W</td>
-      </tr>
-    </tbody>
-  </table>
-</tbody>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Componente</th>
+          <th>Precio</th>
+          <th>Tienda</th>
+          <th>Consumo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let key of Object?.keys(configData)">
+          <td>
+            <div class="component-info">
+              <span class="component-name">{{ configData[key]?.modelo }}</span>
+            </div>
+          </td>
+          <td>{{ configData[key]?.precio | currency : "USD" : "symbol" }}</td>
+          <td>
+            <a [href]="configData[key].url" target="_blank" class="store-link">
+              <i class="fas fa-store"></i>
+              {{ configData[key].tienda }}
+            </a>
+          </td>
+          <td class="consumption">{{ configData[key]?.consumo }} W</td>
+          <td>
+            <button class="icon-button" (click)="verDetalles(key)">
+              <i class="fas fa-info-circle"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="stats-cards">
+    <div class="stat-card">
+      <i class="fas fa-bolt"></i>
+      <div class="stat-info">
+        <span class="stat-label">Consumo Total</span>
+        <span class="stat-value">{{ getTotalConsumo() }} W</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-tags"></i>
+      <div class="stat-info">
+        <span class="stat-label">Precio Total</span>
+        <span class="stat-value">{{ getTotalPrecio() | currency : "USD" : "symbol" }}</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-clock"></i>
+      <div class="stat-info">
+        <span class="stat-label">Última Actualización</span>
+        <span class="stat-value">{{ formatFechaHora(fechaHora) }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" *ngIf="modalVisible" (click)="cerrarModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ componenteSeleccionado?.modelo }}</h2>
+      <button class="close-button" (click)="cerrarModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="imagen-componente">
+        <img 
+          [src]="componenteSeleccionado?.img" 
+          [alt]="componenteSeleccionado?.modelo"
+          (error)="onImageError($event)"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="detalle-grid">
+        <div class="detalle-item">
+          <span class="label">Precio</span>
+          <span class="value">${{ componenteSeleccionado?.precio.toLocaleString() }}</span>
+        </div>
+        <div class="detalle-item">
+          <span class="label">Tienda</span>
+          <span class="value">{{ componenteSeleccionado?.tienda }}</span>
+        </div>
+        <div class="detalle-item">
+          <span class="label">Consumo</span>
+          <span class="value">{{ componenteSeleccionado?.consumo }}W</span>
+        </div>
+      </div>
+
+      <div class="tienda-link">
+        <a [href]="componenteSeleccionado?.url" target="_blank" class="btn-tienda">
+          <i class="fas fa-shopping-cart"></i>
+          Ver en tienda
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

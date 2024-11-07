@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { PartsComponent } from './parts/parts.component';
 import { BuildsComponent } from './builds/builds.component';
@@ -61,6 +62,7 @@ import { ProfileUserComponent } from './profile-user/profile-user.component';
     MatButtonToggleModule,
     MatCardModule,
     MatDividerModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
