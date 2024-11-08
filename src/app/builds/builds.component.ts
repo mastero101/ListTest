@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import axios from 'axios';
 
 import jsPDF from 'jspdf';
@@ -7,13 +7,16 @@ import autoTable from 'jspdf-autotable'
 import { ActivatedRoute } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { FormControl } from '@angular/forms';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-builds',
   templateUrl: './builds.component.html',
   styleUrls: ['./builds.component.scss']
 })
-export class BuildsComponent implements OnInit{
+export class BuildsComponent implements OnInit, OnDestroy{
   procesadores: { precio: number; modelo: string; tienda: string; consumo: string;  socket: string}[] = [];
   motherboard: { precio: number; modelo: string; tienda: string; url: string; consumo: number;  socket: string; rams: any; img: any;}[] = [];
   ram: { precio: number; modelo: string; tienda: string; url: string; consumo: number; socket: any; rams: any; img: any;}[] = [];
@@ -101,7 +104,17 @@ export class BuildsComponent implements OnInit{
   todasLasTiendasSeleccionadas: boolean = true;
   endpoint: any;
   endpoint2: any;
+  searchText: string = '';
   
+  selectedProcesador: any = null;
+  procesadorFilterCtrl = new FormControl('');
+  filteredProcesadores: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  protected _onDestroy = new Subject<void>();
+
+  selectedGrafica: any = null;
+  graficaFilterCtrl = new FormControl('');
+  filteredGraficas: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+
   constructor(private route: ActivatedRoute, private clipboard: Clipboard, private navbarComponent: NavbarComponent) {}
 
   ngOnInit(): void {
@@ -118,6 +131,54 @@ export class BuildsComponent implements OnInit{
     this.recoverGrafica();
     this.recoverGabinetes();
     this.navbarComponent.showToggleButton = true;
+
+    // Inicializar la lista filtrada
+    this.filteredProcesadores.next(this.procesadores.slice());
+
+    // Escuchar cambios en el filtro
+    this.procesadorFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterProcesadores();
+      });
+
+    // Inicializar la lista filtrada de gráficas
+    this.filteredGraficas.next(this.grafica.slice());
+
+    // Escuchar cambios en el filtro de gráficas
+    this.graficaFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterGraficas();
+      });
+  }
+
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
+
+  private filterProcesadores() {
+    if (!this.procesadores) {
+      return;
+    }
+
+    // obtener el valor de búsqueda
+    let search = this.procesadorFilterCtrl.value;
+    
+    // Si no hay término de búsqueda, mostrar todos los procesadores
+    if (!search) {
+      this.filteredProcesadores.next(this.procesadores.slice());
+      return;
+    }
+
+    const searchStr = search.toString().toLowerCase();
+    
+    // filtrar los procesadores
+    this.filteredProcesadores.next(
+      this.procesadores.filter(procesador => 
+        procesador.modelo.toLowerCase().includes(searchStr))
+    );
   }
 
   recoverid() {
@@ -150,26 +211,27 @@ export class BuildsComponent implements OnInit{
             img: item.img,
           })
         );
+        // Inicializar la lista filtrada con todos los procesadores después de obtenerlos
+        this.filteredProcesadores.next(this.procesadores);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  setPrecioSeleccionado(procesadorSeleccionado: any) {
-    if (procesadorSeleccionado) {
-      this.precioSeleccionado = procesadorSeleccionado.precio;
-      this.modeloSeleccionado = procesadorSeleccionado.modelo;
-      this.tiendaSeleccionada = procesadorSeleccionado.tienda;
-      this.consumoSeleccionado = procesadorSeleccionado.consumo;
-      this.urlSeleccionada = procesadorSeleccionado.url;
-      this.imgSeleccionada = procesadorSeleccionado.img;
+  setPrecioSeleccionado(procesador: any) {
+    this.selectedProcesador = procesador;
+    if (procesador) {
+      this.precioSeleccionado = procesador.precio;
+      this.modeloSeleccionado = procesador.modelo;
+      this.tiendaSeleccionada = procesador.tienda;
+      this.consumoSeleccionado = procesador.consumo;
+      this.urlSeleccionada = procesador.url;
+      this.imgSeleccionada = procesador.img;
       
-      // Filtrar placas madre según el socket del procesador
-      this.motherboardFiltradas = this.motherboard.filter(motherboard => motherboard.socket === procesadorSeleccionado.socket);
-      
-      // Reiniciar el valor seleccionado de la placa madre
-      this.precioSeleccionado2 = 0;
+      this.motherboardFiltradas = this.motherboard.filter(
+        motherboard => motherboard.socket === procesador.socket
+      );
     } else {
       this.precioSeleccionado = 0;
     }
@@ -385,6 +447,8 @@ export class BuildsComponent implements OnInit{
             consumo: item.consumo,
           })
         );
+        // Inicializar la lista filtrada DESPUÉS de obtener los datos
+        this.filteredGraficas.next(this.grafica.slice());
         this.precioSeleccionado7 = 0;
       })
       .catch((error) => {
@@ -392,18 +456,19 @@ export class BuildsComponent implements OnInit{
       });
   }
 
-  setPrecioSeleccionado7(modelo: string) {
-    const graficaSeleccionado = this.grafica.find(
-      (item) => item.modelo === modelo
-    );
-    if (graficaSeleccionado) {
-      this.precioSeleccionado7 = graficaSeleccionado.precio;
-      this.modeloSeleccionado7 = graficaSeleccionado.modelo;
-      this.tiendaSeleccionada7 = graficaSeleccionado.tienda;
-      this.consumoSeleccionado7 = graficaSeleccionado.consumo;
-      this.urlSeleccionada7 = graficaSeleccionado.url;
-      this.imgSeleccionada7 = graficaSeleccionado.img;
+  setPrecioSeleccionado7(grafica: any) {
+    this.selectedGrafica = grafica;
+    if (grafica) {
+      this.precioSeleccionado7 = grafica.precio;
+      this.modeloSeleccionado7 = grafica.modelo;
+      this.tiendaSeleccionada7 = grafica.tienda;
+      this.consumoSeleccionado7 = grafica.consumo;
+      this.urlSeleccionada7 = grafica.url;
+      this.imgSeleccionada7 = grafica.img;
+    } else {
+      this.precioSeleccionado7 = 0;
     }
+    
     this.sumatoriaPrecios();
     this.sumatoriaConsumo();
   }
@@ -737,6 +802,41 @@ export class BuildsComponent implements OnInit{
 
   endPan() {
     this.isPanning = false;
+  }
+
+  // Método para buscar procesador
+  buscarProcesador() {
+    if (!this.searchText.trim()) return;
+
+    const searchTerm = this.searchText.toLowerCase();
+    const procesadorEncontrado = this.procesadores.find(procesador => 
+      procesador.modelo.toLowerCase().includes(searchTerm)
+    );
+
+    if (procesadorEncontrado) {
+      this.setPrecioSeleccionado(procesadorEncontrado);
+    } else {
+      alert('No se encontró el procesador');
+    }
+  }
+
+  private filterGraficas() {
+    if (!this.grafica) {
+      return;
+    }
+
+    let search = this.graficaFilterCtrl.value;
+    if (!search) {
+      this.filteredGraficas.next(this.grafica.slice());
+      return;
+    }
+
+    const searchStr = search.toString().toLowerCase();
+    
+    this.filteredGraficas.next(
+      this.grafica.filter(grafica => 
+        grafica.modelo.toLowerCase().includes(searchStr))
+    );
   }
 
 }

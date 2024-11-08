@@ -9,9 +9,21 @@
     <!-- Procesador -->
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
-        <mat-label>Procesador</mat-label>
+        <mat-label>Buscar o seleccionar procesador</mat-label>
         <mat-select (selectionChange)="setPrecioSeleccionado($event.value)">
-          <mat-option *ngFor="let procesador of procesadores" [value]="procesador">
+          <mat-select-trigger>
+            {{ selectedProcesador?.modelo || 'Seleccione un procesador' }}
+          </mat-select-trigger>
+          <!-- Campo de búsqueda dentro del select -->
+          <mat-option>
+            <ngx-mat-select-search 
+              [formControl]="procesadorFilterCtrl"
+              placeholderLabel="Buscar..."
+              noEntriesFoundLabel="No se encontraron coincidencias">
+            </ngx-mat-select-search>
+          </mat-option>
+          <!-- Opciones filtradas -->
+          <mat-option *ngFor="let procesador of filteredProcesadores | async" [value]="procesador">
             {{ procesador.modelo }}
           </mat-option>
         </mat-select>
@@ -147,9 +159,21 @@
     <!-- Gráfica -->
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
-        <mat-label>Gráfica</mat-label>
+        <mat-label>Buscar o seleccionar gráfica</mat-label>
         <mat-select (selectionChange)="setPrecioSeleccionado7($event.value)">
-          <mat-option *ngFor="let grafica of grafica" [value]="grafica.modelo">
+          <mat-select-trigger>
+            {{ selectedGrafica?.modelo || 'Seleccione una gráfica' }}
+          </mat-select-trigger>
+          <!-- Campo de búsqueda -->
+          <mat-option>
+            <ngx-mat-select-search 
+              [formControl]="graficaFilterCtrl"
+              placeholderLabel="Buscar..."
+              noEntriesFoundLabel="No se encontraron coincidencias">
+            </ngx-mat-select-search>
+          </mat-option>
+          <!-- Opciones filtradas -->
+          <mat-option *ngFor="let grafica of filteredGraficas | async" [value]="grafica">
             {{ grafica.modelo }}
           </mat-option>
         </mat-select>
