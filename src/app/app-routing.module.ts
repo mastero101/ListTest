@@ -13,6 +13,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'builds', component: BuildsComponent },
   { path: 'builds/:id', component: DetalleConfiguracionComponent },
   { path: 'login', component: LoginComponent},
