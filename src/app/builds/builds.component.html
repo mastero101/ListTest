@@ -244,7 +244,7 @@
         <mat-icon>table_view</mat-icon>
         Exportar CSV
       </button>
-      <button mat-raised-button color="primary" (click)="compartirConfiguracion()">
+      <button mat-raised-button color="primary" (click)="compartirConfiguracion()" [disabled]="compartido">
         <mat-icon>share</mat-icon>
         Compartir URL
       </button>

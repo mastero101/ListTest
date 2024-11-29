@@ -115,6 +115,8 @@ export class BuildsComponent implements OnInit, OnDestroy{
   graficaFilterCtrl = new FormControl('');
   filteredGraficas: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
 
+  compartido: boolean = false;
+
   constructor(private route: ActivatedRoute, private clipboard: Clipboard, private navbarComponent: NavbarComponent) {}
 
   ngOnInit(): void {
@@ -728,24 +730,27 @@ export class BuildsComponent implements OnInit, OnDestroy{
   }
 
   compartirConfiguracion() {
-    const jsonConfig = this.buildJSON();
+    if (!this.compartido) {
+      this.compartido = true;
+      const jsonConfig = this.buildJSON();
 
-    axios.post(this.endpoint+'/guardar-configuracion', jsonConfig)
-      .then(response => {
-        console.log('Configuración compartida con éxito');
+      axios.post(this.endpoint+'/guardar-configuracion', jsonConfig)
+        .then(response => {
+          console.log('Configuración compartida con éxito');
 
-        if (response.data.url) {
-          this.enlaceCompartir = response.data.url;
-        } else {
-          console.error('La respuesta del servidor no incluye la URL esperada.');
-        }
+          if (response.data.url) {
+            this.enlaceCompartir = response.data.url;
+          } else {
+            console.error('La respuesta del servidor no incluye la URL esperada.');
+          }
 
-      })
-      .catch(error => {
-        console.error('Error al compartir configuración', error);
+        })
+        .catch(error => {
+          console.error('Error al compartir configuración', error);
 
-      });
-    this.mostrarCard = true;
+        });
+      this.mostrarCard = true;
+    }
   }
 
   // Método para copiar al portapapeles
