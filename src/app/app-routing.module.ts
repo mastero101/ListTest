@@ -11,6 +11,7 @@ import { ProfileUserComponent } from './profile-user/profile-user.component';
 
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { HomeComponent } from './home/home.component';
+import { ValuacionComponent } from './valuacion/valuacion.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -39,6 +40,9 @@ const routes: Routes = [
   },
   { path: 'home', 
     component: HomeComponent,
+  },
+  { path: 'valuacion', 
+    component: ValuacionComponent 
   },
 ];
 

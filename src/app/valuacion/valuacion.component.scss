@@ -1,0 +1,93 @@
+.valuacion-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #f9f9f9; // Color de fondo
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px; // Ancho máximo
+  margin: auto; // Centrar el contenedor
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333; // Color del texto
+}
+
+h3 {
+  font-size: 20px;
+  margin: 10px 0;
+  color: #007bff; // Color del total
+}
+
+h4 {
+  font-size: 18px;
+  margin: 15px 0 5px;
+  color: #555; // Color del subtítulo
+}
+
+h5 {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #666; // Color del tipo de componente
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 15px; // Espaciado entre campos
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  padding: 10px; // Espaciado interno
+  border: 1px solid #ddd; // Borde alrededor de cada componente
+  border-radius: 4px; // Bordes redondeados
+  transition: background-color 0.3s; // Transición suave
+}
+
+li:hover {
+  background-color: #f1f1f1; // Color de fondo al pasar el mouse
+}
+
+img {
+  margin-right: 10px; // Espaciado entre imagen y texto
+  border-radius: 4px; // Bordes redondeados para la imagen
+}
+
+button {
+  margin-top: 20px; // Espaciado para botones
+  background-color: #007bff; // Color de fondo del botón
+  color: white; // Color del texto del botón
+  &:hover {
+    background-color: #0056b3; // Color al pasar el mouse
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px; // Espaciado superior
+}
+
+th, td {
+  border: 1px solid #ddd; // Borde de la tabla
+  padding: 10px; // Espaciado interno
+  text-align: left; // Alinear texto a la izquierda
+}
+
+th {
+  background-color: #f2f2f2; // Color de fondo para el encabezado
+  font-weight: bold; // Negrita para el encabezado
+}
+
+tr:hover {
+  background-color: #f1f1f1; // Color de fondo al pasar el mouse
+}

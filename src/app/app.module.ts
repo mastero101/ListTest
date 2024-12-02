@@ -21,6 +21,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { PartsComponent } from './parts/parts.component';
 import { BuildsComponent } from './builds/builds.component';
@@ -31,6 +32,7 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileUserComponent } from './profile-user/profile-user.component';
 import { HomeComponent } from './home/home.component';
+import { ValuacionComponent } from './valuacion/valuacion.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     ProfileUserComponent,
     HomeComponent,
+    ValuacionComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ import { HomeComponent } from './home/home.component';
     MatCardModule,
     MatDividerModule,
     MatDialogModule,
+    MatSliderModule,
     NgxMatSelectSearchModule
   ],
   providers: [],
