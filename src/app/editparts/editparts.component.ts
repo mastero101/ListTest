@@ -92,10 +92,10 @@ export class EditpartsComponent {
     axios.get(`https://nodemysql12.duckdns.org:443/components/modelo/${this.modelo}`)
       .then((response) => {
         // Verifica si se encontró el elemento
-        if (response.data) {
+        if (response.data && response.data[0]) {
           // Puedes asignar los datos recuperados al formulario de edición para prellenarlos
-          this.registroForm.patchValue(response.data);
-          console.log(response.data);
+          this.registroForm.patchValue(response.data[0]);
+          console.log(response.data[0]);
         } else {
           // Maneja el caso en el que no se encuentre el elemento
           alert('No se encontró el elemento');

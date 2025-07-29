@@ -61,7 +61,6 @@ export class PartsComponent {
     }
     
     const registro: Registro = this.registroForm.value;
-    console.log(registro);
     
     // Guardar datos en el localStorage
     localStorage.setItem('registro', JSON.stringify(registro));
@@ -72,8 +71,7 @@ export class PartsComponent {
     const data = this.registroForm.value;
     
     // Realiza la solicitud POST utilizando Axios
-    console.log(data);
-    axios.post('https://nodemysql12.duckdns.org:443/', data)
+    axios.post('https://nodemysql12.duckdns.org:443/components/', data)
       .then((response) => {
         // Maneja la respuesta exitosa de la inserción en la base de datos
         console.log('Datos guardados exitosamente:', response.data);
@@ -88,7 +86,7 @@ export class PartsComponent {
 
   recoverid(){
     axios
-      .get(`https://nodemysql12.duckdns.org:443/`)
+      .get(`https://nodemysql12.duckdns.org:443/components/`)
       .then(response => {
         this.idInit = response.data[response.data.length - 1].id;
         this.idInit = this.idInit+1;
