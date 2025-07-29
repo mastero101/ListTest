@@ -33,7 +33,7 @@ export class DetalleConfiguracionComponent {
   recoverConfiguracion(configId: string) {
     this.configData = {};
     // Haz una solicitud al servidor para recuperar la configuración basada en el ID
-    axios.get(`https://nodemysql12.duckdns.org:443/recuperar-configuracion/${configId}`)
+    axios.get(`https://nodemysql12.duckdns.org:443/configuraciones/${configId}`)
       .then(response => {
         this.configData = response.data.configData;
         this.fechaHora = response.data.fechaHora;

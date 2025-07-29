@@ -200,7 +200,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
 
   recoverProcesadores() {
     axios
-      .get(this.endpoint+'/procesadores')
+      .get(this.endpoint+'/components/tipo/procesador')
       .then((response) => {
         this.procesadores = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; img: any; }) => ({
@@ -244,7 +244,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
 
   recovertMotherboard() {
     axios
-      .get(this.endpoint+'/motherboards')
+      .get(this.endpoint+'/components/tipo/motherboard')
       .then((response) => {
         this.motherboard = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; socket: any; rams: any; img: any;}) => ({
@@ -286,7 +286,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
 
   recoverRam() {
     axios
-      .get(this.endpoint+'/rams')
+      .get(this.endpoint+'/components/tipo/ram')
       .then((response) => {
         this.ram = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any ;consumo: number; socket: any; rams: any; img: any; }) => ({
@@ -323,7 +323,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
 
   recoverAlmacenamiento() {
     axios
-      .get(this.endpoint+'/almacenamientos')
+      .get(this.endpoint+'/components/tipo/almacenamiento')
       .then((response) => {
         this.almacenamiento = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any; }) => ({
@@ -360,7 +360,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
 
   recoverDisipador() {
     axios
-      .get(this.endpoint+'/disipadores')
+      .get(this.endpoint+'/components/tipo/disipador')
       .then((response) => {
         this.disipador = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any;}) => ({
@@ -397,7 +397,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
 
   recoverFuente() {
     axios
-      .get(this.endpoint+'/fuentes')
+      .get(this.endpoint+'/components/tipo/psu')
       .then((response) => {
         this.fuentedepoder = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; potencia: number; img: any;}) => ({
@@ -437,7 +437,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
 
   recoverGrafica() {
     axios
-      .get(this.endpoint+'/graficas')
+      .get(this.endpoint+'/components/tipo/gpu')
       .then((response) => {
         this.grafica = response.data.map(
           (item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any;}) => ({
@@ -477,7 +477,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
 
   recoverGabinetes() {
     axios
-      .get(this.endpoint+'/gabinetes')
+      .get(this.endpoint+'/components/tipo/gabinete')
       .then((response) => {
         this.gabinetes = response.data.map((item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any;}) => ({
           modelo: item.modelo,
@@ -734,7 +734,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
       this.compartido = true;
       const jsonConfig = this.buildJSON();
 
-      axios.post(this.endpoint+'/guardar-configuracion', jsonConfig)
+      axios.post(this.endpoint+'/configuraciones/', jsonConfig)
         .then(response => {
           console.log('Configuración compartida con éxito');
 

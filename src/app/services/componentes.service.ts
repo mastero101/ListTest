@@ -5,7 +5,7 @@ import axios from 'axios';
   providedIn: 'root'
 })
 export class ComponentesService {
-  endpoint = 'https://nodemysql12.duckdns.org:443';
+  endpoint = 'https://nodemysql12.duckdns.org:443/componentes';
 
   constructor() {}
 
