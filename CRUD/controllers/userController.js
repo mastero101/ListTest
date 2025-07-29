@@ -69,7 +69,10 @@ const userController = {
     authenticateUser: async (req, res) => {
         const { id_usuario, password } = req.body;
 
+        console.log('Intento de autenticación para usuario:', id_usuario); // Agrega esta línea
+
         if (!id_usuario || !password) {
+            console.log('Faltan credenciales: id_usuario o password.'); // Agrega esta línea
             return res.status(400).json({ message: 'Por favor, ingrese usuario y contraseña.' });
         }
 
@@ -77,19 +80,23 @@ const userController = {
             const user = await User.findOne({ where: { id_usuario } });
 
             if (!user) {
+                console.log('Usuario no encontrado en la base de datos:', id_usuario); // Agrega esta línea
                 return res.status(401).json({ message: 'Usuario y/o contraseña incorrectos.' });
             }
 
+            console.log('Usuario encontrado. Comparando contraseñas...'); // Agrega esta línea
             const match = await bcrypt.compare(password, user.password);
 
             if (match) {
+                console.log('Contraseña coincide. Generando token para:', id_usuario); // Agrega esta línea
                 const token = jwt.sign({ id_usuario: user.id_usuario }, jwtSecret, { expiresIn: '1h' });
                 return res.status(200).json({ message: 'Login exitoso', token });
             } else {
+                console.log('Contraseña no coincide para el usuario:', id_usuario); // Agrega esta línea
                 return res.status(401).json({ message: 'Usuario y/o contraseña incorrectos.' });
             }
         } catch (error) {
-            console.error('Error en la autenticación:', error);
+            console.error('Error en la autenticación (catch block):', error); // Modifica esta línea
             res.status(500).json({ message: 'Error interno del servidor en la autenticación.' });
         }
     }
