@@ -185,7 +185,7 @@ export class BuildsComponent implements OnInit, OnDestroy{
 
   recoverid() {
     axios
-      .get(this.endpoint)
+      .get(this.endpoint+'/components/')
       .then((response) => {
         this.idRecuperado = response.data;
         this.idInit = response.data[response.data.length - 1].id;

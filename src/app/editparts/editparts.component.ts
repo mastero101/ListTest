@@ -75,7 +75,7 @@ export class EditpartsComponent {
     
     // Realiza la solicitud POST utilizando Axios
     console.log(data);
-    axios.put(`https://nodemysql12.duckdns.org:443/${data.id}`, data)
+    axios.put(`https://nodemysql12.duckdns.org:443/components/${data.id}`, data)
       .then((response) => {
         // Maneja la respuesta exitosa de la inserción en la base de datos
         console.log('Datos guardados exitosamente:', response.data);
@@ -89,7 +89,7 @@ export class EditpartsComponent {
   }
 
   buscar() {
-    axios.get(`https://nodemysql12.duckdns.org:443/modelo/${this.modelo}`)
+    axios.get(`https://nodemysql12.duckdns.org:443/components/modelo/${this.modelo}`)
       .then((response) => {
         // Verifica si se encontró el elemento
         if (response.data) {
@@ -123,7 +123,7 @@ export class EditpartsComponent {
     
     // Realiza la solicitud Delete utilizando Axios
     console.log(data);
-    axios.delete(`https://nodemysql12.duckdns.org:443/${data.id}`, data)
+    axios.delete(`https://nodemysql12.duckdns.org:443/components/${data.id}`, data)
       .then((response) => {
         // Maneja la respuesta exitosa de la inserción en la base de datos
         console.log('Datos eliminados exitosamente:', response.data);
@@ -138,7 +138,7 @@ export class EditpartsComponent {
 
   recoverProcesadores() {
     axios
-      .get('https://nodemysql12.duckdns.org:443/')
+      .get('https://nodemysql12.duckdns.org:443/components')
       .then((response) => {
         this.items = response.data.map(
           (item: {id: number; tipo: any; modelo: any; precio: number; tienda: any; url: any; consumo: any; img:any;}) => ({

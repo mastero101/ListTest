@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
   }
 
   private async recuperarConfiguracion(configId: string) {
-    const response = await axios.get(`https://nodemysql12.duckdns.org:443/recuperar-configuracion/${configId}`);
+    const response = await axios.get(`https://nodemysql12.duckdns.org:443/configuraciones/${configId}`);
     return response.data;
   }
 

@@ -19,9 +19,9 @@ export class AuthService {
     const formData = { id_usuario: usuario, password: contrasena };
     return axios.post(`${this.auth_Url}/users/auth`, formData)
         .then(response => {
-            if (response.data.message === 'Login successful') {
-                localStorage.setItem('token', response.data.token); // Almacena el token en el almacenamiento local
-                this.isAuthenticatedSubject.next(true); // Actualiza el estado de autenticación a true
+            if (response.data.message === 'Login exitoso') {
+                localStorage.setItem('token', response.data.token); 
+                this.isAuthenticatedSubject.next(true);
                 return response;
             } else {
                 throw new Error('Authentication error');
