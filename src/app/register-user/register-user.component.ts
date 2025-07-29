@@ -39,7 +39,7 @@ export class RegisterUserComponent implements OnInit {
       const correo = this.registrationForm.value.correo;
 
        // Realiza la solicitud HTTP con Axios
-       axios.post(this.endpoint + '/registro_usuario', formData)
+       axios.post(this.endpoint + '/users/register', formData)
        .then(response => {
          console.log(response.data);
        })

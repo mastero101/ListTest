@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.usuario, this.contrasena)
     .then((response) => {
       
-      if (response.data.message === 'Login successful') {
+      if (response.data.message === 'Login exitoso') {
         console.log("Inicio Exitoso");
         alert("Login Successful")
         localStorage.setItem('id_usuario', this.usuario);
