@@ -1,46 +1,70 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ApiService } from '../api.service';
 import { AuthService } from '../auth.service';
+import { ChangePhotoDialogComponent } from './change-photo-dialog/change-photo-dialog.component';
 
 @Component({
   selector: 'app-profile-user',
   templateUrl: './profile-user.component.html',
   styleUrls: ['./profile-user.component.scss']
 })
-export class ProfileUserComponent implements OnInit{
-  ordenes: any [] = [];
-  nombre: any;
-  id_usuario: any;
-  telefono: any;
-  direccion: any;
-  img: any;
+export class ProfileUserComponent implements OnInit {
+  profileForm: FormGroup = this.fb.group({
+    nombre: ['', [Validators.required, Validators.minLength(3)]],
+    telefono: ['', [Validators.pattern('^[0-9+\-\s()]*$')]],
+    direccion: ['']
+  });
+  
+  isEditMode = false;
+  ordenes: any[] = [];
+  nombre: string = '';
+  id_usuario: string = '';
+  telefono: string = '';
+  direccion: string = '';
+  img: string = 'assets/default-avatar.png';
+  isLoading = true;
 
-  constructor(private apiService: ApiService, private router: Router, private authService: AuthService) { }
+  constructor(
+    private apiService: ApiService, 
+    private router: Router, 
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
-    this.getUsuarios();
+    this.loadUserData();
   }
 
-  async getUsuarios() {
+  private initForm() {
+    // El formulario ya se inicializa en la declaración de la propiedad
+  }
+
+  async loadUserData() {
     try {
+      this.isLoading = true;
       const idUsuario = localStorage.getItem('id_usuario');
   
       if (!idUsuario) {
         console.error('No se encontró el id_usuario en el almacenamiento local');
+        this.router.navigate(['/login']);
         return;
       }
   
       const users = await this.apiService.getUsuarios();
       
       if (!users || users.length === 0) {
-        console.log(`No se encontraron datos de usuarios`);
+        console.log('No se encontraron datos de usuarios');
         return;
       }
   
-      // Buscar el conjunto de datos por id_usuario
-      const usuario = users.find((users) => users.id_usuario === idUsuario);
+      const usuario = users.find(u => u.id_usuario === idUsuario);
   
       if (!usuario) {
         console.log(`No se encontró ningún usuario con id_usuario ${idUsuario}`);
@@ -52,9 +76,127 @@ export class ProfileUserComponent implements OnInit{
       this.id_usuario = usuario.id_usuario;
       this.direccion = usuario.direccion;
       this.telefono = usuario.telefono;
+
+      // Cargar las órdenes del usuario
+      await this.loadUserOrders();
+      
+      // Actualizar el formulario con los datos del usuario
+      this.profileForm.patchValue({
+        nombre: this.nombre,
+        telefono: this.telefono,
+        direccion: this.direccion
+      });
     } catch (error) {
-      console.error('Error al obtener los datos del usuario:', error);
+      console.error('Error al cargar los datos del usuario:', error);
+      this.snackBar.open('Error al cargar los datos del perfil', 'Cerrar', {
+        duration: 5000,
+        panelClass: ['error-snackbar']
+      });
+    } finally {
+      this.isLoading = false;
     }
+  }
+
+  async loadUserOrders() {
+    try {
+      // Simulación de carga de órdenes
+      await this.simulateApiCall(() => {
+        // En una aplicación real, esto sería algo como:
+        // const response = await this.apiService.getOrdenesPorUsuario(this.id_usuario).toPromise();
+        // this.ordenes = response.data || [];
+        
+        // Datos de ejemplo
+        this.ordenes = [
+          { id_orden: 'ORD-001', fecha: new Date(), estado: 'completado' },
+          { id_orden: 'ORD-002', fecha: new Date(Date.now() - 86400000), estado: 'en_proceso' },
+          { id_orden: 'ORD-003', fecha: new Date(Date.now() - 172800000), estado: 'pendiente' }
+        ];
+      });
+    } catch (error) {
+      console.error('Error al cargar las órdenes:', error);
+      this.ordenes = [];
+    }
+  }
+  
+  // Función auxiliar para simular llamadas a la API
+  private async simulateApiCall(callback: () => void): Promise<void> {
+    this.isLoading = true;
+    try {
+      // Simular retraso de red
+      await new Promise(resolve => setTimeout(resolve, 800));
+      callback();
+    } catch (error) {
+      throw error;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  toggleEditMode() {
+    this.isEditMode = !this.isEditMode;
+    if (this.isEditMode) {
+      this.profileForm.patchValue({
+        nombre: this.nombre,
+        telefono: this.telefono,
+        direccion: this.direccion
+      });
+    }
+  }
+
+  cancelEdit() {
+    this.isEditMode = false;
+  }
+
+  async saveProfile() {
+    if (this.profileForm.invalid) {
+      return;
+    }
+
+    try {
+      const formData = this.profileForm.value;
+      
+      // Actualizar los datos locales
+      this.nombre = formData.nombre;
+      this.telefono = formData.telefono;
+      this.direccion = formData.direccion;
+
+      // Actualizar el perfil del usuario (simulación)
+      await this.simulateApiCall(() => {
+        // En una aplicación real, esto se haría con una llamada HTTP
+        // await this.apiService.actualizarUsuario(this.id_usuario, formData).toPromise();
+        console.log('Perfil actualizado:', formData);
+      });
+      
+      this.isEditMode = false;
+      
+      this.snackBar.open('Perfil actualizado correctamente', 'Cerrar', {
+        duration: 3000,
+        panelClass: ['success-snackbar']
+      });
+    } catch (error) {
+      console.error('Error al guardar los cambios:', error);
+      this.snackBar.open('Error al guardar los cambios', 'Cerrar', {
+        duration: 5000,
+        panelClass: ['error-snackbar']
+      });
+    }
+  }
+
+  openEditPhotoDialog() {
+    const dialogRef = this.dialog.open(ChangePhotoDialogComponent, {
+      width: '400px',
+      data: { currentPhoto: this.img }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.img = result.photoUrl;
+        // Aquí iría la lógica para guardar la nueva foto en el servidor
+        this.snackBar.open('Foto de perfil actualizada', 'Cerrar', {
+          duration: 3000
+        });
+      }
+    });
   }
 
   logout() {

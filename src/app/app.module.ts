@@ -22,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { PartsComponent } from './parts/parts.component';
 import { BuildsComponent } from './builds/builds.component';
@@ -33,6 +34,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileUserComponent } from './profile-user/profile-user.component';
 import { HomeComponent } from './home/home.component';
 import { ValuacionComponent } from './valuacion/valuacion.component';
+import { ChangePhotoDialogModule } from './profile-user/change-photo-dialog/change-photo-dialog.module';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,9 @@ import { ValuacionComponent } from './valuacion/valuacion.component';
     MatDividerModule,
     MatDialogModule,
     MatSliderModule,
-    NgxMatSelectSearchModule
+    MatSnackBarModule,
+    NgxMatSelectSearchModule,
+    ChangePhotoDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

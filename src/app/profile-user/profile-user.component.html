@@ -1,25 +1,107 @@
-<mat-card id="main-content" class="main-content">
-    <mat-card-header>
-      <div class="profile-image">
-        <img [src]="img" alt="Foto de perfil" />
+<div class="profile-container">
+  <mat-card class="profile-card">
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <img [src]="img || 'assets/default-avatar.png'" alt="Foto de perfil" class="avatar" />
+        <button mat-icon-button class="edit-photo" (click)="openEditPhotoDialog()" matTooltip="Cambiar foto">
+          <mat-icon>camera_alt</mat-icon>
+        </button>
       </div>
-      <mat-card-subtitle>Usuario</mat-card-subtitle>
-      <mat-card-title>{{ id_usuario }}</mat-card-title>
+      <div class="profile-info">
+        <h1>{{ nombre || 'Usuario' }}</h1>
+        <p class="user-id">ID: {{ id_usuario || 'N/A' }}</p>
+      </div>
+      <button mat-icon-button class="edit-profile" (click)="toggleEditMode()" matTooltip="Editar perfil">
+        <mat-icon>{{ isEditMode ? 'close' : 'edit' }}</mat-icon>
+      </button>
+    </div>
+
+    <mat-card-content>
+      <form [formGroup]="profileForm" *ngIf="isEditMode; else viewMode">
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre completo</mat-label>
+            <input matInput formControlName="nombre" required>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input matInput formControlName="telefono" type="tel">
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Dirección</mat-label>
+          <textarea matInput formControlName="direccion" rows="2"></textarea>
+          <mat-icon matSuffix>location_on</mat-icon>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="cancelEdit()">Cancelar</button>
+          <button mat-raised-button color="primary" type="submit" (click)="saveProfile()" [disabled]="!profileForm.valid">
+            Guardar cambios
+          </button>
+        </div>
+      </form>
+
+      <ng-template #viewMode>
+        <div class="info-section">
+          <div class="info-item">
+            <mat-icon>person</mat-icon>
+            <div>
+              <h3>Nombre</h3>
+              <p>{{ nombre || 'No especificado' }}</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <mat-icon>phone</mat-icon>
+            <div>
+              <h3>Teléfono</h3>
+              <p>{{ telefono || 'No especificado' }}</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <mat-icon>location_on</mat-icon>
+            <div>
+              <h3>Dirección</h3>
+              <p>{{ direccion || 'No especificada' }}</p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="orders-card">
+    <mat-card-header>
+      <mat-card-title>Órdenes recientes</mat-card-title>
+      <button mat-button color="primary" [routerLink]="['/orders']">Ver todas</button>
     </mat-card-header>
     <mat-card-content>
-      <mat-form-field>
-        <mat-label>Nombre:</mat-label>
-        <input matInput [value]="nombre" readonly>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Dirección:</mat-label>
-        <input matInput [value]="direccion" readonly>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Teléfono:</mat-label>
-        <input matInput [value]="telefono" readonly>
-      </mat-form-field>
+      <div class="no-orders" *ngIf="ordenes.length === 0">
+        <mat-icon>receipt</mat-icon>
+        <p>No hay órdenes recientes</p>
+      </div>
+      <mat-list *ngIf="ordenes.length > 0">
+        <mat-list-item *ngFor="let orden of ordenes.slice(0, 3)">
+          <mat-icon mat-list-icon>receipt</mat-icon>
+          <div mat-line>Orden #{{ orden.id_orden }}</div>
+          <div mat-line>{{ orden.fecha | date:'medium' }}</div>
+          <div mat-line>{{ orden.estado }}</div>
+          <button mat-icon-button [routerLink]="['/orders', orden.id_orden]">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
     </mat-card-content>
-    <button mat-raised-button color="warn" style="margin-top: 1em;" (click)="logout()">Cerrar sesión</button>
   </mat-card>
-  
+</div>
+
+<div class="actions-container">
+  <button mat-raised-button color="warn" (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+    Cerrar sesión
+  </button>
+</div>
