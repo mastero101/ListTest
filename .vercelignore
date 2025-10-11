@@ -1,0 +1,16 @@
+CRUD/
+MYSQL Respaldo/
+*.sql
+node_modules/
+CRUD/node_modules/
+coverage/
+dist/
+.tmp/
+.sass-cache/
+.cache/
+.vscode/
+*.log
+.DS_Store
+Thumbs.db
+startServer.bat
+bs-config.json

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { ChangePhotoDialogComponent } from './profile-user/change-photo-dialog/change-photo-dialog.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +35,6 @@ import { LoginComponent } from './login/login.component';
 import { ProfileUserComponent } from './profile-user/profile-user.component';
 import { HomeComponent } from './home/home.component';
 import { ValuacionComponent } from './valuacion/valuacion.component';
-import { ChangePhotoDialogModule } from './profile-user/change-photo-dialog/change-photo-dialog.module';
 
 @NgModule({
   declarations: [
@@ -74,7 +74,7 @@ import { ChangePhotoDialogModule } from './profile-user/change-photo-dialog/chan
     MatSliderModule,
     MatSnackBarModule,
     NgxMatSelectSearchModule,
-    ChangePhotoDialogModule
+    ChangePhotoDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

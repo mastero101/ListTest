@@ -9,7 +9,7 @@ const configuracionController = {
                 fechaHora: new Date() // Asegúrate de que este campo se maneje correctamente si no es automático
             });
             const configId = nuevaConfiguracion.id;
-            const configUrl = `https://cotizador.cloud/builds/${configId}`;
+            const configUrl = `https://cotizadorpc.org/builds/${configId}`;
             res.status(200).json({ message: 'Configuración guardada con éxito', url: configUrl });
         } catch (error) {
             console.error('Error al guardar la configuración:', error);
