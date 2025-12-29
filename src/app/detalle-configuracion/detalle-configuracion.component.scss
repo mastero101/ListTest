@@ -10,7 +10,7 @@
   background: white;
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 1.5rem;
 
   .title-container {
@@ -59,19 +59,28 @@
       &.share {
         background: #3182ce;
         color: white;
-        &:hover { background: #2c5282; }
+
+        &:hover {
+          background: #2c5282;
+        }
       }
 
       &.pdf {
         background: #e53e3e;
         color: white;
-        &:hover { background: #c53030; }
+
+        &:hover {
+          background: #c53030;
+        }
       }
 
       &.print {
         background: #718096;
         color: white;
-        &:hover { background: #4a5568; }
+
+        &:hover {
+          background: #4a5568;
+        }
       }
     }
   }
@@ -88,7 +97,7 @@
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   gap: 15px;
@@ -118,7 +127,7 @@
 .table-container {
   background: white;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   overflow: hidden;
 
   table {
@@ -181,11 +190,12 @@
   .table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    
+
     table {
       min-width: 800px;
-      
-      th, td {
+
+      th,
+      td {
         white-space: nowrap;
         padding: 0.75rem;
       }
@@ -194,8 +204,10 @@
 }
 
 @media print {
+
   // Eliminar scroll y ajustar contenedor
-  html, body {
+  html,
+  body {
     height: auto !important;
     overflow: visible !important;
   }
@@ -218,19 +230,45 @@
       width: 100% !important;
       min-width: unset !important;
       page-break-inside: auto !important;
-      
-      th, td {
+
+      th,
+      td {
         width: auto !important;
         padding: 8px !important;
         font-size: 11px !important;
       }
 
       // Ajustar anchos de columnas específicamente
-      th:nth-child(1), td:nth-child(1) { width: 35% !important; } // Componente
-      th:nth-child(2), td:nth-child(2) { width: 15% !important; } // Precio
-      th:nth-child(3), td:nth-child(3) { width: 15% !important; } // Tienda
-      th:nth-child(4), td:nth-child(4) { width: 15% !important; } // Consumo
-      th:nth-child(5), td:nth-child(5) { display: none !important; } // Ocultar columna de acciones
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 35% !important;
+      }
+
+      // Componente
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 15% !important;
+      }
+
+      // Precio
+      th:nth-child(3),
+      td:nth-child(3) {
+        width: 15% !important;
+      }
+
+      // Tienda
+      th:nth-child(4),
+      td:nth-child(4) {
+        width: 15% !important;
+      }
+
+      // Consumo
+      th:nth-child(5),
+      td:nth-child(5) {
+        display: none !important;
+      }
+
+      // Ocultar columna de acciones
     }
   }
 
@@ -425,11 +463,13 @@
 }
 
 @keyframes spin {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 // Ocultar el spinner cuando la imagen está cargada
-img:not([src=""]) + .imagen-componente::after {
+img:not([src=""])+.imagen-componente::after {
   display: none;
 }
 
@@ -446,10 +486,92 @@ img:not([src=""]) + .imagen-componente::after {
 
   .imagen-componente {
     min-height: 200px;
-    
+
     img {
       max-height: 200px;
       padding: 15px;
     }
+  }
+}
+
+// Dark Theme Overrides
+:host-context(.dark-theme) {
+  .config-container {
+    background-color: var(--bg-color);
+  }
+
+  .header-section,
+  .stat-card,
+  .table-container,
+  .modal-content {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
+
+  .header-section {
+    .title-container h1 {
+      color: var(--text-color);
+    }
+  }
+
+  .stat-card {
+    .stat-info {
+      .stat-label {
+        color: #94a3b8;
+      }
+
+      .stat-value {
+        color: var(--text-color);
+      }
+    }
+  }
+
+  .table-container {
+    table {
+      th {
+        background: #1e293b;
+        color: #e2e8f0;
+      }
+
+      td {
+        border-bottom-color: #334155;
+        color: var(--text-color);
+      }
+
+      tr:hover {
+        background: #0f172a;
+      }
+    }
+  }
+
+  .modal-header {
+    border-bottom-color: #334155;
+
+    h2 {
+      color: var(--text-color);
+    }
+  }
+
+  .modal-body .detalle-item {
+    .label {
+      color: #94a3b8;
+    }
+
+    .value {
+      color: var(--text-color);
+    }
+  }
+
+  .imagen-componente {
+    background: #0f172a;
+
+    &::before {
+      background: rgba(15, 23, 42, 0.5);
+    }
+  }
+
+  .close-button:hover {
+    color: #f1f5f9;
   }
 }

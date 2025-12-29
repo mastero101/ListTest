@@ -7,13 +7,13 @@ $border-color: #e2e8f0;
 
 .sidenav-container {
   height: 100vh;
-  background-color: #f8fafc;
+  background-color: var(--bg-color);
 }
 
 .sidenav {
   width: 280px;
-  background-color: $sidebar-bg;
-  border-right: 1px solid $border-color;
+  background-color: var(--card-bg);
+  border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.02);
@@ -22,7 +22,7 @@ $border-color: #e2e8f0;
 // Header
 .sidebar-header {
   padding: 16px 24px;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
@@ -32,7 +32,7 @@ $border-color: #e2e8f0;
     display: flex;
     align-items: center;
     gap: 12px;
-    color: $primary-color;
+    color: var(--primary-color);
     font-weight: 800;
     font-size: 1.25rem;
     letter-spacing: -0.5px;
@@ -42,14 +42,18 @@ $border-color: #e2e8f0;
       width: 28px;
       height: 28px;
     }
+
+    span {
+      color: var(--text-color);
+    }
   }
 
   .collapse-btn {
-    color: #64748b;
+    color: var(--text-muted);
 
     &:hover {
-      background-color: $hover-bg;
-      color: $primary-color;
+      background-color: var(--secondary-bg);
+      color: var(--primary-color);
     }
   }
 }
@@ -65,7 +69,7 @@ $border-color: #e2e8f0;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--border-color);
     border-radius: 10px;
   }
 }
@@ -78,7 +82,7 @@ $border-color: #e2e8f0;
     padding: 0 16px 8px;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #94a3b8;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -92,34 +96,43 @@ mat-nav-list {
     height: 48px !important;
     margin-bottom: 4px;
     border-radius: 8px;
-    color: $text-color;
+    color: var(--text-color);
     transition: all 0.2s ease;
 
     &:hover {
-      background-color: $hover-bg !important;
-      color: $primary-color;
+      background-color: var(--secondary-bg) !important;
+      color: var(--primary-color);
       transform: translateX(4px);
+
+      mat-icon {
+        color: var(--primary-color);
+      }
     }
 
     &.active-link {
-      background-color: $active-bg !important;
+      background-color: rgba(92, 61, 153, 0.1) !important;
       color: $primary-color;
       font-weight: 600;
 
       mat-icon {
         color: $primary-color;
       }
+
+      ::ng-deep .mat-list-item-content {
+        color: $primary-color !important;
+      }
     }
 
     mat-icon {
       margin-right: 16px;
-      color: #64748b;
+      color: var(--text-muted);
       font-size: 22px;
       transition: color 0.2s ease;
     }
 
     span {
       font-size: 0.95rem;
+      color: inherit;
     }
   }
 }
@@ -127,8 +140,8 @@ mat-nav-list {
 // Footer
 .sidebar-footer {
   padding: 16px;
-  border-top: 1px solid $border-color;
-  background-color: #fafafa;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--secondary-bg);
 
   .footer-actions {
     display: flex;
@@ -136,11 +149,11 @@ mat-nav-list {
     gap: 12px;
 
     .theme-btn {
-      color: #64748b;
+      color: var(--text-muted);
 
       &:hover {
-        background-color: $hover-bg;
-        color: $primary-color;
+        background-color: var(--border-color);
+        color: var(--primary-color);
       }
     }
 
@@ -169,73 +182,39 @@ mat-nav-list {
   top: 16px;
   left: 16px;
   z-index: 1001;
-  background-color: white;
+  background-color: var(--card-bg);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  border: 1px solid $border-color;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    background-color: $primary-color;
+    background-color: var(--primary-color);
     color: white;
     transform: scale(1.1);
   }
 }
 
-// Dark Theme Overrides
+// Dark Theme Specific Tweaks
 .dark-theme {
-  .sidenav {
-    background-color: #0f172a;
-    border-color: #1e293b;
-    color: #f8fafc;
-  }
+  .active-link {
+    background-color: rgba(129, 140, 248, 0.1) !important;
+    color: #818cf8 !important;
 
-  .sidebar-header {
-    border-color: #1e293b;
-
-    .logo {
-      color: #818cf8;
-    }
-  }
-
-  .nav-sections {
-    &::-webkit-scrollbar-thumb {
-      background: #334155;
-    }
-  }
-
-  .section-label {
-    color: #64748b;
-  }
-
-  mat-nav-list a[mat-list-item] {
-    color: #94a3b8;
-
-    &:hover {
-      background-color: #1e293b !important;
-      color: #f8fafc;
+    mat-icon {
+      color: #818cf8 !important;
     }
 
-    &.active-link {
-      background-color: rgba(129, 140, 248, 0.1) !important;
-      color: #818cf8;
-
-      mat-icon {
-        color: #818cf8;
-      }
+    ::ng-deep .mat-list-item-content {
+      color: #818cf8 !important;
     }
   }
 
   .sidebar-footer {
-    background-color: #111827;
-    border-color: #1e293b;
-  }
-
-  .sidenav-container {
-    background-color: #020617;
+    background-color: rgba(0, 0, 0, 0.2);
   }
 }
 
-// Adjust content when sidebar is open/closed
 mat-sidenav-content {
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 24px;

@@ -323,3 +323,59 @@ $spacing-unit: 1rem;
 .search-field {
   width: 100%;
 }
+
+// Dark Theme Overrides
+:host-context(.dark-theme) {
+  .build-container {
+    background-color: var(--bg-color);
+  }
+
+  .component-item,
+  .summary-card,
+  .share-card,
+  .modal-content,
+  .modal-controls {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);
+  }
+
+  .component-item {
+    .component-details {
+      .component-image {
+        background-color: #1e293b;
+      }
+
+      .component-info {
+        .watts {
+          color: #94a3b8;
+        }
+
+        .price {
+          color: #818cf8;
+        }
+
+        .store-link {
+          color: #818cf8;
+        }
+      }
+    }
+  }
+
+  .summary-card {
+    .totals {
+      .total-price {
+        color: #818cf8;
+      }
+
+      .total-watts {
+        color: #94a3b8;
+      }
+    }
+  }
+
+  .image-container {
+    background: #020617;
+  }
+}

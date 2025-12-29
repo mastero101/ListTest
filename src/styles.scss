@@ -1,9 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+    --bg-color: #f8fafc;
+    --text-color: #1e293b;
+    --text-muted: #64748b;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --primary-color: #5c3d99;
+    --secondary-bg: #f1f5f9;
+}
 
 .dark-theme {
-    background-color: #000;
-    color: #fff;
+    --bg-color: #020617;
+    --text-color: #f1f5f9;
+    --text-muted: #94a3b8;
+    --card-bg: #0f172a;
+    --border-color: #1e293b;
+    --secondary-bg: #1e293b;
+
+    background-color: var(--bg-color);
+    color: var(--text-color);
+
+    // Global Material Component Overrides for Dark Theme
+    .mat-card {
+        background-color: var(--card-bg) !important;
+        color: var(--text-color) !important;
+        border: 1px solid var(--border-color);
+    }
+
+    .mat-drawer,
+    .mat-sidenav {
+        background-color: var(--card-bg) !important;
+        color: var(--text-color) !important;
+    }
+
+    // Ensure ALL menu text is light in dark mode
+    .mat-list-base .mat-list-item,
+    .mat-nav-list .mat-list-item,
+    .mat-line,
+    .mat-list-text,
+    .mat-list-item-content,
+    span[matline] {
+        color: var(--text-color) !important;
+    }
+
+    .mat-form-field-label {
+        color: var(--text-muted) !important;
+    }
+
+    input.mat-input-element {
+        color: var(--text-color) !important;
+    }
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }

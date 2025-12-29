@@ -168,3 +168,54 @@ $border-radius: 12px;
         padding: 0 10px;
     }
 }
+
+// Dark Theme Overrides
+:host-context(.dark-theme) {
+    .guia-container {
+        background-color: var(--bg-color);
+    }
+
+    .guia-header {
+        h1 {
+            color: #818cf8;
+        }
+
+        p {
+            color: #94a3b8;
+        }
+    }
+
+    .step-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+        mat-card-header {
+            mat-card-title {
+                color: var(--text-color);
+            }
+
+            mat-icon {
+                background: rgba(129, 140, 248, 0.1);
+                color: #818cf8;
+            }
+        }
+
+        mat-card-content p {
+            color: #94a3b8;
+        }
+
+        .step-number {
+            background-color: #818cf8;
+            box-shadow: 0 4px 10px rgba(129, 140, 248, 0.3);
+        }
+    }
+
+    .guia-actions button {
+        background-color: #818cf8;
+
+        &:hover {
+            background-color: #6366f1;
+        }
+    }
+}

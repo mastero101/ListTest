@@ -19,9 +19,9 @@ export class ProfileUserComponent implements OnInit {
     telefono: ['', [Validators.pattern('^[0-9+\-\s()]*$')]],
     direccion: ['']
   });
-  
+
   isEditMode = false;
-  ordenes: any[] = [];
+  configuraciones: any[] = [];
   nombre: string = '';
   id_usuario: string = '';
   telefono: string = '';
@@ -30,8 +30,8 @@ export class ProfileUserComponent implements OnInit {
   isLoading = true;
 
   constructor(
-    private apiService: ApiService, 
-    private router: Router, 
+    private apiService: ApiService,
+    private router: Router,
     private authService: AuthService,
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -50,36 +50,36 @@ export class ProfileUserComponent implements OnInit {
     try {
       this.isLoading = true;
       const idUsuario = localStorage.getItem('id_usuario');
-  
+
       if (!idUsuario) {
         console.error('No se encontró el id_usuario en el almacenamiento local');
         this.router.navigate(['/login']);
         return;
       }
-  
+
       const users = await this.apiService.getUsuarios();
-      
+
       if (!users || users.length === 0) {
         console.log('No se encontraron datos de usuarios');
         return;
       }
-  
+
       const usuario = users.find(u => u.id_usuario === idUsuario);
-  
+
       if (!usuario) {
         console.log(`No se encontró ningún usuario con id_usuario ${idUsuario}`);
         return;
       }
-  
+
       this.nombre = usuario.nombre;
       this.img = usuario.img;
       this.id_usuario = usuario.id_usuario;
       this.direccion = usuario.direccion;
       this.telefono = usuario.telefono;
 
-      // Cargar las órdenes del usuario
-      await this.loadUserOrders();
-      
+      // Cargar las configuraciones del usuario
+      await this.loadUserConfiguraciones();
+
       // Actualizar el formulario con los datos del usuario
       this.profileForm.patchValue({
         nombre: this.nombre,
@@ -97,27 +97,23 @@ export class ProfileUserComponent implements OnInit {
     }
   }
 
-  async loadUserOrders() {
+  async loadUserConfiguraciones() {
     try {
-      // Simulación de carga de órdenes
+      // Simulación de carga de configuraciones guardadas
       await this.simulateApiCall(() => {
-        // En una aplicación real, esto sería algo como:
-        // const response = await this.apiService.getOrdenesPorUsuario(this.id_usuario).toPromise();
-        // this.ordenes = response.data || [];
-        
-        // Datos de ejemplo
-        this.ordenes = [
-          { id_orden: 'ORD-001', fecha: new Date(), estado: 'completado' },
-          { id_orden: 'ORD-002', fecha: new Date(Date.now() - 86400000), estado: 'en_proceso' },
-          { id_orden: 'ORD-003', fecha: new Date(Date.now() - 172800000), estado: 'pendiente' }
+        // Datos de ejemplo de configuraciones guardadas
+        this.configuraciones = [
+          { id_config: '618', nombre: 'PC Gaming Entrada', fecha: new Date(), precio: 1250 },
+          { id_config: '620', nombre: 'Workstation Pro', fecha: new Date(Date.now() - 86400000), precio: 2400 },
+          { id_config: '622', nombre: 'Build Ultra 4K', fecha: new Date(Date.now() - 172800000), precio: 3500 }
         ];
       });
     } catch (error) {
-      console.error('Error al cargar las órdenes:', error);
-      this.ordenes = [];
+      console.error('Error al cargar las configuraciones:', error);
+      this.configuraciones = [];
     }
   }
-  
+
   // Función auxiliar para simular llamadas a la API
   private async simulateApiCall(callback: () => void): Promise<void> {
     this.isLoading = true;
@@ -154,7 +150,7 @@ export class ProfileUserComponent implements OnInit {
 
     try {
       const formData = this.profileForm.value;
-      
+
       // Actualizar los datos locales
       this.nombre = formData.nombre;
       this.telefono = formData.telefono;
@@ -166,9 +162,9 @@ export class ProfileUserComponent implements OnInit {
         // await this.apiService.actualizarUsuario(this.id_usuario, formData).toPromise();
         console.log('Perfil actualizado:', formData);
       });
-      
+
       this.isEditMode = false;
-      
+
       this.snackBar.open('Perfil actualizado correctamente', 'Cerrar', {
         duration: 3000,
         panelClass: ['success-snackbar']
