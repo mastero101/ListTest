@@ -1,125 +1,171 @@
-<div class="config-container" *ngIf="configData">
-  <div class="header-section">
-    <div class="title-container">
-      <h1>Detalles de Configuración</h1>
-      <span class="price-tag">{{ getRoundedTotalPrecio() }}K</span>
+<div class="detail-page-wrapper" *ngIf="configData">
+  <div class="content-container">
+    <div class="header-card">
+      <div class="header-overlay"></div>
+      <div class="header-main">
+        <div class="title-area">
+          <button mat-icon-button routerLink="/builds" class="back-btn" matTooltip="Volver al cotizador">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <div>
+            <h1>Configuración</h1>
+            <p>Generado el {{ formatFechaHora(fechaHora) }}</p>
+          </div>
+        </div>
+        <div class="price-badge">
+          <span class="currency">$</span>
+          <span class="amount">{{ getTotalPrecio() | number }}</span>
+        </div>
+      </div>
+      
+      <div class="action-footer">
+        <div class="actions">
+          <button mat-flat-button color="primary" (click)="compartirConfiguracion()">
+            <mat-icon>share</mat-icon>
+            Compartir
+          </button>
+          <button mat-stroked-button (click)="exportarPDF()">
+            <mat-icon>picture_as_pdf</mat-icon>
+            Exportar PDF
+          </button>
+          <button mat-stroked-button (click)="imprimir()">
+            <mat-icon>print</mat-icon>
+            Imprimir
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="button-group">
-      <button class="btn-action share" (click)="compartirConfiguracion()">
-        <i class="fas fa-share-alt"></i>
-        <span>Compartir</span>
-      </button>
-      <button class="btn-action pdf" (click)="exportarPDF()">
-        <i class="fas fa-file-pdf"></i>
-        <span>Exportar PDF</span>
-      </button>
-      <button class="btn-action print" (click)="imprimir()">
-        <i class="fas fa-print"></i>
-        <span>Imprimir</span>
-      </button>
-    </div>
-  </div>
 
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Componente</th>
-          <th>Precio</th>
-          <th>Tienda</th>
-          <th>Consumo</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let key of Object?.keys(configData)">
-          <td>
-            <div class="component-info">
-              <span class="component-name">{{ configData[key]?.modelo }}</span>
+    <div class="main-grid">
+      <div class="components-column">
+        <mat-card class="list-card">
+          <mat-card-header>
+            <mat-card-title>Componentes Seleccionados</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          
+          <div class="component-list">
+            <div class="component-row" *ngFor="let key of Object?.keys(configData)" (click)="verDetalles(key)">
+              <div class="type-icon" [ngClass]="key">
+                <mat-icon>{{ getIconForKey(key) }}</mat-icon>
+              </div>
+              <div class="component-details">
+                <div class="name-row">
+                  <span class="part-type">{{ key | titlecase }}</span>
+                  <span class="part-name">{{ configData[key]?.modelo }}</span>
+                </div>
+                <div class="meta-row">
+                  <a [href]="configData[key]?.url" target="_blank" class="store-link-wrapped" (click)="$event.stopPropagation()">
+                    <span class="store-tag">
+                      <mat-icon>storefront</mat-icon>
+                      {{ configData[key]?.tienda }}
+                    </span>
+                  </a>
+                  <span class="power-tag">
+                    <mat-icon>bolt</mat-icon>
+                    {{ configData[key]?.consumo }}W
+                  </span>
+                </div>
+              </div>
+              <div class="price-column">
+                <span class="price-val">{{ configData[key]?.precio | currency }}</span>
+                <mat-icon class="arrow">chevron_right</mat-icon>
+              </div>
             </div>
-          </td>
-          <td>{{ configData[key]?.precio | currency : "USD" : "symbol" }}</td>
-          <td>
-            <a [href]="configData[key].url" target="_blank" class="store-link">
-              <i class="fas fa-store"></i>
-              {{ configData[key].tienda }}
-            </a>
-          </td>
-          <td class="consumption">{{ configData[key]?.consumo }} W</td>
-          <td>
-            <button class="icon-button" (click)="verDetalles(key)">
-              <i class="fas fa-info-circle"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          </div>
+        </mat-card>
+      </div>
 
-  <div class="stats-cards">
-    <div class="stat-card">
-      <i class="fas fa-bolt"></i>
-      <div class="stat-info">
-        <span class="stat-label">Consumo Total</span>
-        <span class="stat-value">{{ getTotalConsumo() }} W</span>
-      </div>
-    </div>
-    <div class="stat-card">
-      <i class="fas fa-tags"></i>
-      <div class="stat-info">
-        <span class="stat-label">Precio Total</span>
-        <span class="stat-value">{{ getTotalPrecio() | currency : "USD" : "symbol" }}</span>
-      </div>
-    </div>
-    <div class="stat-card">
-      <i class="fas fa-clock"></i>
-      <div class="stat-info">
-        <span class="stat-label">Última Actualización</span>
-        <span class="stat-value">{{ formatFechaHora(fechaHora) }}</span>
+      <div class="summary-column">
+        <mat-card class="stats-card">
+          <mat-card-header>
+            <mat-card-title>Estabilidad Energética</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="power-summary" [style.--status-color]="getPowerStatus().color">
+              <div class="power-circle" [style.border-top-color]="getPowerStatus().color">
+                <span class="val">{{ getTotalConsumo() }}</span>
+                <span class="unit">Watts</span>
+              </div>
+              <div class="power-status-label" [style.color]="getPowerStatus().color">
+                <mat-icon>{{ getPowerStatus().percent > 100 ? 'report_problem' : (getPowerStatus().percent > 80 ? 'warning' : 'check_circle') }}</mat-icon>
+                <span>{{ getPowerStatus().label }}</span>
+              </div>
+              <p class="limit-msg">
+                Fuente detectada: <strong>{{ getActualPSUWattage() > 0 ? getActualPSUWattage() + 'W' : 'No definida' }}</strong><br>
+                Uso de capacidad: <strong>{{ getPowerStatus().percent | number:'1.0-1' }}%</strong>
+              </p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="valuation-card">
+          <mat-card-header>
+            <mat-card-title>Inversión Total</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="price-breakdown">
+              <div class="breakdown-item total">
+                <span>Monto Final</span>
+                <span>{{ getTotalPrecio() | currency }}</span>
+              </div>
+              <div class="iva-note">
+                <mat-icon>info</mat-icon>
+                <span>Precios con IVA incluido. Los costos pueden variar según la tienda.</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Premium Modal -->
 <div class="modal-overlay" *ngIf="modalVisible" (click)="cerrarModal()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <div class="modal-header">
-      <h2>{{ componenteSeleccionado?.modelo }}</h2>
-      <button class="close-button" (click)="cerrarModal()">
-        <i class="fas fa-times"></i>
-      </button>
+  <div class="premium-modal" (click)="$event.stopPropagation()">
+    <div class="modal-gallery">
+      <img [src]="componenteSeleccionado?.img" [alt]="componenteSeleccionado?.modelo" (error)="onImageError($event)">
     </div>
-
-    <div class="modal-body">
-      <div class="imagen-componente">
-        <img 
-          [src]="componenteSeleccionado?.img" 
-          [alt]="componenteSeleccionado?.modelo"
-          (error)="onImageError($event)"
-          loading="lazy"
-        >
+    <div class="modal-info">
+      <div class="modal-header">
+        <div>
+          <span class="type-tag">Componente</span>
+          <h2>{{ componenteSeleccionado?.modelo }}</h2>
+        </div>
+        <button mat-icon-button (click)="cerrarModal()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      
+      <div class="specs-grid">
+        <div class="spec-item">
+          <mat-icon>payments</mat-icon>
+          <div>
+            <label>Precio</label>
+            <p>{{ componenteSeleccionado?.precio | currency }}</p>
+          </div>
+        </div>
+        <div class="spec-item">
+          <mat-icon>store</mat-icon>
+          <div>
+            <label>Tienda</label>
+            <p>{{ componenteSeleccionado?.tienda }}</p>
+          </div>
+        </div>
+        <div class="spec-item">
+          <mat-icon>flash_on</mat-icon>
+          <div>
+            <label>Consumo</label>
+            <p>{{ componenteSeleccionado?.consumo }}W</p>
+          </div>
+        </div>
       </div>
 
-      <div class="detalle-grid">
-        <div class="detalle-item">
-          <span class="label">Precio</span>
-          <span class="value">${{ componenteSeleccionado?.precio.toLocaleString() }}</span>
-        </div>
-        <div class="detalle-item">
-          <span class="label">Tienda</span>
-          <span class="value">{{ componenteSeleccionado?.tienda }}</span>
-        </div>
-        <div class="detalle-item">
-          <span class="label">Consumo</span>
-          <span class="value">{{ componenteSeleccionado?.consumo }}W</span>
-        </div>
-      </div>
-
-      <div class="tienda-link">
-        <a [href]="componenteSeleccionado?.url" target="_blank" class="btn-tienda">
-          <i class="fas fa-shopping-cart"></i>
-          Ver en tienda
+      <div class="modal-actions">
+        <a mat-flat-button color="primary" [href]="componenteSeleccionado?.url" target="_blank" class="buy-btn">
+          <mat-icon>shopping_cart</mat-icon>
+          Comprar en {{ componenteSeleccionado?.tienda }}
         </a>
       </div>
     </div>

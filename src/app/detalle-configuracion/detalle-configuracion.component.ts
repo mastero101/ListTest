@@ -18,11 +18,11 @@ export class DetalleConfiguracionComponent {
   modalVisible = false;
   componenteSeleccionado: any = null;
 
-  constructor(private route: ActivatedRoute, private navbarComponent: NavbarComponent, private dialog: MatDialog) {}
+  constructor(private route: ActivatedRoute, private navbarComponent: NavbarComponent, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-    const configId = params['id'];
+      const configId = params['id'];
       if (configId) {
         this.recoverConfiguracion(configId);
       }
@@ -57,21 +57,21 @@ export class DetalleConfiguracionComponent {
       'enfriamiento',
       'gabinete'
     ];
-  
+
     // Añade un tipo de índice a this.configData
     const configDataWithIndex: { [key: string]: any } = this.configData;
-  
+
     // Ordena las claves según el orden especificado
     const sortedKeys = Object.keys(configDataWithIndex).sort((a, b) => {
       return order.indexOf(a) - order.indexOf(b);
     });
-  
+
     // Crea un nuevo objeto con las claves ordenadas
     const sortedConfigData = sortedKeys.reduce((acc, key) => {
       acc[key] = configDataWithIndex[key];
       return acc;
     }, {} as { [key: string]: any });
-  
+
     // Reemplaza el objeto original con el objeto ordenado
     this.configData = sortedConfigData;
   }
@@ -83,7 +83,7 @@ export class DetalleConfiguracionComponent {
 
     return `${formatoFecha} ${formatoHora}`;
   }
-  
+
   getTotalPrecio(): number {
     let total = 0;
     if (this.configData) {
@@ -104,13 +104,36 @@ export class DetalleConfiguracionComponent {
     return totalConsumo;
   }
 
+  getActualPSUWattage(): number {
+    const fuente = this.configData['fuente'];
+    if (!fuente || !fuente.potencia) return 0;
+    return parseInt(fuente.potencia) || 0;
+  }
+
+  getPowerStatus(): { color: string, label: string, percent: number } {
+    const consumo = this.getTotalConsumo();
+    const psu = this.getActualPSUWattage();
+
+    if (psu === 0) return { color: 'gray', label: 'Fuente no detectada', percent: 0 };
+
+    const usagePercent = (consumo / psu) * 100;
+
+    if (usagePercent <= 80) {
+      return { color: '#22c55e', label: 'Estable (Margen > 20%)', percent: usagePercent };
+    } else if (usagePercent <= 100) {
+      return { color: '#f59e0b', label: 'Carga Alta (Margen < 20%)', percent: usagePercent };
+    } else {
+      return { color: '#ef4444', label: 'Crítico (Excede capacidad)', percent: usagePercent };
+    }
+  }
+
   getRoundedTotalPrecio(): number {
     return Math.round(this.getTotalPrecio() / 1000);
   }
 
   compartirConfiguracion(): void {
     const currentUrl = window.location.href;
-    
+
     navigator.clipboard.writeText(currentUrl).then(() => {
       alert('¡Enlace copiado al portapapeles!');
     }).catch(err => {
@@ -122,15 +145,15 @@ export class DetalleConfiguracionComponent {
     // Crear el PDF
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pageWidth = pdf.internal.pageSize.getWidth();
-    
+
     // Agregar título centrado
     pdf.setFontSize(24);
-    pdf.text('Detalle de Configuración', pageWidth/2, 20, { align: 'center' });
-    
+    pdf.text('Detalle de Configuración', pageWidth / 2, 20, { align: 'center' });
+
     // Calcular totales
     const precioTotal = this.getTotalPrecio();
     const consumoTotal = this.getTotalConsumo();
-    
+
     // Agregar información general con formato
     pdf.setFontSize(12);
     pdf.text(`Fecha: ${this.formatFechaHora(this.fechaHora)}`, 20, 40);
@@ -161,11 +184,11 @@ export class DetalleConfiguracionComponent {
       body: data,
       startY: 70,
       theme: 'grid',
-      styles: { 
+      styles: {
         fontSize: 10,
         cellPadding: 5
       },
-      headStyles: { 
+      headStyles: {
         fillColor: [30, 144, 255],
         textColor: 255,
         fontStyle: 'bold'
@@ -177,7 +200,7 @@ export class DetalleConfiguracionComponent {
         3: { cellWidth: 30 }  // Consumo
       },
       // Estilo especial para la última fila (totales)
-      didParseCell: function(data: any) {
+      didParseCell: function (data: any) {
         if (data.row.index === data.table.body.length - 1) {
           data.cell.styles.fontStyle = 'bold';
           data.cell.styles.fillColor = [240, 240, 240];
@@ -215,8 +238,21 @@ export class DetalleConfiguracionComponent {
   }
 
   onImageError(event: any): void {
-    event.target.parentElement.classList.add('error');
-    event.target.style.display = 'none';
-    event.target.parentElement.innerHTML = 'Imagen no disponible';
+    event.target.src = 'assets/images/placeholder-pc.png'; // Asegúrate de que exista o usa una URL de placeholder
+    event.target.classList.add('image-placeholder');
+  }
+
+  getIconForKey(key: string): string {
+    const icons: { [key: string]: string } = {
+      procesador: 'cpu',
+      placaMadre: 'memory',
+      ram: 'reorder',
+      almacenamiento: 'storage',
+      fuente: 'settings_input_component',
+      grafica: 'videogame_asset',
+      enfriamiento: 'ac_unit',
+      gabinete: 'kitchen'
+    };
+    return icons[key] || 'extension';
   }
 }
