@@ -1,23 +1,89 @@
 <mat-sidenav-container class="sidenav-container" [ngClass]="{ 'dark-theme': darkTheme }">
   <mat-sidenav [opened]="opened" mode="side" class="sidenav">
-    <mat-nav-list>
-      <a mat-list-item routerLink="/">Home</a>
-      <a mat-list-item routerLink="/profile" *ngIf="isAuthenticated">User Profile</a>
-      <a mat-list-item routerLink="/register-user" *ngIf="isAuthenticated">Registrar Usuario</a>
-      <a mat-list-item routerLink="/login" *ngIf="!isAuthenticated">Login</a>
-      <a mat-list-item routerLink="/chatgpt" *ngIf="isAuthenticated">ChatGPT</a>
-      <a mat-list-item routerLink="/parts" *ngIf="isAuthenticated">Registrar Partes</a>
-      <a mat-list-item routerLink="/edit" *ngIf="isAuthenticated">Editar Partes</a>
-      <a mat-list-item routerLink="/builds">Consultar Partes</a>
-      <a mat-list-item routerLink="/valuacion">Valuaciones</a>
-      <a mat-list-item routerLink="/home">Recomendaciones</a>
-    </mat-nav-list>
-    <button class="close-session" mat-raised-button color="warn" *ngIf="isAuthenticated" (click)="logout()">
-      Cerrar sesión
-    </button>
-      <button class="toggle-theme-button" mat-icon-button (click)="toggleTheme()" >
-        <mat-icon>{{ darkTheme ? 'brightness_7' : 'brightness_4' }}</mat-icon>
-      </button>   
+    <div class="sidebar-header">
+      <div class="logo">
+        <mat-icon class="logo-icon">computer</mat-icon>
+        <span>PC Builder</span>
+      </div>
+      <button mat-icon-button (click)="toggleSidebar()" class="collapse-btn">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+    </div>
+
+    <div class="nav-sections">
+      <!-- General Navigation -->
+      <div class="nav-section">
+        <label class="section-label">Navegación</label>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/home" routerLinkActive="active-link">
+            <mat-icon matListIcon>home</mat-icon>
+            <span matLine>Inicio</span>
+          </a>
+          <a mat-list-item routerLink="/builds" routerLinkActive="active-link">
+            <mat-icon matListIcon>build</mat-icon>
+            <span matLine>Cotizador</span>
+          </a>
+          <a mat-list-item routerLink="/valuacion" routerLinkActive="active-link">
+            <mat-icon matListIcon>calculate</mat-icon>
+            <span matLine>Valuaciones</span>
+          </a>
+          <a mat-list-item routerLink="/guia" routerLinkActive="active-link">
+            <mat-icon matListIcon>help_outline</mat-icon>
+            <span matLine>Guía de uso</span>
+          </a>
+        </mat-nav-list>
+      </div>
+
+      <!-- Tools (Authenticated Only) -->
+      <div class="nav-section" *ngIf="isAuthenticated">
+        <label class="section-label">Herramientas</label>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/parts" routerLinkActive="active-link">
+            <mat-icon matListIcon>add_box</mat-icon>
+            <span matLine>Registrar Partes</span>
+          </a>
+          <a mat-list-item routerLink="/edit" routerLinkActive="active-link">
+            <mat-icon matListIcon>edit</mat-icon>
+            <span matLine>Editar Partes</span>
+          </a>
+          <a mat-list-item routerLink="/chatgpt" routerLinkActive="active-link">
+            <mat-icon matListIcon>psychology</mat-icon>
+            <span matLine>AI Assistant</span>
+          </a>
+          <a mat-list-item routerLink="/register-user" routerLinkActive="active-link">
+            <mat-icon matListIcon>person_add</mat-icon>
+            <span matLine>Registrar Usuario</span>
+          </a>
+        </mat-nav-list>
+      </div>
+
+      <!-- User Account -->
+      <div class="nav-section">
+        <label class="section-label">Cuenta</label>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/profile" *ngIf="isAuthenticated" routerLinkActive="active-link">
+            <mat-icon matListIcon>account_circle</mat-icon>
+            <span matLine>Mi Perfil</span>
+          </a>
+          <a mat-list-item routerLink="/login" *ngIf="!isAuthenticated" routerLinkActive="active-link">
+            <mat-icon matListIcon>login</mat-icon>
+            <span matLine>Iniciar Sesión</span>
+          </a>
+        </mat-nav-list>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="footer-actions">
+        <button mat-icon-button class="theme-btn" (click)="toggleTheme()" matTooltip="Cambiar tema">
+          <mat-icon>{{ darkTheme ? 'brightness_7' : 'brightness_4' }}</mat-icon>
+        </button>
+        <button mat-flat-button color="warn" class="logout-btn" *ngIf="isAuthenticated" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Salir</span>
+        </button>
+      </div>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <button mat-icon-button (click)="toggleSidebar()" class="toggle-button" *ngIf="showToggleButton" [disabled]="!showToggleButton">

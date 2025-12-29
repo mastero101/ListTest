@@ -1,28 +1,242 @@
+$primary-color: #5c3d99;
+$sidebar-bg: #ffffff;
+$text-color: #334155;
+$hover-bg: #f1f5f9;
+$active-bg: rgba(92, 61, 153, 0.1);
+$border-color: #e2e8f0;
+
 .sidenav-container {
-    height: 100%;
+  height: 100vh;
+  background-color: #f8fafc;
+}
+
+.sidenav {
+  width: 280px;
+  background-color: $sidebar-bg;
+  border-right: 1px solid $border-color;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.02);
+}
+
+// Header
+.sidebar-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $primary-color;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+
+    .logo-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
   }
-  
+
+  .collapse-btn {
+    color: #64748b;
+
+    &:hover {
+      background-color: $hover-bg;
+      color: $primary-color;
+    }
+  }
+}
+
+// Navigation Content
+.nav-sections {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+  }
+}
+
+.nav-section {
+  margin-bottom: 24px;
+
+  .section-label {
+    display: block;
+    padding: 0 16px 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// List Items
+mat-nav-list {
+  padding-top: 0 !important;
+
+  a[mat-list-item] {
+    height: 48px !important;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    color: $text-color;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $hover-bg !important;
+      color: $primary-color;
+      transform: translateX(4px);
+    }
+
+    &.active-link {
+      background-color: $active-bg !important;
+      color: $primary-color;
+      font-weight: 600;
+
+      mat-icon {
+        color: $primary-color;
+      }
+    }
+
+    mat-icon {
+      margin-right: 16px;
+      color: #64748b;
+      font-size: 22px;
+      transition: color 0.2s ease;
+    }
+
+    span {
+      font-size: 0.95rem;
+    }
+  }
+}
+
+// Footer
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid $border-color;
+  background-color: #fafafa;
+
+  .footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .theme-btn {
+      color: #64748b;
+
+      &:hover {
+        background-color: $hover-bg;
+        color: $primary-color;
+      }
+    }
+
+    .logout-btn {
+      flex: 1;
+      border-radius: 8px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+// Toggle Button (Floating)
+.toggle-button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1001;
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid $border-color;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background-color: $primary-color;
+    color: white;
+    transform: scale(1.1);
+  }
+}
+
+// Dark Theme Overrides
+.dark-theme {
   .sidenav {
-    width: 250px;
-  }
-  
-  .toggle-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index:1000;
+    background-color: #0f172a;
+    border-color: #1e293b;
+    color: #f8fafc;
   }
 
-  .toggle-theme-button {
-    margin-left: 0.6em;
+  .sidebar-header {
+    border-color: #1e293b;
+
+    .logo {
+      color: #818cf8;
+    }
   }
 
-  .close-session {
-    margin-left: 1em; 
-    margin-top: -2em;
+  .nav-sections {
+    &::-webkit-scrollbar-thumb {
+      background: #334155;
+    }
   }
-  
-  .dark-theme {
-    background-color: grey;
-    color: black;
+
+  .section-label {
+    color: #64748b;
   }
+
+  mat-nav-list a[mat-list-item] {
+    color: #94a3b8;
+
+    &:hover {
+      background-color: #1e293b !important;
+      color: #f8fafc;
+    }
+
+    &.active-link {
+      background-color: rgba(129, 140, 248, 0.1) !important;
+      color: #818cf8;
+
+      mat-icon {
+        color: #818cf8;
+      }
+    }
+  }
+
+  .sidebar-footer {
+    background-color: #111827;
+    border-color: #1e293b;
+  }
+
+  .sidenav-container {
+    background-color: #020617;
+  }
+}
+
+// Adjust content when sidebar is open/closed
+mat-sidenav-content {
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 24px;
+}

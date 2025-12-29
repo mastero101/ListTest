@@ -11,29 +11,30 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
   usuario: string = '';
   contrasena: string = '';
+  hidePassword: boolean = true;
 
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
   }
-  
+
   onSubmit() {
     this.authService.login(this.usuario, this.contrasena)
-    .then((response) => {
-      
-      if (response.data.message === 'Login exitoso') {
-        console.log("Inicio Exitoso");
-        alert("Login Successful")
-        localStorage.setItem('id_usuario', this.usuario);
-        this.router.navigate(['/profile']);
-      } else {
-        console.log('Error de autenticación:', response.data.message);
-      }
-    })
-    .catch((error) => {
-      console.log('Error de autenticación:', error);
-      alert("Error de Inicio de Sesion, usuario o contraseña incorrectos");
-    });
+      .then((response) => {
+
+        if (response.data.message === 'Login exitoso') {
+          console.log("Inicio Exitoso");
+          alert("Login Successful")
+          localStorage.setItem('id_usuario', this.usuario);
+          this.router.navigate(['/profile']);
+        } else {
+          console.log('Error de autenticación:', response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.log('Error de autenticación:', error);
+        alert("Error de Inicio de Sesion, usuario o contraseña incorrectos");
+      });
   }
 
 }

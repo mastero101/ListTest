@@ -1,20 +1,45 @@
-<mat-card id="main-content" class="main-content">
-    <mat-card-header>
-        <mat-card-title>Iniciar Sesión</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <form (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill">
-            <mat-label>Usuario</mat-label>
-            <input matInput type="text" [(ngModel)]="usuario" name="usuario" required>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Contraseña</mat-label>
-            <input matInput type="password" [(ngModel)]="contrasena" name="contrasena" required>
-        </mat-form-field>
-        <button mat-raised-button type="submit">Iniciar Sesión</button>
-        </form>
-    </mat-card-content>
-</mat-card>
+<div class="login-page-wrapper">
+  <div class="login-container">
+    <mat-card class="login-card">
+      <div class="login-header">
+        <div class="logo-area">
+          <mat-icon class="logo-icon">computer</mat-icon>
+        </div>
+        <h1>Bienvenido de nuevo</h1>
+        <p>Inicia sesión para gestionar tus armados</p>
+      </div>
 
-  
+      <mat-card-content>
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+          <div class="form-fields">
+            <mat-form-field appearance="outline">
+              <mat-label>Usuario</mat-label>
+              <input matInput type="text" [(ngModel)]="usuario" name="usuario" required placeholder="Ingresa tu usuario">
+              <mat-icon matPrefix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Contraseña</mat-label>
+              <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="contrasena" name="contrasena" required placeholder="Ingresa tu contraseña">
+              <mat-icon matPrefix>lock</mat-icon>
+              <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" type="submit" [disabled]="!loginForm.form.valid" class="submit-btn">
+              <span>Iniciar Sesión</span>
+              <mat-icon>login</mat-icon>
+            </button>
+          </div>
+        </form>
+
+        <div class="login-footer">
+          <p>¿No tienes una cuenta? <span class="register-link" routerLink="/register-user">Regístrate aquí</span></p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
