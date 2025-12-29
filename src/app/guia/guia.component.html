@@ -1,0 +1,67 @@
+<div class="guia-container">
+  <header class="guia-header">
+    <h1>Guía del Cotizador PC Builder</h1>
+    <p>Aprende a usar nuestra herramienta para configurar tu PC ideal</p>
+  </header>
+
+  <div class="steps-grid">
+    <!-- Paso 1 -->
+    <mat-card class="step-card">
+      <div class="step-number">1</div>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>search</mat-icon>
+        <mat-card-title>Búsqueda de Componentes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Utiliza los selectores con búsqueda integrada para encontrar rápidamente el <strong>Procesador</strong> y la <strong>Tarjeta Gráfica</strong> que prefieras.</p>
+        <p>Solo escribe el nombre y el sistema te mostrará las coincidencias.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Paso 2 -->
+    <mat-card class="step-card">
+      <div class="step-number">2</div>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>check_circle</mat-icon>
+        <mat-card-title>Selección de Partes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Selecciona el resto de los componentes: Madre, RAM, Almacenamiento, Disipador, Fuente y Gabinete.</p>
+        <p>Al seleccionar cada uno, verás su <strong>precio</strong>, <strong>consumo en Watts</strong> y un enlace a la tienda.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Paso 3 -->
+    <mat-card class="step-card">
+      <div class="step-number">3</div>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>bolt</mat-icon>
+        <mat-card-title>Control de Consumo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>El sistema sumará automáticamente el consumo de todos los componentes.</p>
+        <p class="warning-text"><mat-icon>warning</mat-icon> Si la fuente de poder no es suficiente para alimentar el procesador y la gráfica, aparecerá una advertencia roja.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Paso 4 -->
+    <mat-card class="step-card">
+      <div class="step-number">4</div>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>get_app</mat-icon>
+        <mat-card-title>Exportar y Compartir</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Una vez terminada tu configuración, puedes exportarla en formato <strong>TXT, PDF o CSV</strong>.</p>
+        <p>También puedes generar un <strong>enlace único</strong> para compartir tu armado con amigos o en redes sociales.</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="guia-actions">
+    <button mat-raised-button color="primary" routerLink="/builds">
+      <mat-icon>play_arrow</mat-icon>
+      ¡Empezar a armar!
+    </button>
+  </div>
+</div>

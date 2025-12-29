@@ -35,6 +35,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileUserComponent } from './profile-user/profile-user.component';
 import { HomeComponent } from './home/home.component';
 import { ValuacionComponent } from './valuacion/valuacion.component';
+import { GuiaComponent } from './guia/guia.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ValuacionComponent } from './valuacion/valuacion.component';
     ProfileUserComponent,
     HomeComponent,
     ValuacionComponent,
+    GuiaComponent,
   ],
   imports: [
     BrowserModule,

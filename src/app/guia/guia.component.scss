@@ -1,0 +1,170 @@
+.guia-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    min-height: 100vh;
+    color: #f8fafc;
+}
+
+.guia-header {
+    text-align: center;
+    margin-bottom: 60px;
+    animation: fadeInDown 0.8s ease-out;
+
+    h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(to right, #38bdf8, #818cf8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    p {
+        font-size: 1.25rem;
+        color: #94a3b8;
+    }
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.step-card {
+    position: relative;
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: visible;
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    .step-number {
+        position: absolute;
+        top: -20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #38bdf8, #818cf8);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.4);
+    }
+
+    mat-card-header {
+        margin-bottom: 20px;
+
+        mat-icon {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        mat-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+    }
+
+    mat-card-content {
+        p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 15px;
+
+            strong {
+                color: #38bdf8;
+            }
+        }
+
+        .warning-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #f87171;
+            font-size: 0.9rem;
+            background: rgba(248, 113, 113, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+
+            mat-icon {
+                font-size: 18px;
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+}
+
+.guia-actions {
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+
+    button {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        background: linear-gradient(to right, #38bdf8, #818cf8);
+        font-weight: 600;
+        transition: all 0.3s ease;
+
+        &:hover {
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+            transform: scale(1.05);
+        }
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+    .guia-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+}
