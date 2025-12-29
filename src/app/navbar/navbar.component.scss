@@ -187,11 +187,35 @@ mat-nav-list {
   border: 1px solid var(--border-color);
   color: var(--text-color);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+
+  mat-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
 
   &:hover {
     background-color: var(--primary-color);
     color: white;
     transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    top: 12px;
+    left: 12px;
+    width: 36px;
+    height: 36px;
   }
 }
 
@@ -217,5 +241,10 @@ mat-nav-list {
 
 mat-sidenav-content {
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 24px;
+  padding: 32px;
+  min-height: 100vh;
+
+  @media (max-width: 768px) {
+    padding: 60px 16px 24px; // Extra top padding to clear the floating button
+  }
 }
