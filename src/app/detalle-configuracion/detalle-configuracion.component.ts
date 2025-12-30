@@ -12,7 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class DetalleConfiguracionComponent {
-  configData: any = {};
+  configData: any = null;
+  loading = true;
+  error = false;
   Object = Object;
   fechaHora: any;
   modalVisible = false;
@@ -31,18 +33,21 @@ export class DetalleConfiguracionComponent {
   }
 
   recoverConfiguracion(configId: string) {
-    this.configData = {};
+    this.loading = true;
+    this.error = false;
+    this.configData = null;
     // Haz una solicitud al servidor para recuperar la configuración basada en el ID
     axios.get(`https://nodemysql12.duckdns.org:443/configuraciones/${configId}`)
       .then(response => {
         this.configData = response.data.configData;
         this.fechaHora = response.data.fechaHora;
         this.sortConfigData();  // Llama a la función para ordenar los datos
-        console.log(this.configData);
-        console.log(this.fechaHora);
+        this.loading = false;
       })
       .catch(error => {
         console.error('Error al recuperar configuración', error);
+        this.loading = false;
+        this.error = true;
       });
   }
 

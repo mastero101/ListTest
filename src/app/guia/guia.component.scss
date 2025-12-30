@@ -127,7 +127,7 @@ $border-radius: 12px;
 
 .guia-actions {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 0px;
 
     button {
         padding: 12px 30px;
@@ -159,13 +159,17 @@ $border-radius: 12px;
 
 /* Responsive adjustment */
 @media (max-width: 768px) {
+    .guia-container {
+        padding-bottom: 100px; // Aumentar espacio al final para evitar cortes
+    }
+
     .guia-header h1 {
         font-size: 2rem;
     }
 
     .steps-grid {
         grid-template-columns: 1fr;
-        padding: 0 10px;
+        margin-bottom: 30px; // Reducir margen para subir el botón
     }
 }
 

@@ -1,4 +1,30 @@
-<div class="detail-page-wrapper" *ngIf="configData">
+<!-- Loading State -->
+<div class="loading-overlay" *ngIf="loading">
+  <div class="premium-loader">
+    <div class="loader-circle"></div>
+    <div class="loader-text">
+      <span class="main-text">Cargando Configuración</span>
+      <span class="sub-text">Preparando tu PC ideal...</span>
+    </div>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="error-wrapper" *ngIf="!loading && error">
+  <div class="error-card">
+    <div class="error-icon">
+      <mat-icon>search_off</mat-icon>
+    </div>
+    <h2>Configuración no encontrada</h2>
+    <p>Lo sentimos, no pudimos encontrar la configuración que buscas. Es posible que el enlace sea incorrecto o haya sido eliminada.</p>
+    <button mat-flat-button color="primary" routerLink="/home">
+      <mat-icon>home</mat-icon>
+      Volver al Inicio
+    </button>
+  </div>
+</div>
+
+<div class="detail-page-wrapper" *ngIf="!loading && configData">
   <div class="content-container">
     <div class="header-card">
       <div class="header-overlay"></div>
