@@ -125,7 +125,23 @@
   }
 }
 
-// Media queries para pantallas muy pequeñas
+@media (max-width: 768px) {
+  .home-container {
+    padding: 1rem 0.5rem; // Reducido para móviles
+  }
+
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .build-card {
+    min-height: auto; // Altura automática en móvil
+    margin-bottom: 0;
+  }
+}
+
 @media (max-width: 380px) {
   .hero-section {
     .hero-actions {
@@ -151,6 +167,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .build-card {
