@@ -244,8 +244,8 @@ export class DetalleConfiguracionComponent {
 
   getIconForKey(key: string): string {
     const icons: { [key: string]: string } = {
-      procesador: 'cpu',
-      placaMadre: 'memory',
+      procesador: 'memory',
+      placaMadre: 'developer_board',
       ram: 'reorder',
       almacenamiento: 'storage',
       fuente: 'settings_input_component',

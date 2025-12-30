@@ -262,6 +262,21 @@
         background: #fff7ed;
         color: #f97316;
       }
+
+      &.almacenamiento {
+        background: #f5f3ff;
+        color: #8b5cf6;
+      }
+
+      &.enfriamiento {
+        background: #ecfeff;
+        color: #06b6d4;
+      }
+
+      &.gabinete {
+        background: #f8fafc;
+        color: #64748b;
+      }
     }
 
     .component-details {
@@ -508,7 +523,7 @@
 .modal-overlay {
   position: fixed;
   top: 0;
-  left: 0;
+  left: -20px;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
