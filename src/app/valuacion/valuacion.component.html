@@ -1,82 +1,131 @@
-<div class="valuacion-container">
-    <h2>Valuación de Armados de Segunda Mano</h2>
-    
-    <mat-label for="year-selector">Selecciona el año de depreciación:</mat-label>
-    <mat-select id="year-selector" [(ngModel)]="anoSeleccionado" (change)="onYearChange(anoSeleccionado)">
-      <mat-option *ngFor="let year of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="year">{{ year }} año(s)</mat-option>
-    </mat-select>
-
-    <!--    
-    <mat-slider id="year-selector" min="0" max="10" step="1" showTickMarks discrete
-        [(ngModel)]="anoSeleccionado" 
-        (change)="onYearChange(anoSeleccionado)"
-        > 
-        <input matSliderThumb value="year">
-    </mat-slider>
-    -->
-  
-    <h3>Valor Total: {{ valorTotal | currency }}</h3>
-  
-    <h4>Selecciona Componentes por Tipo:</h4>
-    <div *ngFor="let tipo of ordenCategorias">
-      <h5>{{ formatCategoria(tipo) }}</h5>
-  
-
-  
-      <!-- Selector de componentes -->
-      <mat-form-field appearance="fill">
-        <mat-form-field *ngIf="tipo === 'gpu'" appearance="fill">
-            <mat-label>Selecciona o Busca GPU</mat-label>
-            <input matInput 
-                   [(ngModel)]="searchTermGPU" 
-                   (input)="filtrarGPUs()" 
-                   placeholder="Buscar GPU...">
-        </mat-form-field>
-        <mat-form-field *ngIf="tipo === 'procesador'" appearance="fill">
-            <mat-label>Selecciona o Busca procesador</mat-label>
-            <input matInput 
-                   [(ngModel)]="searchTermProcesador" 
-                   (input)="filtrarProcesadores()" 
-                   placeholder="Buscar procesador...">
-        </mat-form-field>
-        <mat-label>Selecciona un {{ tipo }}</mat-label>
-              <!-- Campos de búsqueda para Procesador y GPU -->
-        <mat-select (selectionChange)="seleccionarComponente(tipo, $event.value)">
-          <mat-option 
-            *ngFor="let componente of 
-              tipo === 'procesador' ? componentesFiltradosProcesador : 
-              tipo === 'gpu' ? componentesFiltradosGPU : 
-              obtenerComponentesPorTipo(tipo)" 
-            [value]="componente">
-            <img [src]="componente.img" alt="{{ componente.modelo }}" width="50" height="50" />
-            {{ componente.modelo }} - Precio: {{ componente.precio | currency }} 
-            - Precio Depreciado: {{ calcularDepreciacion(componente.precio, anoSeleccionado) | currency }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+<div class="valuacion-wrapper">
+  <div class="header-section">
+    <div class="title-group">
+      <h1>Valuación de PC de Segunda Mano</h1>
+      <p class="subtitle">Calcula el valor real de tu ensamble considerando la depreciación anual.</p>
     </div>
-  
-    <h4>Componentes Seleccionados:</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>Componente</th>
-          <th>Precio</th>
-          <th>Precio Depreciado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let componente of componentesSeleccionados | keyvalue">
-          <td>{{ componente.value.modelo }}</td>
-          <td>{{ componente.value.precio | currency }}</td>
-          <td>{{ calcularDepreciacion(componente.value.precio, anoSeleccionado) | currency }}</td>
-        </tr>
-        <tr>
-          <td colspan="2" style="text-align: right; font-weight: bold;">Total:</td>
-          <td>{{ calcularTotal() | currency }}</td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <button mat-raised-button color="primary" (click)="exportarPDF()">Exportar</button>
+    <div class="export-actions">
+      <button mat-flat-button color="primary" class="btn-export" (click)="exportarPDF()">
+        <mat-icon>download</mat-icon>
+        Exportar PDF
+      </button>
+    </div>
   </div>
+
+  <div class="main-content">
+    <div class="selection-area">
+      <!-- Depreciación Selector Card -->
+      <div class="glass-card depreciation-card">
+        <div class="card-header">
+          <mat-icon>history</mat-icon>
+          <h3>Tiempo de Uso</h3>
+        </div>
+        <div class="slider-container">
+          <mat-label>Antigüedad: <strong>{{ anoSeleccionado }} {{ anoSeleccionado === 1 ? 'año' : 'años' }}</strong></mat-label>
+          <mat-slider min="0" max="10" step="1" discrete>
+            <input matSliderThumb [(ngModel)]="anoSeleccionado" (ngModelChange)="onYearChange($event)">
+          </mat-slider>
+          <div class="depreciation-info">
+            <span class="badge">30% primer año</span>
+            <span class="badge">+10% años siguientes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Component Categories -->
+      <div class="categories-grid">
+        <div *ngFor="let tipo of ordenCategorias" class="component-card" [class.selected]="componentesSeleccionados[tipo]">
+          <div class="category-header">
+            <h4>{{ formatCategoria(tipo) }}</h4>
+            <mat-icon *ngIf="componentesSeleccionados[tipo]" class="check-icon">check_circle</mat-icon>
+          </div>
+
+          <!-- Búsqueda específica para CPU y GPU -->
+          <div class="search-field" *ngIf="tipo === 'procesador' || tipo === 'gpu'">
+            <mat-form-field appearance="outline" class="search-input">
+              <mat-icon matPrefix>search</mat-icon>
+              <mat-label>Buscar {{ formatCategoria(tipo) }}</mat-label>
+              <input matInput 
+                     [ngModel]="tipo === 'procesador' ? searchTermProcesador : searchTermGPU" 
+                     (input)="onSearchInput(tipo, $any($event.target).value)"
+                     placeholder="Modelo...">
+            </mat-form-field>
+          </div>
+
+          <!-- Selector -->
+          <mat-form-field appearance="outline" class="select-field">
+            <mat-label>Selecciona un {{ formatCategoria(tipo) }}</mat-label>
+            <mat-select (selectionChange)="seleccionarComponente(tipo, $event.value)">
+              <mat-option *ngFor="let componente of 
+                tipo === 'procesador' ? componentesFiltradosProcesador : 
+                tipo === 'gpu' ? componentesFiltradosGPU : 
+                obtenerComponentesPorTipo(tipo)" 
+                [value]="componente" class="component-option">
+                <div class="option-content">
+                  <img [src]="componente.img" alt="{{ componente.modelo }}" class="option-thumb" />
+                  <div class="option-text">
+                    <span class="option-model">{{ componente.modelo }}</span>
+                    <span class="option-price">{{ componente.precio | currency }}</span>
+                  </div>
+                </div>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Display Selected Component Info -->
+          <div class="selected-info" *ngIf="componentesSeleccionados[tipo] as sel">
+            <div class="sel-row">
+              <span class="label">P. Original:</span>
+              <span class="value">{{ sel.precio | currency }}</span>
+            </div>
+            <div class="sel-row highlight">
+              <span class="label">P. Valuado:</span>
+              <span class="value">{{ calcularDepreciacion(sel.precio, anoSeleccionado) | currency }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky Summary Card -->
+    <div class="summary-area">
+      <div class="summary-card">
+        <h3>Resumen de Valuación</h3>
+        <div class="total-display">
+          <span class="label">Valor Estimado</span>
+          <span class="amount">{{ valorTotal | currency }}</span>
+        </div>
+        
+        <div class="summary-list">
+          <div *ngFor="let item of componentesSeleccionados | keyvalue" class="summary-item">
+            <div class="item-info">
+              <span class="type">{{ formatCategoria(item.key) }}</span>
+              <span class="name text-truncate">{{ item.value.modelo }}</span>
+            </div>
+            <div class="item-price">
+              {{ calcularDepreciacion(item.value.precio, anoSeleccionado) | currency }}
+            </div>
+          </div>
+        </div>
+
+        <div class="empty-state" *ngIf="(componentesSeleccionados | keyvalue).length === 0">
+          <mat-icon>inventory_2</mat-icon>
+          <p>Selecciona componentes para ver la valuación.</p>
+        </div>
+
+        <div class="summary-footer" *ngIf="(componentesSeleccionados | keyvalue).length > 0">
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-label">Componentes</span>
+              <span class="stat-value">{{ (componentesSeleccionados | keyvalue).length }}</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Años Uso</span>
+              <span class="stat-value">{{ anoSeleccionado }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

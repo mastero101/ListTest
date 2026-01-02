@@ -38,7 +38,7 @@ export class ValuacionComponent implements OnInit {
   // Almacena el tipo de RAM de la motherboard seleccionada
   tipoRamMotherboard: string = '';
 
-  constructor(private componentesService: ComponentesService) {}
+  constructor(private componentesService: ComponentesService) { }
 
   ngOnInit(): void {
     this.recuperarComponentes();
@@ -120,81 +120,203 @@ export class ValuacionComponent implements OnInit {
   }
 
   formatCategoria(categoria: string): string {
-    return categoria.charAt(0).toUpperCase() + categoria.slice(1); // Capitaliza la primera letra
+    const mapping: { [key: string]: string } = {
+      'procesador': 'Procesador',
+      'motherboard': 'Placa Base',
+      'ram': 'Memoria RAM',
+      'almacenamiento': 'Almacenamiento',
+      'disipador': 'Refrigeración',
+      'psu': 'Fuente de Poder',
+      'gpu': 'Tarjeta Gráfica',
+      'gabinete': 'Gabinete'
+    };
+    return mapping[categoria.toLowerCase()] || (categoria.charAt(0).toUpperCase() + categoria.slice(1));
+  }
+
+  onSearchInput(tipo: string, value: string) {
+    if (tipo === 'procesador') {
+      this.searchTermProcesador = value;
+      this.filtrarProcesadores();
+    } else if (tipo === 'gpu') {
+      this.searchTermGPU = value;
+      this.filtrarGPUs();
+    }
   }
 
   filtrarProcesadores() {
-    // Filtra los procesadores según el término de búsqueda
-    this.componentesFiltradosProcesador = this.componentes.filter(componente => 
-      componente.tipo === 'procesador' && 
+    this.componentesFiltradosProcesador = this.componentes.filter(componente =>
+      componente.tipo === 'procesador' &&
       componente.modelo.toLowerCase().includes(this.searchTermProcesador.toLowerCase())
     );
   }
 
   filtrarGPUs() {
-    // Filtra los componentes de GPU según el término de búsqueda
-    this.componentesFiltradosGPU = this.componentes.filter(componente => 
-      componente.tipo === 'gpu' && 
+    this.componentesFiltradosGPU = this.componentes.filter(componente =>
+      componente.tipo === 'gpu' &&
       componente.modelo.toLowerCase().includes(this.searchTermGPU.toLowerCase())
     );
   }
 
   exportarPDF() {
     const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
 
-    // Agregar título
-    doc.setFontSize(18);
-    doc.text('Valuación de Armados de Segunda Mano', 10, 10);
+    // Colores del tema
+    const primaryColor: [number, number, number] = [92, 61, 153]; // #5c3d99
+    const accentColor: [number, number, number] = [139, 92, 246]; // #8b5cf6
+    const darkGray: [number, number, number] = [51, 51, 51];
+    const lightGray: [number, number, number] = [245, 245, 245];
 
-    // Agregar valor total
+    // ============ ENCABEZADO ============
+    // Fondo del encabezado
+    doc.setFillColor(...primaryColor);
+    doc.rect(0, 0, pageWidth, 45, 'F');
+
+    // Título principal
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Reporte de Valuación', pageWidth / 2, 20, { align: 'center' });
+
+    // Subtítulo
     doc.setFontSize(12);
-    doc.text(`Valor Total: ${this.valorTotal.toFixed(2)}`, 10, 20);
+    doc.setFont('helvetica', 'normal');
+    doc.text('PC de Segunda Mano', pageWidth / 2, 30, { align: 'center' });
 
-    // Agregar tabla de componentes seleccionados
-    const columnas = [
-      'Componente', // Encabezado de la columna
-      'Precio',     // Encabezado de la columna
-      'Precio Depreciado' // Encabezado de la columna
-    ];
+    // Fecha de generación
+    const fecha = new Date().toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    doc.setFontSize(9);
+    doc.text(`Generado: ${fecha}`, pageWidth / 2, 38, { align: 'center' });
 
-    const filas = Object.values(this.componentesSeleccionados).map(componente => [
+    // ============ INFORMACIÓN DE DEPRECIACIÓN ============
+    let yPos = 55;
+
+    // Cuadro de información
+    doc.setFillColor(...lightGray);
+    doc.roundedRect(15, yPos, pageWidth - 30, 25, 3, 3, 'F');
+
+    doc.setTextColor(...darkGray);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Tiempo de Uso:', 20, yPos + 8);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${this.anoSeleccionado} ${this.anoSeleccionado === 1 ? 'año' : 'años'}`, 50, yPos + 8);
+
+    doc.setFont('helvetica', 'bold');
+    doc.text('Depreciación Aplicada:', 20, yPos + 16);
+    doc.setFont('helvetica', 'normal');
+    const depreciacionTexto = this.anoSeleccionado === 0
+      ? 'Sin depreciación'
+      : this.anoSeleccionado === 1
+        ? '30% (primer año)'
+        : `30% primer año + ${(this.anoSeleccionado - 1) * 10}% años siguientes`;
+    doc.text(depreciacionTexto, 70, yPos + 16);
+
+    // ============ VALOR TOTAL DESTACADO ============
+    yPos += 35;
+
+    // Cuadro con gradiente simulado
+    doc.setFillColor(...primaryColor);
+    doc.roundedRect(15, yPos, pageWidth - 30, 30, 5, 5, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    doc.text('VALOR ESTIMADO TOTAL', pageWidth / 2, yPos + 10, { align: 'center' });
+
+    doc.setFontSize(22);
+    doc.setFont('helvetica', 'bold');
+    const valorFormateado = new Intl.NumberFormat('es-MX', {
+      style: 'currency',
+      currency: 'MXN'
+    }).format(this.valorTotal);
+    doc.text(valorFormateado, pageWidth / 2, yPos + 22, { align: 'center' });
+
+    // ============ TABLA DE COMPONENTES ============
+    yPos += 40;
+
+    const componentesArray = Object.entries(this.componentesSeleccionados).map(([tipo, componente]) => [
+      this.formatCategoria(tipo),
       componente.modelo,
-      componente.precio.toFixed(2), // Formato de precio
-      this.calcularDepreciacion(componente.precio, this.anoSeleccionado).toFixed(2) // Formato de precio depreciado
+      new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(componente.precio),
+      new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(
+        this.calcularDepreciacion(componente.precio, this.anoSeleccionado)
+      )
     ]);
 
-    // Agregar una fila para el total
-    const totalRow = [
-      'Total', // Componente
-      '',      // Precio (vacío)
-      this.calcularTotal().toFixed(2) // Precio depreciado
-    ];
-
-    filas.push(totalRow); // Agregar la fila del total a las filas
-
-    const autoTableConfig = {
-      head: [columnas],
-      body: filas,
-      startY: 30,
-      theme: 'grid' as 'grid',
-      styles: {
-        fontSize: 10,
-        cellPadding: 3,
-        overflow: 'linebreak' as 'linebreak',
+    autoTable(doc, {
+      startY: yPos,
+      head: [['Categoría', 'Componente', 'Precio Original', 'Precio Valuado']],
+      body: componentesArray,
+      theme: 'striped',
+      headStyles: {
+        fillColor: primaryColor,
+        textColor: [255, 255, 255],
+        fontSize: 11,
+        fontStyle: 'bold',
+        halign: 'center'
+      },
+      bodyStyles: {
+        fontSize: 9,
+        textColor: darkGray
+      },
+      alternateRowStyles: {
+        fillColor: [250, 250, 250]
       },
       columnStyles: {
-        0: { cellWidth: 80 },
-        1: { cellWidth: 40 },
-        2: { cellWidth: 50 },
+        0: { cellWidth: 35, fontStyle: 'bold', textColor: primaryColor },
+        1: { cellWidth: 70 },
+        2: { cellWidth: 35, halign: 'right' },
+        3: { cellWidth: 35, halign: 'right', fontStyle: 'bold' }
       },
-      margin: { top: 40 },
-    };
+      margin: { left: 15, right: 15 },
+      didDrawPage: (data) => {
+        // Pie de página
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.setFont('helvetica', 'italic');
+        doc.text(
+          'Este reporte es una estimación basada en precios de mercado y depreciación estándar.',
+          pageWidth / 2,
+          pageHeight - 10,
+          { align: 'center' }
+        );
+      }
+    });
 
-    // Generar la tabla
-    autoTable(doc, autoTableConfig);
+    // ============ RESUMEN FINAL ============
+    const finalY = (doc as any).lastAutoTable.finalY + 10;
 
-    // Guardar el PDF
-    doc.save('valuacion.pdf');
+    if (finalY < pageHeight - 40) {
+      // Línea separadora
+      doc.setDrawColor(...accentColor);
+      doc.setLineWidth(0.5);
+      doc.line(15, finalY, pageWidth - 15, finalY);
+
+      // Total final destacado
+      doc.setFillColor(...lightGray);
+      doc.roundedRect(pageWidth - 90, finalY + 5, 75, 15, 3, 3, 'F');
+
+      doc.setTextColor(...darkGray);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('TOTAL:', pageWidth - 85, finalY + 13);
+
+      doc.setTextColor(...primaryColor);
+      doc.setFontSize(12);
+      doc.text(valorFormateado, pageWidth - 20, finalY + 13, { align: 'right' });
+    }
+
+    // Guardar el PDF con nombre descriptivo
+    const nombreArchivo = `valuacion_pc_${this.anoSeleccionado}años_${new Date().getTime()}.pdf`;
+    doc.save(nombreArchivo);
   }
 
 }
