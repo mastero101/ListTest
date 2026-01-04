@@ -45,7 +45,7 @@
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Precio (MXN)</mat-label>
             <input matInput type="number" placeholder="0.00" formControlName="precio">
-            <span matPrefix>$&nbsp;</span>
+            <span matPrefix>$</span>
             <mat-error *ngIf="registroForm.get('precio')?.invalid && registroForm.get('precio')?.touched">
               El Precio es requerido.
             </mat-error>
@@ -57,7 +57,7 @@
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Consumo (Watts)</mat-label>
             <input matInput type="number" placeholder="Ej: 105" formControlName="consumo">
-            <span matSuffix>&nbsp;W</span>
+            <span matSuffix>W</span>
             <mat-error *ngIf="registroForm.get('consumo')?.invalid && registroForm.get('consumo')?.touched">
               El Consumo es requerido.
             </mat-error>
@@ -132,7 +132,7 @@
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Potencia (Watts)</mat-label>
             <input matInput type="number" placeholder="Ej: 750" formControlName="potencia">
-            <span matSuffix>&nbsp;W</span>
+            <span matSuffix>W</span>
           </mat-form-field>
         </div>
       </div>

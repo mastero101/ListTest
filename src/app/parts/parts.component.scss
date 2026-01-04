@@ -42,6 +42,7 @@
     margin-bottom: 0.5rem;
     background: linear-gradient(135deg, var(--primary-color), #a855f7);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
@@ -82,6 +83,16 @@
 
 .form-field {
   width: 100%;
+
+  [matPrefix] {
+    margin-right: 4px;
+    margin-left: 8px;
+  }
+
+  [matSuffix] {
+    margin-left: 4px;
+    margin-right: 8px;
+  }
 }
 
 .image-preview-container {

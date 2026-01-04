@@ -14,7 +14,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 export class EditpartsComponent implements OnInit {
   items: any[] = [];
   filteredItemsAutocomplete: Observable<any[]>;
-  searchControl = new FormControl('');
+  searchControl = new FormControl<any>('');
 
   registroForm: FormGroup;
 
@@ -36,32 +36,26 @@ export class EditpartsComponent implements OnInit {
 
     this.filteredItemsAutocomplete = this.searchControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value || ''))
+      map(value => {
+        const val = value as any;
+        const filterValue = (typeof val === 'string' ? val : val?.modelo || '').toLowerCase();
+
+        // Si el buscador se vacía, ocultamos el formulario de edición para "reiniciar"
+        if (!filterValue) {
+          this.registroForm.reset();
+        }
+
+        return this.items.filter(item =>
+          item.modelo.toLowerCase().includes(filterValue) ||
+          item.tipo.toLowerCase().includes(filterValue)
+        );
+      })
     );
   }
 
   ngOnInit() {
     this.recoverProcesadores();
     this.navbarComponent.showToggleButton = true;
-  }
-
-  private _filter(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.items.filter(item =>
-      item.modelo.toLowerCase().includes(filterValue) ||
-      item.tipo.toLowerCase().includes(lowQueryCompare(filterValue))
-    );
-
-    function lowQueryCompare(val: string) { return val; } // Placeholder helper
-  }
-
-  // Improved filter logic
-  filterSuggestions(value: string | any): any[] {
-    const filterValue = (typeof value === 'string' ? value : value?.modelo || '').toLowerCase();
-    return this.items.filter(item =>
-      item.modelo.toLowerCase().includes(filterValue) ||
-      item.tipo.toLowerCase().includes(filterValue)
-    );
   }
 
   displayFn(item: any): string {
@@ -72,8 +66,9 @@ export class EditpartsComponent implements OnInit {
     axios.get('https://nodemysql12.duckdns.org:443/components')
       .then((response) => {
         this.items = response.data;
-        // Trigger a refresh of the autocomplete
-        this.searchControl.setValue(this.searchControl.value);
+        // Trigger initial filter
+        const currentVal = this.searchControl.value;
+        this.searchControl.setValue(currentVal);
       })
       .catch((error) => console.log(error));
   }
@@ -128,7 +123,6 @@ export class EditpartsComponent implements OnInit {
     const value = this.searchControl.value;
     if (!value) return;
 
-    // Si el valor es un string (no seleccionado del autocomplete), buscamos en la base de datos
     if (typeof value === 'string') {
       axios.get(`https://nodemysql12.duckdns.org:443/components/modelo/${value}`)
         .then((response) => {
