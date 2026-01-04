@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import axios from 'axios';
-
 import { NavbarComponent } from '../navbar/navbar.component';
 
 interface Registro {
@@ -23,86 +23,111 @@ interface Registro {
   styleUrls: ['./parts.component.scss']
 })
 
-export class PartsComponent {
-  registroForm: FormGroup = new FormGroup({});
-  idInit: number = 0;;
-  idInit2: any;
-  componenteControl = new FormControl();
-  tuFormulario: FormGroup = this.formBuilder.group({
-    tipo: [''],
-    socket: ['']
-  });
+export class PartsComponent implements OnInit {
+  registroForm: FormGroup;
+  idInit: number = 0;
+  idInit2: string = '';
+
   mostrarSocket: boolean = false;
   mostrarRam: boolean = false;
   mostrarPotencia: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private navbarComponent: NavbarComponent) { }
-
-  ngOnInit() {
+  constructor(
+    private formBuilder: FormBuilder,
+    private navbarComponent: NavbarComponent,
+    private snackBar: MatSnackBar
+  ) {
     this.registroForm = this.formBuilder.group({
       tipo: ['', Validators.required],
       modelo: ['', Validators.required],
-      precio: ['', Validators.required],
-      url: ['',],
+      precio: ['', [Validators.required, Validators.min(0)]],
+      url: ['', [Validators.pattern('https?://.+')]],
       img: ['', Validators.required],
       tienda: ['', Validators.required],
-      consumo: ['', Validators.required],
+      consumo: ['', [Validators.required, Validators.min(0)]],
       socket: [''],
       rams: [''],
-      potencia: [''],
+      potencia: ['', [Validators.min(0)]],
     });
+  }
+
+  ngOnInit() {
     this.recoverid();
     this.navbarComponent.showToggleButton = true;
   }
 
   onSubmit() {
     if (this.registroForm.invalid) {
+      this.snackBar.open('Por favor, completa correctamente todos los campos requeridos.', 'Cerrar', {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
       return;
     }
-    
+
     const registro: Registro = this.registroForm.value;
-    
-    // Guardar datos en el localStorage
+
+    // Guardar datos en el localStorage (opcional)
     localStorage.setItem('registro', JSON.stringify(registro));
     this.guardar();
   }
 
-  guardar() { 
+  guardar() {
     const data = this.registroForm.value;
-    
-    // Realiza la solicitud POST utilizando Axios
+
     axios.post('https://nodemysql12.duckdns.org:443/components/', data)
       .then((response) => {
-        // Maneja la respuesta exitosa de la inserción en la base de datos
         console.log('Datos guardados exitosamente:', response.data);
+        this.snackBar.open('¡Componente registrado exitosamente!', 'Excelente', {
+          duration: 3000
+        });
+        this.resetForm();
+        this.recoverid(); // Refresh ID
       })
       .catch((error) => {
-        // Maneja el error en caso de que la inserción falle
         console.error('Error al guardar los datos:', error);
-        // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales según tus necesidades
+        this.snackBar.open('Error al registrar el componente. Intenta de nuevo.', 'Cerrar', {
+          duration: 5000
+        });
       });
-    alert("Registrado");
   }
 
-  recoverid(){
+  recoverid() {
     axios
       .get(`https://nodemysql12.duckdns.org:443/components/`)
       .then(response => {
-        this.idInit = response.data[response.data.length - 1].id;
-        this.idInit = this.idInit+1;
-        this.idInit2 = ("ID: " + this.idInit);
-        console.log(response);
+        if (response.data && response.data.length > 0) {
+          this.idInit = response.data[response.data.length - 1].id + 1;
+        } else {
+          this.idInit = 1;
+        }
+        this.idInit2 = "ID: " + this.idInit;
       })
       .catch(error => {
-        console.log(error);
+        console.error('Error al recuperar ID:', error);
       });
   }
 
   onComponenteChange(event: any) {
     const selectedComponente = event.value;
-    this.mostrarSocket = selectedComponente === 'procesador' || selectedComponente === 'motherboard';
-    this.mostrarRam = selectedComponente === 'motherboard' || selectedComponente === 'ram';
-    this.mostrarPotencia = selectedComponente === 'psu';
+    this.updateVisibleFields(selectedComponente);
   }
 
+  updateVisibleFields(tipo: string) {
+    this.mostrarSocket = tipo === 'procesador' || tipo === 'motherboard';
+    this.mostrarRam = tipo === 'motherboard' || tipo === 'ram';
+    this.mostrarPotencia = tipo === 'psu';
+
+    // Clear fields that are no longer visible
+    if (!this.mostrarSocket) this.registroForm.patchValue({ socket: '' });
+    if (!this.mostrarRam) this.registroForm.patchValue({ rams: '' });
+    if (!this.mostrarPotencia) this.registroForm.patchValue({ potencia: '' });
+  }
+
+  resetForm() {
+    this.registroForm.reset();
+    this.mostrarSocket = false;
+    this.mostrarRam = false;
+    this.mostrarPotencia = false;
+  }
 }

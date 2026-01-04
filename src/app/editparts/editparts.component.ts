@@ -1,161 +1,174 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import axios from 'axios';
-
 import { NavbarComponent } from '../navbar/navbar.component';
-
-interface Registro {
-  id: string;
-  tipo: string;
-  modelo: string;
-  precio: number;
-  url: string;
-  tienda: string;
-  consumo: string;
-  img: string;
-}
 
 @Component({
   selector: 'app-editparts',
   templateUrl: './editparts.component.html',
   styleUrls: ['./editparts.component.scss']
 })
-export class EditpartsComponent {
-  items: { precio: number; tipo: string; modelo: string; tienda: string; url: string; consumo: string; img:string;}[] = [];
-  registroForm: FormGroup = new FormGroup({});
-  modeloBusqueda: any;
-  modelo: any;
-  elementoid: any;
+export class EditpartsComponent implements OnInit {
+  items: any[] = [];
+  filteredItemsAutocomplete: Observable<any[]>;
+  searchControl = new FormControl('');
 
-  constructor(private formBuilder: FormBuilder, private navbarComponent: NavbarComponent) { }
+  registroForm: FormGroup;
 
-  ngOnInit() {
+  constructor(
+    private formBuilder: FormBuilder,
+    private navbarComponent: NavbarComponent,
+    private snackBar: MatSnackBar
+  ) {
     this.registroForm = this.formBuilder.group({
-      id: ['', Validators.required],
+      id: [{ value: '', disabled: true }, Validators.required],
       tipo: ['', Validators.required],
-      modelo: ['', Validators.required],
-      precio: ['', Validators.required],
+      modelo: ['', [Validators.required, Validators.minLength(3)]],
+      precio: ['', [Validators.required, Validators.min(0)]],
       url: ['', Validators.required],
       img: ['', Validators.required],
       tienda: ['', Validators.required],
-      consumo: ['', Validators.required],
+      consumo: ['', [Validators.required, Validators.min(0)]],
     });
+
+    this.filteredItemsAutocomplete = this.searchControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || ''))
+    );
+  }
+
+  ngOnInit() {
     this.recoverProcesadores();
     this.navbarComponent.showToggleButton = true;
   }
 
+  private _filter(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.items.filter(item =>
+      item.modelo.toLowerCase().includes(filterValue) ||
+      item.tipo.toLowerCase().includes(lowQueryCompare(filterValue))
+    );
+
+    function lowQueryCompare(val: string) { return val; } // Placeholder helper
+  }
+
+  // Improved filter logic
+  filterSuggestions(value: string | any): any[] {
+    const filterValue = (typeof value === 'string' ? value : value?.modelo || '').toLowerCase();
+    return this.items.filter(item =>
+      item.modelo.toLowerCase().includes(filterValue) ||
+      item.tipo.toLowerCase().includes(filterValue)
+    );
+  }
+
+  displayFn(item: any): string {
+    return item && item.modelo ? item.modelo : '';
+  }
+
+  recoverProcesadores() {
+    axios.get('https://nodemysql12.duckdns.org:443/components')
+      .then((response) => {
+        this.items = response.data;
+        // Trigger a refresh of the autocomplete
+        this.searchControl.setValue(this.searchControl.value);
+      })
+      .catch((error) => console.log(error));
+  }
+
+  onItemSelected(event: any) {
+    const selectedItem = event.option.value;
+    this.fillForm(selectedItem);
+  }
+
+  fillForm(selectedItem: any) {
+    if (!selectedItem) return;
+    this.registroForm.patchValue({
+      id: selectedItem.id,
+      tipo: selectedItem.tipo,
+      modelo: selectedItem.modelo,
+      precio: selectedItem.precio,
+      tienda: selectedItem.tienda,
+      url: selectedItem.url,
+      img: selectedItem.img,
+      consumo: selectedItem.consumo,
+    });
+
+    if (window.innerWidth < 768) {
+      setTimeout(() => {
+        document.querySelector('.edit-card')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }
+
   onSubmit() {
     if (this.registroForm.invalid) {
+      this.snackBar.open('Formulario inválido', 'Cerrar', { duration: 3000 });
       return;
     }
-    
-    const registro: Registro = this.registroForm.value;
-    console.log(registro);
-    
-    // Guardar datos en el localStorage
-    localStorage.setItem('registro', JSON.stringify(registro));
-    this.guardar();
+    const data = this.registroForm.getRawValue();
+    this.guardar(data);
   }
 
-  onSelectionChange(selectedItem: any) {
-    this.registroForm.patchValue({
-        id: selectedItem.id,
-        tipo: selectedItem.tipo,
-        modelo: selectedItem.modelo,
-        precio: selectedItem.precio,
-        tienda: selectedItem.tienda,
-        url: selectedItem.url,
-        img: selectedItem.img,
-        consumo: selectedItem.consumo,
-    });
-  }
-
-  guardar() { 
-    const data = this.registroForm.value;
-    
-    // Realiza la solicitud POST utilizando Axios
-    console.log(data);
+  guardar(data: any) {
     axios.put(`https://nodemysql12.duckdns.org:443/components/${data.id}`, data)
-      .then((response) => {
-        // Maneja la respuesta exitosa de la inserción en la base de datos
-        console.log('Datos guardados exitosamente:', response.data);
-        alert('Articulo Actualizado')
+      .then(() => {
+        this.snackBar.open('¡Componente actualizado!', 'Aceptar', { duration: 3000 });
+        this.recoverProcesadores();
       })
       .catch((error) => {
-        // Maneja el error en caso de que la inserción falle
-        console.error('Error al guardar los datos:', error);
-        // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales según tus necesidades
+        console.error('Error:', error);
+        this.snackBar.open('Error al actualizar', 'Cerrar', { duration: 5000 });
       });
   }
 
-  buscar() {
-    axios.get(`https://nodemysql12.duckdns.org:443/components/modelo/${this.modelo}`)
-      .then((response) => {
-        // Verifica si se encontró el elemento
-        if (response.data && response.data[0]) {
-          // Puedes asignar los datos recuperados al formulario de edición para prellenarlos
-          this.registroForm.patchValue(response.data[0]);
-          console.log(response.data[0]);
-        } else {
-          // Maneja el caso en el que no se encuentre el elemento
-          alert('No se encontró el elemento');
-        }
-      })
-      .catch((error) => {
-        console.error('Error al buscar el elemento:', error);
-        // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales según tus necesidades
-      });
+  buscarManualmente() {
+    const value = this.searchControl.value;
+    if (!value) return;
+
+    // Si el valor es un string (no seleccionado del autocomplete), buscamos en la base de datos
+    if (typeof value === 'string') {
+      axios.get(`https://nodemysql12.duckdns.org:443/components/modelo/${value}`)
+        .then((response) => {
+          if (response.data && response.data[0]) {
+            this.fillForm(response.data[0]);
+            this.snackBar.open('Componente encontrado', 'OK', { duration: 2000 });
+          } else {
+            this.snackBar.open('No se encontró el modelo', 'Cerrar', { duration: 3000 });
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          this.snackBar.open('Error en la búsqueda', 'Cerrar', { duration: 3000 });
+        });
+    }
   }
 
   confirmarEliminacion() {
-    const confirmacion = window.confirm('¿Estás seguro de que deseas eliminar?');
-    if (confirmacion) {
-      // El usuario ha confirmado, ejecuta la función de eliminación
+    const modelo = this.registroForm.get('modelo')?.value;
+    if (confirm(`¿Estás seguro de que deseas eliminar: ${modelo}?`)) {
       this.delete();
-    } else {
-      // El usuario ha cancelado la eliminación
-      alert('El usuario ha cancelado la eliminación')
     }
   }
 
   delete() {
-    const data = this.registroForm.value;
-    
-    // Realiza la solicitud Delete utilizando Axios
-    console.log(data);
-    axios.delete(`https://nodemysql12.duckdns.org:443/components/${data.id}`, data)
-      .then((response) => {
-        // Maneja la respuesta exitosa de la inserción en la base de datos
-        console.log('Datos eliminados exitosamente:', response.data);
-        alert('Articulo Eliminado')
+    const id = this.registroForm.get('id')?.value;
+    axios.delete(`https://nodemysql12.duckdns.org:443/components/${id}`)
+      .then(() => {
+        this.snackBar.open('Componente eliminado', 'Aceptar', { duration: 3000 });
+        this.resetForm();
+        this.recoverProcesadores();
       })
       .catch((error) => {
-        // Maneja el error en caso de que la inserción falle
-        console.error('Error al eliminar los datos:', error);
-        // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales según tus necesidades
+        console.error('Error:', error);
+        this.snackBar.open('Error al eliminar', 'Cerrar', { duration: 5000 });
       });
   }
 
-  recoverProcesadores() {
-    axios
-      .get('https://nodemysql12.duckdns.org:443/components')
-      .then((response) => {
-        this.items = response.data.map(
-          (item: {id: number; tipo: any; modelo: any; precio: number; tienda: any; url: any; consumo: any; img:any;}) => ({
-            id: item.id,
-            tipo: item.tipo,
-            modelo: item.modelo,
-            precio: item.precio,
-            tienda: item.tienda,
-            url: item.url,
-            img: item.img,
-            consumo: item.consumo,
-          })
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  resetForm() {
+    this.registroForm.reset();
+    this.searchControl.setValue('');
   }
-
 }

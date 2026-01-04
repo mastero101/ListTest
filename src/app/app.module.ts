@@ -25,6 +25,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { PartsComponent } from './parts/parts.component';
 import { BuildsComponent } from './builds/builds.component';
@@ -77,6 +78,7 @@ import { GuiaComponent } from './guia/guia.component';
     MatSliderModule,
     MatSnackBarModule,
     MatTooltipModule,
+    MatAutocompleteModule,
     NgxMatSelectSearchModule,
     ChangePhotoDialogComponent
   ],

@@ -1,113 +1,168 @@
-<mat-card class="form-group" style="margin-top: 5em;">
-    <mat-label style="text-align: center; margin-bottom: 1em; margin-top: 1em;" for="busqueda">Buscar por modelo:</mat-label>
-        <mat-form-field class="form-field">
-            <mat-select (selectionChange)="onSelectionChange($event.value)">
-                <mat-option *ngFor="let item of items" [value]="item">{{ item.modelo }}</mat-option>
+<div class="edit-parts-container">
+  <!-- Search Section -->
+  <div class="search-card">
+    <div class="section-header">
+      <mat-icon>search</mat-icon>
+      <h2>Gestión de Componentes</h2>
+    </div>
+
+    <div class="search-box">
+      <!-- Unified Smart Search with Autocomplete -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Buscar por modelo o tipo...</mat-label>
+        <input type="text"
+               placeholder="Ej: Ryzen 5, RTX 4060, Motherboard..."
+               aria-label="Componente"
+               matInput
+               [formControl]="searchControl"
+               [matAutocomplete]="auto">
+        <mat-icon matPrefix>search</mat-icon>
+        <button *ngIf="searchControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="resetForm()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onItemSelected($event)">
+          <mat-option *ngFor="let item of filteredItemsAutocomplete | async" [value]="item">
+            <div class="option-content">
+              <span class="option-model">{{item.modelo}}</span>
+              <span class="option-type">{{item.tipo | titlecase}}</span>
+            </div>
+          </mat-option>
+        </mat-autocomplete>
+        <mat-hint>Escribe para ver sugerencias en tiempo real</mat-hint>
+      </mat-form-field>
+
+      <div class="search-actions">
+        <button mat-raised-button color="primary" class="search-btn" (click)="buscarManualmente()">
+          <mat-icon>find_in_page</mat-icon>
+          Consultar DB
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Section -->
+  <div class="edit-card" *ngIf="registroForm.get('id')?.value">
+    <div class="section-header">
+      <mat-icon>edit</mat-icon>
+      <h2>Editar Detalles</h2>
+      <span class="id-badge" style="margin-left: auto; font-family: monospace; opacity: 0.7; font-weight: bold;">
+        ID: {{registroForm.get('id')?.value}}
+      </span>
+    </div>
+
+    <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="registration-form">
+      <div class="form-grid">
+        <!-- Tipo -->
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Tipo de Componente</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option value="procesador">Procesador</mat-option>
+              <mat-option value="disipador">Disipador</mat-option>
+              <mat-option value="motherboard">Motherboard</mat-option>
+              <mat-option value="ram">Ram</mat-option>
+              <mat-option value="almacenamiento">Almacenamiento</mat-option>
+              <mat-option value="psu">Fuente de Poder</mat-option>
+              <mat-option value="gpu">Grafica</mat-option>
+              <mat-option value="gabinete">Gabinete</mat-option>
             </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="Modelo" type="text" id="busqueda" [(ngModel)]="modelo">
-        </mat-form-field>
-        <div style="margin-left: -1em; margin-bottom: 1em;">
-            <button mat-raised-button color="primary" (click)="buscar()">Buscar</button>
+          </mat-form-field>
         </div>
-</mat-card>
 
-<form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="registration-form">
-    
-    <div class="form-group">
-        <label for="id">ID:</label>
-        <mat-form-field appearance="fill" class="form-field">
-            <input matInput placeholder="ID" formControlName="id">
-            <mat-error *ngIf="registroForm.get('id')?.invalid && registroForm.get('id')?.touched">
-            El ID es requerido.
-            </mat-error>
-        </mat-form-field>
-    </div>
+        <!-- Modelo -->
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Modelo</mat-label>
+            <input matInput formControlName="modelo" placeholder="Nombre del componente">
+            <mat-error *ngIf="registroForm.get('modelo')?.invalid">El modelo es requerido (mín. 3 letras)</mat-error>
+          </mat-form-field>
+        </div>
 
-    <div class="form-group">
-        <label for="tipo">Componente:</label>
-        <mat-form-field appearance="fill" class="form-field">
-          <mat-label>Componente</mat-label>
-          <mat-select formControlName="tipo">
-            <mat-option value="procesador">Procesador</mat-option>
-            <mat-option value="disipador">Disipador</mat-option>
-            <mat-option value="motherboard">Motherboard</mat-option>
-            <mat-option value="ram">Ram</mat-option>
-            <mat-option value="almacenamiento">Almacenamiento</mat-option>
-            <mat-option value="psu">Fuente de Poder</mat-option>
-            <mat-option value="gpu">Grafica</mat-option>
-            <mat-option value="gabinete">Gabinete</mat-option>
-          </mat-select>
-        </mat-form-field>
-    </div> 
+        <!-- Precio -->
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Precio (MXN)</mat-label>
+            <span matPrefix>$&nbsp;</span>
+            <input matInput type="number" formControlName="precio">
+          </mat-form-field>
+        </div>
 
-    <div class="form-group">
-        <label for="modelo">Modelo:</label>
-        <mat-form-field appearance="fill" class="form-field">
-            <input matInput placeholder="Modelo" formControlName="modelo">
-            <mat-error *ngIf="registroForm.get('modelo')?.invalid && registroForm.get('modelo')?.touched">
-            El Modelo es requerido.
-            </mat-error>
-        </mat-form-field>
-    </div>
+        <!-- Consumo -->
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Consumo (Watts)</mat-label>
+            <input matInput type="number" formControlName="consumo">
+            <span matSuffix>W</span>
+          </mat-form-field>
+        </div>
 
-    <div class="form-group">
-        <label for="precio">Precio:</label>
-        <mat-form-field appearance="fill" class="form-field">
-            <input matInput type="number" placeholder="Precio" formControlName="precio">
-            <mat-error *ngIf="registroForm.get('precio')?.invalid && registroForm.get('precio')?.touched">
-            El Precio es requerido.
-            </mat-error>
-        </mat-form-field>
-    </div>
+        <!-- Tienda -->
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Tienda</mat-label>
+            <mat-select formControlName="tienda">
+              <mat-option value="Cyberpuerta">Cyberpuerta</mat-option>
+              <mat-option value="DDTECH">DDTECH</mat-option>
+              <mat-option value="Amazon">Amazon</mat-option>
+              <mat-option value="Pcel">PCEL</mat-option>
+              <mat-option value="Dimercom">Dimercom</mat-option>
+              <mat-option value="Aliexpress">Aliexpress</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-    <div class="form-group">
-        <label for="url">URL:</label>
-        <mat-form-field appearance="fill" class="form-field">
-            <input matInput placeholder="URL" formControlName="url">
-            <mat-error *ngIf="registroForm.get('url')?.invalid && registroForm.get('url')?.touched">
-            La URL del producto es requerida.
-            </mat-error>
-        </mat-form-field>
-    </div>
+        <!-- URL -->
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>URL del Producto</mat-label>
+            <input matInput formControlName="url">
+            <mat-icon matSuffix>link</mat-icon>
+          </mat-form-field>
+        </div>
 
-    <div class="form-group">
-        <label for="img">Imagen:</label>
-        <mat-form-field appearance="fill" class="form-field">
-            <input matInput placeholder="URL" formControlName="img">
-            <mat-error *ngIf="registroForm.get('img')?.invalid && registroForm.get('img')?.touched">
-            La img del producto es requerida.
-            </mat-error>
-        </mat-form-field>
-    </div>
+        <!-- Imagen URL -->
+        <div class="form-field-wrapper full-width">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>URL de la Imagen</mat-label>
+            <input matInput formControlName="img">
+            <mat-icon matSuffix>image</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
 
-    <div class="form-group">
-        <label for="tienda">Tienda:</label>
-        <mat-form-field appearance="fill" class="form-field">
-          <mat-label>Tienda</mat-label>
-          <mat-select formControlName="tienda">
-            <mat-option value="Cyberpuerta">Cyberpuerta</mat-option>
-            <mat-option value="DDTECH">DDTECH</mat-option>
-            <mat-option value="Amazon">Amazon</mat-option>
-            <mat-option value="Pcel">PCEL</mat-option>
-            <mat-option value="Dimercom">Dimercom</mat-option>
-            <mat-option value="Aliexpress">Aliexpress</mat-option>
-          </mat-select>
-        </mat-form-field>
-    </div>  
+      <!-- Preview -->
+      <div class="image-preview-container">
+        <div *ngIf="registroForm.get('img')?.value; else noImage">
+          <img [src]="registroForm.get('img')?.value" alt="Preview" onerror="this.src='https://placehold.co/200x200?text=Sin+Imagen'">
+        </div>
+        <ng-template #noImage>
+          <div class="no-image">
+            <mat-icon>image_not_supported</mat-icon>
+            <span>Vista previa no disponible</span>
+          </div>
+        </ng-template>
+      </div>
 
-    <div class="form-group">
-        <label for="consumo">Consumo:</label>
-        <mat-form-field appearance="fill" class="form-field">
-            <input matInput type="number" placeholder="Consumo" formControlName="consumo">
-            <mat-error *ngIf="registroForm.get('consumo')?.invalid && registroForm.get('consumo')?.touched">
-            El Consumo es requerido.
-            </mat-error>
-        </mat-form-field>
-    </div>
+      <!-- Actions -->
+      <div class="actions">
+        <button mat-flat-button type="button" class="delete-btn" (click)="confirmarEliminacion()">
+          <mat-icon>delete_forever</mat-icon>
+          Eliminar
+        </button>
+        <button mat-button type="button" class="clear-btn" (click)="resetForm()">
+          Cancelar
+        </button>
+        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="registroForm.invalid">
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  </div>
 
-    <button mat-raised-button color="primary" type="submit" style="margin-top: -3em; margin-left: 10.2em;">Submit</button>
-</form>
-    <button mat-raised-button color="primary" class="submit" type="clear">Clear</button>
-    <button mat-raised-button color="primary" style="margin-bottom: 2em;" (click)="confirmarEliminacion()">Eliminar</button>
+  <!-- Empty State -->
+  <div class="search-card empty-state" *ngIf="!registroForm.get('id')?.value">
+     <mat-icon>manage_search</mat-icon>
+     <h3>Listo para editar</h3>
+     <p>Empieza a escribir en el buscador arriba para encontrar un componente.</p>
+  </div>
+</div>
