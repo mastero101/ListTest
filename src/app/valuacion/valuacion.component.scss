@@ -382,11 +382,13 @@
   margin-top: 8px !important;
   border-radius: 12px !important;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
-  overflow: hidden !important; // Para que el sticky funcione bien
 
   .mat-select-panel {
     border-radius: 12px;
     padding: 0 !important;
+    overflow-y: auto !important; // Asegurar que el scroll vertical funcione
+    overflow-x: hidden !important; // Evitar desbordamiento horizontal
+    max-height: 350px !important; // Limitar altura para forzar scroll si es necesario
   }
 }
 
