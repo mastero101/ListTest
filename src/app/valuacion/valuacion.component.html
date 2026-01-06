@@ -40,22 +40,30 @@
             <mat-icon *ngIf="componentesSeleccionados[tipo]" class="check-icon">check_circle</mat-icon>
           </div>
 
-          <!-- Búsqueda específica para CPU y GPU -->
-          <div class="search-field" *ngIf="tipo === 'procesador' || tipo === 'gpu'">
-            <mat-form-field appearance="outline" class="search-input">
-              <mat-icon matPrefix>search</mat-icon>
-              <mat-label>Buscar {{ formatCategoria(tipo) }}</mat-label>
-              <input matInput 
-                     [ngModel]="tipo === 'procesador' ? searchTermProcesador : searchTermGPU" 
-                     (input)="onSearchInput(tipo, $any($event.target).value)"
-                     placeholder="Modelo...">
-            </mat-form-field>
-          </div>
-
           <!-- Selector -->
           <mat-form-field appearance="outline" class="select-field">
             <mat-label>Selecciona un {{ formatCategoria(tipo) }}</mat-label>
-            <mat-select (selectionChange)="seleccionarComponente(tipo, $event.value)">
+            <mat-select #selectField (selectionChange)="seleccionarComponente(tipo, $event.value)"
+                        [(value)]="componentesSeleccionados[tipo]"
+                        disableOptionCentering
+                        panelClass="dropdown-with-search"
+                        (opened)="onSelectOpened(tipo, selectField)">
+              <mat-select-trigger>
+                <div class="selected-trigger-value" *ngIf="componentesSeleccionados[tipo]">
+                  <span class="text-truncate">{{ componentesSeleccionados[tipo].modelo }}</span>
+                </div>
+              </mat-select-trigger>
+
+              <!-- Búsqueda moved inside -->
+              <div class="search-container-inside" *ngIf="tipo === 'procesador' || tipo === 'gpu'" (keydown)="$event.stopPropagation()">
+                <mat-icon>search</mat-icon>
+                <input #searchInput
+                       [ngModel]="tipo === 'procesador' ? searchTermProcesador : searchTermGPU" 
+                       (input)="onSearchInput(tipo, $any($event.target).value, selectField)"
+                       placeholder="Buscar..."
+                       (click)="$event.stopPropagation()">
+              </div>
+
               <mat-option *ngFor="let componente of 
                 tipo === 'procesador' ? componentesFiltradosProcesador : 
                 tipo === 'gpu' ? componentesFiltradosGPU : 
@@ -100,7 +108,7 @@
           <div *ngFor="let item of componentesSeleccionados | keyvalue" class="summary-item">
             <div class="item-info">
               <span class="type">{{ formatCategoria(item.key) }}</span>
-              <span class="name text-truncate">{{ item.value.modelo }}</span>
+              <span class="name">{{ item.value.modelo }}</span>
             </div>
             <div class="item-price">
               {{ calcularDepreciacion(item.value.precio, anoSeleccionado) | currency }}

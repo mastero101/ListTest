@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ComponentesService } from '../services/componentes.service';
 import { Componente } from '../interfaces/componente.interface';
 import { MatSliderChange } from '@angular/material/slider';
+import { MatSelect } from '@angular/material/select';
 import jsPDF from 'jspdf'; // Importa jsPDF
 import autoTable from 'jspdf-autotable'; // Importa el complemento para tablas
 
@@ -133,13 +134,26 @@ export class ValuacionComponent implements OnInit {
     return mapping[categoria.toLowerCase()] || (categoria.charAt(0).toUpperCase() + categoria.slice(1));
   }
 
-  onSearchInput(tipo: string, value: string) {
+  onSearchInput(tipo: string, value: string, selectField: MatSelect) {
     if (tipo === 'procesador') {
       this.searchTermProcesador = value;
       this.filtrarProcesadores();
     } else if (tipo === 'gpu') {
       this.searchTermGPU = value;
       this.filtrarGPUs();
+    }
+  }
+
+  onSelectOpened(tipo: string, selectField: MatSelect) {
+    if (tipo === 'procesador' || tipo === 'gpu') {
+      // Usamos un pequeño timeout para asegurar que el panel esté renderizado
+      setTimeout(() => {
+        const panel = document.querySelector('.dropdown-with-search');
+        if (panel) {
+          const input = panel.querySelector('input') as HTMLInputElement;
+          if (input) input.focus();
+        }
+      }, 0);
     }
   }
 
