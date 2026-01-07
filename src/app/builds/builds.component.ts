@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./builds.component.scss']
 })
 export class BuildsComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
   procesadores: { precio: number; modelo: string; tienda: string; consumo: string; socket: string }[] = [];
   motherboard: { precio: number; modelo: string; tienda: string; url: string; consumo: number; socket: string; rams: any; img: any; }[] = [];
   ram: { precio: number; modelo: string; tienda: string; url: string; consumo: number; socket: any; rams: any; img: any; }[] = [];
@@ -120,19 +121,29 @@ export class BuildsComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private clipboard: Clipboard, private navbarComponent: NavbarComponent, private snackBar: MatSnackBar) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.isLoading = true;
     this.endpoint2 = 'http://localhost:3000';
     this.endpoint = 'https://nodemysql12.duckdns.org:443';
 
-    this.recoverid();
-    this.recoverProcesadores();
-    this.recovertMotherboard();
-    this.recoverRam();
-    this.recoverAlmacenamiento();
-    this.recoverDisipador();
-    this.recoverFuente();
-    this.recoverGrafica();
-    this.recoverGabinetes();
+    try {
+      await Promise.all([
+        this.recoverid(),
+        this.recoverProcesadores(),
+        this.recovertMotherboard(),
+        this.recoverRam(),
+        this.recoverAlmacenamiento(),
+        this.recoverDisipador(),
+        this.recoverFuente(),
+        this.recoverGrafica(),
+        this.recoverGabinetes()
+      ]);
+    } catch (error) {
+      console.error('Error loading data', error);
+    } finally {
+      this.isLoading = false;
+    }
+
     this.navbarComponent.showToggleButton = true;
 
     // Inicializar la lista filtrada
@@ -185,7 +196,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   }
 
   recoverid() {
-    axios
+    return axios
       .get(this.endpoint + '/components/')
       .then((response) => {
         this.idRecuperado = response.data;
@@ -200,7 +211,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   }
 
   recoverProcesadores() {
-    axios
+    return axios
       .get(this.endpoint + '/components/tipo/procesador')
       .then((response) => {
         this.procesadores = response.data.map(
@@ -244,7 +255,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   }
 
   recovertMotherboard() {
-    axios
+    return axios
       .get(this.endpoint + '/components/tipo/motherboard')
       .then((response) => {
         this.motherboard = response.data.map(
@@ -286,7 +297,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   }
 
   recoverRam() {
-    axios
+    return axios
       .get(this.endpoint + '/components/tipo/ram')
       .then((response) => {
         this.ram = response.data.map(
@@ -323,7 +334,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   }
 
   recoverAlmacenamiento() {
-    axios
+    return axios
       .get(this.endpoint + '/components/tipo/almacenamiento')
       .then((response) => {
         this.almacenamiento = response.data.map(
@@ -360,7 +371,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   }
 
   recoverDisipador() {
-    axios
+    return axios
       .get(this.endpoint + '/components/tipo/disipador')
       .then((response) => {
         this.disipador = response.data.map(
@@ -397,7 +408,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   }
 
   recoverFuente() {
-    axios
+    return axios
       .get(this.endpoint + '/components/tipo/psu')
       .then((response) => {
         this.fuentedepoder = response.data.map(
@@ -437,7 +448,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   }
 
   recoverGrafica() {
-    axios
+    return axios
       .get(this.endpoint + '/components/tipo/gpu')
       .then((response) => {
         this.grafica = response.data.map(
@@ -477,7 +488,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   }
 
   recoverGabinetes() {
-    axios
+    return axios
       .get(this.endpoint + '/components/tipo/gabinete')
       .then((response) => {
         this.gabinetes = response.data.map((item: { modelo: any; precio: number; tienda: any; url: any; consumo: number; img: any; }) => ({

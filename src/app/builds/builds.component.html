@@ -1,4 +1,12 @@
 <div class="build-container">
+  <!-- Loader Overlay -->
+  <div class="loader-overlay" *ngIf="isLoading">
+    <div class="loader-content">
+      <div class="premium-spinner"></div>
+      <p>Cargando Componentes...</p>
+    </div>
+  </div>
+
   <!-- Imagen seleccionada grande -->
   <mat-card *ngIf="selectedImage" class="selected-image-card">
     <img [src]="selectedImage" alt="Imagen seleccionada" (click)="closeImage()" class="full-size-image">

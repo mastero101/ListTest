@@ -1,7 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const https = require('https');
-const fs = require('fs');
 const dotenv = require('dotenv');
 
 // Import the database connection from config/db.js
@@ -18,12 +16,6 @@ const port = process.env.PORT || 443;
 
 const app = express();
 
-const options = {
-                    key: fs.readFileSync('/etc/letsencrypt/live/nodemysql12.duckdns.org-0004/privkey.pem'),
-                    cert: fs.readFileSync('/etc/letsencrypt/live/nodemysql12.duckdns.org-0004/fullchain.pem')
-                };
-
-                
 
 // Test DB connection and sync models
 sequelize.authenticate()
@@ -42,7 +34,7 @@ sequelize.authenticate()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); // Added Authorization
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -54,12 +46,6 @@ app.use('/components', componentRoutes);
 app.use('/users', userRoutes);
 app.use('/configuraciones', configuracionRoutes);
 
-https.createServer(options, app).listen(port, () => {
+app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}.`);
 });
-
-/*
-http.createServer(app).listen(port, () => {
-    console.log(`Servidor escuchando en el puerto ${port}.`);
-});
-*/

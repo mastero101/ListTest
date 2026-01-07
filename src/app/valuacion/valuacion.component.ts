@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComponentesService } from '../services/componentes.service';
 import { Componente } from '../interfaces/componente.interface';
 import { MatSliderChange } from '@angular/material/slider';
@@ -11,7 +11,9 @@ import autoTable from 'jspdf-autotable'; // Importa el complemento para tablas
   templateUrl: './valuacion.component.html',
   styleUrls: ['./valuacion.component.scss']
 })
-export class ValuacionComponent implements OnInit {
+export class ValuacionComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
+  private loadingSub!: any; // Usamos any para evitar problemas de tipos si no está Subscription importado correctamente
   componentes: Componente[] = [];
   categorias: string[] = [];
   componentesSeleccionados: { [key: string]: Componente } = {};
@@ -42,7 +44,16 @@ export class ValuacionComponent implements OnInit {
   constructor(private componentesService: ComponentesService) { }
 
   ngOnInit(): void {
+    this.loadingSub = this.componentesService.isLoading$.subscribe(state => {
+      this.isLoading = state;
+    });
     this.recuperarComponentes();
+  }
+
+  ngOnDestroy(): void {
+    if (this.loadingSub) {
+      this.loadingSub.unsubscribe();
+    }
   }
 
   async recuperarComponentes() {

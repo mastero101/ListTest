@@ -1,4 +1,12 @@
 <div class="valuacion-wrapper">
+  <!-- Loader Overlay -->
+  <div class="loader-overlay" *ngIf="isLoading">
+    <div class="loader-content">
+      <div class="premium-spinner"></div>
+      <p>Cargando Componentes...</p>
+    </div>
+  </div>
+
   <div class="header-section">
     <div class="title-group">
       <h1>Valuación de PC de Segunda Mano</h1>
