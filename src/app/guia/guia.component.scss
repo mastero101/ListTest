@@ -1,4 +1,6 @@
 // Variables basadas en el diseño global
+@use 'sass:color';
+
 $primary-color: #5c3d99;
 $secondary-color: #f8f9fa;
 $text-dark: #2c3e50;
@@ -68,7 +70,7 @@ $border-radius: 12px;
         justify-content: center;
         font-size: 1.2rem;
         font-weight: bold;
-        box-shadow: 0 4px 6px rgba($primary-color, 0.3);
+        box-shadow: 0 4px 6px color.change($primary-color, $alpha: 0.3);
     }
 
     mat-card-header {
@@ -78,7 +80,7 @@ $border-radius: 12px;
 
         mat-icon {
             color: $primary-color;
-            background: rgba($primary-color, 0.1);
+            background: color.change($primary-color, $alpha: 0.1);
             padding: 8px;
             border-radius: 10px;
             margin-right: 12px;
@@ -139,8 +141,8 @@ $border-radius: 12px;
         transition: background-color 0.3s;
 
         &:hover {
-            background-color: darken($primary-color, 10%);
-            box-shadow: 0 4px 10px rgba($primary-color, 0.4);
+            background-color: color.adjust($primary-color, $lightness: -10%);
+            box-shadow: 0 4px 10px color.change($primary-color, $alpha: 0.4);
         }
     }
 }

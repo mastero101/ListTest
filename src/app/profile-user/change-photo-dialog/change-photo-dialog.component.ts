@@ -5,15 +5,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-change-photo-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatIconModule
-  ],
-  template: `
+    selector: 'app-change-photo-dialog',
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatIconModule
+    ],
+    template: `
     <h2 mat-dialog-title>Cambiar foto de perfil</h2>
     
     <mat-dialog-content class="dialog-content">
@@ -47,7 +46,7 @@ import { MatIconModule } from '@angular/material/icon';
       </button>
     </mat-dialog-actions>
   `,
-  styles: [`
+    styles: [`
     .dialog-content {
       display: flex;
       flex-direction: column;

@@ -7,9 +7,10 @@ import axios from 'axios';
 import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
-  selector: 'app-editparts',
-  templateUrl: './editparts.component.html',
-  styleUrls: ['./editparts.component.scss']
+    selector: 'app-editparts',
+    templateUrl: './editparts.component.html',
+    styleUrls: ['./editparts.component.scss'],
+    standalone: false
 })
 export class EditpartsComponent implements OnInit {
   items: any[] = [];

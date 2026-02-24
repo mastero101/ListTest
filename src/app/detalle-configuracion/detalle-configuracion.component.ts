@@ -6,9 +6,10 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-detalle-configuracion',
-  templateUrl: './detalle-configuracion.component.html',
-  styleUrls: ['./detalle-configuracion.component.scss']
+    selector: 'app-detalle-configuracion',
+    templateUrl: './detalle-configuracion.component.html',
+    styleUrls: ['./detalle-configuracion.component.scss'],
+    standalone: false
 })
 
 export class DetalleConfiguracionComponent {

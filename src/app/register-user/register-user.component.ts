@@ -5,9 +5,10 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-register-user',
-  templateUrl: './register-user.component.html',
-  styleUrls: ['./register-user.component.scss']
+    selector: 'app-register-user',
+    templateUrl: './register-user.component.html',
+    styleUrls: ['./register-user.component.scss'],
+    standalone: false
 })
 export class RegisterUserComponent implements OnInit {
   registrationForm: FormGroup = new FormGroup({});

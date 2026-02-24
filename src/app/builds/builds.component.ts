@@ -13,9 +13,10 @@ import { takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-builds',
-  templateUrl: './builds.component.html',
-  styleUrls: ['./builds.component.scss']
+    selector: 'app-builds',
+    templateUrl: './builds.component.html',
+    styleUrls: ['./builds.component.scss'],
+    standalone: false
 })
 export class BuildsComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;

@@ -7,9 +7,10 @@ import jsPDF from 'jspdf'; // Importa jsPDF
 import autoTable from 'jspdf-autotable'; // Importa el complemento para tablas
 
 @Component({
-  selector: 'app-valuacion',
-  templateUrl: './valuacion.component.html',
-  styleUrls: ['./valuacion.component.scss']
+    selector: 'app-valuacion',
+    templateUrl: './valuacion.component.html',
+    styleUrls: ['./valuacion.component.scss'],
+    standalone: false
 })
 export class ValuacionComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;

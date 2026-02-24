@@ -9,9 +9,10 @@ import { AuthService } from '../auth.service';
 import { ChangePhotoDialogComponent } from './change-photo-dialog/change-photo-dialog.component';
 
 @Component({
-  selector: 'app-profile-user',
-  templateUrl: './profile-user.component.html',
-  styleUrls: ['./profile-user.component.scss']
+    selector: 'app-profile-user',
+    templateUrl: './profile-user.component.html',
+    styleUrls: ['./profile-user.component.scss'],
+    standalone: false
 })
 export class ProfileUserComponent implements OnInit {
   profileForm: FormGroup = this.fb.group({

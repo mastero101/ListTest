@@ -5,9 +5,10 @@ import * as configurations from './configurations.json'; // Importa el JSON de c
 import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
-  selector: 'app-chatgpt',
-  templateUrl: './chatgpt.component.html',
-  styleUrls: ['./chatgpt.component.scss']
+    selector: 'app-chatgpt',
+    templateUrl: './chatgpt.component.html',
+    styleUrls: ['./chatgpt.component.scss'],
+    standalone: false
 })
 export class ChatgptComponent {
   messageHistory: string[] = []; // Historial de mensajes

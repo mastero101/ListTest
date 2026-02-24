@@ -18,9 +18,10 @@ interface Registro {
 }
 
 @Component({
-  selector: 'app-parts',
-  templateUrl: './parts.component.html',
-  styleUrls: ['./parts.component.scss']
+    selector: 'app-parts',
+    templateUrl: './parts.component.html',
+    styleUrls: ['./parts.component.scss'],
+    standalone: false
 })
 
 export class PartsComponent implements OnInit {
