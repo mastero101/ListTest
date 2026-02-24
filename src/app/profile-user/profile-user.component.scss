@@ -6,10 +6,31 @@ $text-muted: #64748b;
 $border-color: #e2e8f0;
 $shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
+@keyframes fadeInUp-soft {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn-soft {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .profile-page-wrapper {
   min-height: calc(100vh - 64px);
   background-color: $bg-light;
   padding: 40px 20px;
+  animation: fadeIn-soft 0.4s ease-out;
 }
 
 .profile-grid {
@@ -32,6 +53,14 @@ $shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.
   overflow: hidden;
   box-shadow: $shadow-soft;
   border: none;
+   animation: fadeInUp-soft 0.45s ease-out;
+
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(15, 23, 42, 0.15);
+  }
 
   .profile-cover {
     height: 120px;
