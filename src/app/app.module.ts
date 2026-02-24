@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ChangePhotoDialogComponent } from './profile-user/change-photo-dialog/change-photo-dialog.component';
 
@@ -39,50 +39,43 @@ import { HomeComponent } from './home/home.component';
 import { ValuacionComponent } from './valuacion/valuacion.component';
 import { GuiaComponent } from './guia/guia.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    PartsComponent,
-    BuildsComponent,
-    EditpartsComponent,
-    ChatgptComponent,
-    DetalleConfiguracionComponent,
-    RegisterUserComponent,
-    LoginComponent,
-    ProfileUserComponent,
-    HomeComponent,
-    ValuacionComponent,
-    GuiaComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatSliderModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    MatAutocompleteModule,
-    NgxMatSelectSearchModule,
-    ChangePhotoDialogComponent
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        NavbarComponent,
+        PartsComponent,
+        BuildsComponent,
+        EditpartsComponent,
+        ChatgptComponent,
+        DetalleConfiguracionComponent,
+        RegisterUserComponent,
+        LoginComponent,
+        ProfileUserComponent,
+        HomeComponent,
+        ValuacionComponent,
+        GuiaComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        MatButtonToggleModule,
+        MatCardModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatSliderModule,
+        MatSnackBarModule,
+        MatTooltipModule,
+        MatAutocompleteModule,
+        NgxMatSelectSearchModule,
+        ChangePhotoDialogComponent], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
