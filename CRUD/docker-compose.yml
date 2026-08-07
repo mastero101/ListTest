@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: .
+    container_name: crud-backend
+    restart: unless-stopped
+    # host networking: el contenedor alcanza MySQL exactamente igual que el
+    # proceso PM2 actual (si DB_HOST=localhost en .env, sigue funcionando sin
+    # cambios) y evita el tema de host.docker.internal en Linux.
+    network_mode: "host"
+    env_file:
+      - .env
+    environment:
+      SSL_KEY_PATH: /etc/letsencrypt/live/nodemysql12.duckdns.org-0004/privkey.pem
+      SSL_CERT_PATH: /etc/letsencrypt/live/nodemysql12.duckdns.org-0004/fullchain.pem
+    volumes:
+      # Certbot sigue siendo dueño de los certificados y los renueva en el host;
+      # el contenedor solo los lee (:ro). No se copian dentro de la imagen.
+      - /etc/letsencrypt/live/nodemysql12.duckdns.org-0004:/etc/letsencrypt/live/nodemysql12.duckdns.org-0004:ro
+      - /etc/letsencrypt/archive/nodemysql12.duckdns.org-0004:/etc/letsencrypt/archive/nodemysql12.duckdns.org-0004:ro

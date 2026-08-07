@@ -17,16 +17,15 @@ const sequelize = new Sequelize(
                 rejectUnauthorized: false // Adjust as needed for production
             } : false
         },
+        pool: {
+            max: 10,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        },
         logging: false // Set to true to see SQL queries in console
     }
 );
 
-sequelize.authenticate()
-    .then(() => {
-        console.log('Conexión exitosa con la base de datos (Sequelize).');
-    })
-    .catch(err => {
-        console.error('Error al conectar con la base de datos (Sequelize):', err);
-    });
-
+// La conexión inicial (con reintentos) se maneja en app3.js vía connectWithRetry().
 module.exports = sequelize;
