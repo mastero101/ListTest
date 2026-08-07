@@ -10,7 +10,9 @@ export class AuthService {
   private auth_Url2 = 'http://localhost:3000'; // Cambia esta URL con la URL backend
 
   // BehaviorSubject para emitir el estado de autenticación
-  private isAuthenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  // Se inicializa a partir del token persistido en localStorage para que el estado
+  // sobreviva a recargas de página (el servicio se reinstancia en cada bootstrap).
+  private isAuthenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
   public isAuthenticated: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
   constructor() {}
