@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container" [ngClass]="{ 'dark-theme': darkTheme }">
-  <mat-sidenav [opened]="opened" mode="side" class="sidenav">
+  <mat-sidenav [opened]="opened" [mode]="isMobile ? 'over' : 'side'" class="sidenav">
     <div class="sidebar-header">
       <div class="logo">
         <mat-icon class="logo-icon">computer</mat-icon>

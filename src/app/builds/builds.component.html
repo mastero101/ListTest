@@ -18,13 +18,13 @@
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
         <mat-label>Buscar o seleccionar procesador</mat-label>
-        <mat-select (selectionChange)="setPrecioSeleccionado($event.value)">
+        <mat-select (selectionChange)="selectComponent('procesador', $event.value)">
           <mat-select-trigger>
-            {{ selectedProcesador?.modelo || 'Seleccione un procesador' }}
+            {{ slots.procesador.selected?.modelo || 'Seleccione un procesador' }}
           </mat-select-trigger>
           <!-- Campo de búsqueda dentro del select -->
           <mat-option>
-            <ngx-mat-select-search 
+            <ngx-mat-select-search
               [formControl]="procesadorFilterCtrl"
               placeholderLabel="Buscar..."
               noEntriesFoundLabel="No se encontraron coincidencias">
@@ -36,15 +36,15 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
-      <div *ngIf="precioSeleccionado" class="component-details">
+
+      <div *ngIf="slots.procesador.selected as sel" class="component-details">
         <div class="component-image">
-          <img [src]="imgSeleccionada" (click)="openImage(imgSeleccionada)" alt="Procesador">
+          <img [src]="sel.img" (click)="openImage(sel.img)" alt="Procesador">
         </div>
         <div class="component-info">
-          <span class="price">{{ precioSeleccionado | currency }}</span>
-          <span class="watts">{{ consumoSeleccionado + " W"}}</span>
-          <a [href]="urlSeleccionada" class="store-link" target="_blank">{{ tiendaSeleccionada }}</a>
+          <span class="price">{{ sel.precio | currency }}</span>
+          <span class="watts">{{ sel.consumo + " W"}}</span>
+          <a [href]="sel.url" class="store-link" target="_blank">{{ sel.tienda }}</a>
         </div>
       </div>
     </mat-card>
@@ -53,21 +53,21 @@
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
         <mat-label>Placa Madre</mat-label>
-        <mat-select (selectionChange)="setPrecioSeleccionado2($event.value)">
+        <mat-select (selectionChange)="selectComponent('placaMadre', $event.value)">
           <mat-option *ngFor="let motherboard of motherboardFiltradas" [value]="motherboard.modelo">
             {{ motherboard.modelo }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
-      <div *ngIf="precioSeleccionado2" class="component-details">
+
+      <div *ngIf="slots.placaMadre.selected as sel" class="component-details">
         <div class="component-image">
-          <img [src]="imgSeleccionada2" (click)="openImage(imgSeleccionada2)" alt="Placa Madre">
+          <img [src]="sel.img" (click)="openImage(sel.img)" alt="Placa Madre">
         </div>
         <div class="component-info">
-          <span class="price">{{ precioSeleccionado2 | currency }}</span>
-          <span class="watts">{{ consumoSeleccionado2 + " W"}}</span>
-          <a [href]="urlSeleccionada2" class="store-link" target="_blank">{{ tiendaSeleccionada2 }}</a>
+          <span class="price">{{ sel.precio | currency }}</span>
+          <span class="watts">{{ sel.consumo + " W"}}</span>
+          <a [href]="sel.url" class="store-link" target="_blank">{{ sel.tienda }}</a>
         </div>
       </div>
     </mat-card>
@@ -76,21 +76,21 @@
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
         <mat-label>RAM</mat-label>
-        <mat-select (selectionChange)="setPrecioSeleccionado3($event.value)">
+        <mat-select (selectionChange)="selectComponent('ram', $event.value)">
           <mat-option *ngFor="let ram of ramFiltradas" [value]="ram.modelo">
             {{ ram.modelo }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
-      <div *ngIf="precioSeleccionado3" class="component-details">
+
+      <div *ngIf="slots.ram.selected as sel" class="component-details">
         <div class="component-image">
-          <img [src]="imgSeleccionada3" (click)="openImage(imgSeleccionada3)" alt="RAM">
+          <img [src]="sel.img" (click)="openImage(sel.img)" alt="RAM">
         </div>
         <div class="component-info">
-          <span class="price">{{ precioSeleccionado3 | currency }}</span>
-          <span class="watts">{{ consumoSeleccionado3 + " W"}}</span>
-          <a [href]="urlSeleccionada3" class="store-link" target="_blank">{{ tiendaSeleccionada3 }}</a>
+          <span class="price">{{ sel.precio | currency }}</span>
+          <span class="watts">{{ sel.consumo + " W"}}</span>
+          <a [href]="sel.url" class="store-link" target="_blank">{{ sel.tienda }}</a>
         </div>
       </div>
     </mat-card>
@@ -99,21 +99,21 @@
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
         <mat-label>Almacenamiento</mat-label>
-        <mat-select (selectionChange)="setPrecioSeleccionado4($event.value)">
+        <mat-select (selectionChange)="selectComponent('almacenamiento', $event.value)">
           <mat-option *ngFor="let almacenamiento of almacenamiento" [value]="almacenamiento.modelo">
             {{ almacenamiento.modelo }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
-      <div *ngIf="precioSeleccionado4" class="component-details">
+
+      <div *ngIf="slots.almacenamiento.selected as sel" class="component-details">
         <div class="component-image">
-          <img [src]="imgSeleccionada4" (click)="openImage(imgSeleccionada4)" alt="Almacenamiento">
+          <img [src]="sel.img" (click)="openImage(sel.img)" alt="Almacenamiento">
         </div>
         <div class="component-info">
-          <span class="price">{{ precioSeleccionado4 | currency }}</span>
-          <span class="watts">{{ consumoSeleccionado4 + " W"}}</span>
-          <a [href]="urlSeleccionada4" class="store-link" target="_blank">{{ tiendaSeleccionada4 }}</a>
+          <span class="price">{{ sel.precio | currency }}</span>
+          <span class="watts">{{ sel.consumo + " W"}}</span>
+          <a [href]="sel.url" class="store-link" target="_blank">{{ sel.tienda }}</a>
         </div>
       </div>
     </mat-card>
@@ -122,21 +122,21 @@
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
         <mat-label>Disipador</mat-label>
-        <mat-select (selectionChange)="setPrecioSeleccionado5($event.value)">
+        <mat-select (selectionChange)="selectComponent('enfriamiento', $event.value)">
           <mat-option *ngFor="let disipador of disipador" [value]="disipador.modelo">
             {{ disipador.modelo }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
-      <div *ngIf="precioSeleccionado5" class="component-details">
+
+      <div *ngIf="slots.enfriamiento.selected as sel" class="component-details">
         <div class="component-image">
-          <img [src]="imgSeleccionada5" (click)="openImage(imgSeleccionada5)" alt="Disipador">
+          <img [src]="sel.img" (click)="openImage(sel.img)" alt="Disipador">
         </div>
         <div class="component-info">
-          <span class="price">{{ precioSeleccionado5 | currency }}</span>
-          <span class="watts">{{ consumoSeleccionado5 + " W"}}</span>
-          <a [href]="urlSeleccionada5" class="store-link" target="_blank">{{ tiendaSeleccionada5 }}</a>
+          <span class="price">{{ sel.precio | currency }}</span>
+          <span class="watts">{{ sel.consumo + " W"}}</span>
+          <a [href]="sel.url" class="store-link" target="_blank">{{ sel.tienda }}</a>
         </div>
       </div>
     </mat-card>
@@ -145,21 +145,21 @@
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
         <mat-label>Fuente de Poder</mat-label>
-        <mat-select (selectionChange)="setPrecioSeleccionado6($event.value)">
+        <mat-select (selectionChange)="selectComponent('fuente', $event.value)">
           <mat-option *ngFor="let fuentedepoder of fuentedepoder" [value]="fuentedepoder.modelo">
             {{ fuentedepoder.modelo }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
-      <div *ngIf="precioSeleccionado6" class="component-details">
+
+      <div *ngIf="slots.fuente.selected as sel" class="component-details">
         <div class="component-image">
-          <img [src]="imgSeleccionada6" (click)="openImage(imgSeleccionada6)" alt="Fuente de Poder">
+          <img [src]="sel.img" (click)="openImage(sel.img)" alt="Fuente de Poder">
         </div>
         <div class="component-info">
-          <span class="price">{{ precioSeleccionado6 | currency }}</span>
-          <span class="watts">{{ consumoSeleccionado6 + " W"}}</span>
-          <a [href]="urlSeleccionada6" class="store-link" target="_blank">{{ tiendaSeleccionada6 }}</a>
+          <span class="price">{{ sel.precio | currency }}</span>
+          <span class="watts">{{ sel.consumo + " W"}}</span>
+          <a [href]="sel.url" class="store-link" target="_blank">{{ sel.tienda }}</a>
         </div>
       </div>
     </mat-card>
@@ -168,13 +168,13 @@
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
         <mat-label>Buscar o seleccionar gráfica</mat-label>
-        <mat-select (selectionChange)="setPrecioSeleccionado7($event.value)">
+        <mat-select (selectionChange)="selectComponent('grafica', $event.value)">
           <mat-select-trigger>
-            {{ selectedGrafica?.modelo || 'Seleccione una gráfica' }}
+            {{ slots.grafica.selected?.modelo || 'Seleccione una gráfica' }}
           </mat-select-trigger>
           <!-- Campo de búsqueda -->
           <mat-option>
-            <ngx-mat-select-search 
+            <ngx-mat-select-search
               [formControl]="graficaFilterCtrl"
               placeholderLabel="Buscar..."
               noEntriesFoundLabel="No se encontraron coincidencias">
@@ -186,15 +186,15 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
-      <div *ngIf="precioSeleccionado7" class="component-details">
+
+      <div *ngIf="slots.grafica.selected as sel" class="component-details">
         <div class="component-image">
-          <img [src]="imgSeleccionada7" (click)="openImage(imgSeleccionada7)" alt="Gráfica">
+          <img [src]="sel.img" (click)="openImage(sel.img)" alt="Gráfica">
         </div>
         <div class="component-info">
-          <span class="price">{{ precioSeleccionado7 | currency }}</span>
-          <span class="watts">{{ consumoSeleccionado7 + " W"}}</span>
-          <a [href]="urlSeleccionada7" class="store-link" target="_blank">{{ tiendaSeleccionada7 }}</a>
+          <span class="price">{{ sel.precio | currency }}</span>
+          <span class="watts">{{ sel.consumo + " W"}}</span>
+          <a [href]="sel.url" class="store-link" target="_blank">{{ sel.tienda }}</a>
         </div>
       </div>
     </mat-card>
@@ -203,21 +203,21 @@
     <mat-card class="component-item">
       <mat-form-field appearance="fill">
         <mat-label>Gabinete</mat-label>
-        <mat-select (selectionChange)="setPrecioSeleccionado8($event.value)">
+        <mat-select (selectionChange)="selectComponent('gabinete', $event.value)">
           <mat-option *ngFor="let gabinete of gabinetes" [value]="gabinete.modelo">
             {{ gabinete.modelo }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
-      <div *ngIf="precioSeleccionado8" class="component-details">
+
+      <div *ngIf="slots.gabinete.selected as sel" class="component-details">
         <div class="component-image">
-          <img [src]="imgSeleccionada8" (click)="openImage(imgSeleccionada8)" alt="Gabinete">
+          <img [src]="sel.img" (click)="openImage(sel.img)" alt="Gabinete">
         </div>
         <div class="component-info">
-          <span class="price">{{ precioSeleccionado8 | currency }}</span>
-          <span class="watts">{{ consumoSeleccionado8 + " W"}}</span>
-          <a [href]="urlSeleccionada8" class="store-link" target="_blank">{{ tiendaSeleccionada8 }}</a>
+          <span class="price">{{ sel.precio | currency }}</span>
+          <span class="watts">{{ sel.consumo + " W"}}</span>
+          <a [href]="sel.url" class="store-link" target="_blank">{{ sel.tienda }}</a>
         </div>
       </div>
     </mat-card>
@@ -238,7 +238,7 @@
 
   <!-- Sección de acciones -->
   <div class="actions-section">
-    
+
     <div class="export-buttons">
       <button mat-raised-button class="btn-guide" routerLink="/guia">
         <mat-icon>help_outline</mat-icon>
@@ -281,18 +281,18 @@
           <mat-icon>close</mat-icon>
         </button>
       </div>
-      
-      <div class="image-container" 
+
+      <div class="image-container"
            (wheel)="onMouseWheel($event)"
            (mousedown)="startPan($event)"
            (mousemove)="pan($event)"
            (mouseup)="endPan()"
            (mouseleave)="endPan()">
-        <img [src]="selectedImage" 
+        <img [src]="selectedImage"
              [style.transform]="'scale(' + zoom + ') translate(' + panX + 'px, ' + panY + 'px)'"
              alt="Imagen detallada">
       </div>
-      
+
       <div class="modal-controls">
         <button mat-icon-button (click)="zoomOut()">
           <mat-icon>remove</mat-icon>

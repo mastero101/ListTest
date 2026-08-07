@@ -1,3 +1,5 @@
+@use '../../styles/variables' as vars;
+
 // Variables
 $primary-color: #5c3d99;
 $secondary-color: #f8f9fa;
@@ -184,7 +186,7 @@ $spacing-unit: 1rem;
 }
 
 /* Estilos responsive */
-@media (max-width: 768px) {
+@include vars.respond-to(768px) {
   .build-container {
     padding: 1rem 0.5rem 5rem; // Increased bottom padding to prevent cut-off
   }
@@ -276,7 +278,7 @@ $spacing-unit: 1rem;
   }
 }
 
-@media (max-width: 480px) {
+@include vars.respond-to(vars.$breakpoint-xs) {
   .export-buttons {
     grid-template-columns: 1fr !important;
 

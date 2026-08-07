@@ -66,6 +66,9 @@
               <mat-option value="gpu">Grafica</mat-option>
               <mat-option value="gabinete">Gabinete</mat-option>
             </mat-select>
+            <mat-error *ngIf="registroForm.get('tipo')?.invalid && registroForm.get('tipo')?.touched">
+              Debe seleccionar un tipo.
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -74,7 +77,9 @@
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Modelo</mat-label>
             <input matInput formControlName="modelo" placeholder="Nombre del componente">
-            <mat-error *ngIf="registroForm.get('modelo')?.invalid">El modelo es requerido (mín. 3 letras)</mat-error>
+            <mat-error *ngIf="registroForm.get('modelo')?.invalid && registroForm.get('modelo')?.touched">
+              El modelo es requerido (mín. 3 letras)
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -84,6 +89,9 @@
             <mat-label>Precio (MXN)</mat-label>
             <span matPrefix>$</span>
             <input matInput type="number" formControlName="precio">
+            <mat-error *ngIf="registroForm.get('precio')?.invalid && registroForm.get('precio')?.touched">
+              El Precio es requerido.
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -93,6 +101,9 @@
             <mat-label>Consumo (Watts)</mat-label>
             <input matInput type="number" formControlName="consumo">
             <span matSuffix>W</span>
+            <mat-error *ngIf="registroForm.get('consumo')?.invalid && registroForm.get('consumo')?.touched">
+              El Consumo es requerido.
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -108,6 +119,9 @@
               <mat-option value="Dimercom">Dimercom</mat-option>
               <mat-option value="Aliexpress">Aliexpress</mat-option>
             </mat-select>
+            <mat-error *ngIf="registroForm.get('tienda')?.invalid && registroForm.get('tienda')?.touched">
+              La Tienda es requerida.
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -117,6 +131,9 @@
             <mat-label>URL del Producto</mat-label>
             <input matInput formControlName="url">
             <mat-icon matSuffix>link</mat-icon>
+            <mat-error *ngIf="registroForm.get('url')?.invalid && registroForm.get('url')?.touched">
+              URL inválida.
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -126,6 +143,9 @@
             <mat-label>URL de la Imagen</mat-label>
             <input matInput formControlName="img">
             <mat-icon matSuffix>image</mat-icon>
+            <mat-error *ngIf="registroForm.get('img')?.invalid && registroForm.get('img')?.touched">
+              La URL de la imagen es requerida.
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
