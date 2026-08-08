@@ -8,11 +8,11 @@ RUN npm ci --omit=dev
 
 COPY . .
 
-# bcrypt requiere compilar un binario nativo; correr como root solo durante el build
-# y bajar de privilegios para ejecutar la app.
-RUN addgroup -S app && adduser -S app -G app && chown -R app:app /usr/src/app
-USER app
-
+# El proceso corre como root: privkey.pem de Let's Encrypt solo lo puede leer
+# root (permisos 640, dueño root:root) y este proceso lo lee directamente al
+# arrancar (sin arquitectura de privilege-drop-after-bind). El proceso PM2
+# actual en producción también corre como root, así que esto no es una
+# regresión respecto al comportamiento de hoy.
 EXPOSE 443
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
