@@ -1,0 +1,57 @@
+# Auto-despliegue del backend a producción.
+#
+# Requiere un runner auto-hospedado corriendo en el VPS (nodejsmysql) — así el
+# build de Docker sucede directamente en el servidor, igual que se hacía a
+# mano, sin necesitar SSH desde GitHub ni subir/bajar imágenes de un registry.
+# Mismo patrón usado en el proyecto "Proyecto Solar".
+#
+# Setup del runner: repo → Settings → Actions → Runners → New self-hosted
+# runner (Linux x64). IMPORTANTE: config.sh debe correr como el usuario
+# `ubuntu`, nunca como root.
+
+name: Deploy backend a producción
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'CRUD/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch: {} # permite dispararlo manualmente desde la pestaña Actions
+
+# Evita que dos deploys corran a la vez si hay pushes seguidos.
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Pull últimos cambios
+        run: |
+          cd /home/ubuntu/ListTest
+          git pull
+
+      - name: Reconstruir y relanzar el contenedor del backend
+        run: |
+          cd /home/ubuntu/ListTest/CRUD
+          docker rm -f crud-backend || true
+          docker build -t crud-backend .
+          docker run -d \
+            --name crud-backend \
+            --restart unless-stopped \
+            --network host \
+            --env-file .env \
+            -e SSL_KEY_PATH=/etc/letsencrypt/live/nodemysql12.duckdns.org-0004/privkey.pem \
+            -e SSL_CERT_PATH=/etc/letsencrypt/live/nodemysql12.duckdns.org-0004/fullchain.pem \
+            -v /etc/letsencrypt/live/nodemysql12.duckdns.org-0004:/etc/letsencrypt/live/nodemysql12.duckdns.org-0004:ro \
+            -v /etc/letsencrypt/archive/nodemysql12.duckdns.org-0004:/etc/letsencrypt/archive/nodemysql12.duckdns.org-0004:ro \
+            crud-backend
+
+      - name: Verificar que arrancó bien
+        run: |
+          sleep 10
+          docker ps --filter name=crud-backend
+          docker logs crud-backend --tail 40
+          curl -k -f https://localhost/health

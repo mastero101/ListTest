@@ -5,6 +5,11 @@ const express = require('express');
 const https = require('https');
 const fs = require('fs');
 
+if (!process.env.JWT_SECRET) {
+    console.error('JWT_SECRET no está definido. Configúralo en .env antes de arrancar.');
+    process.exit(1);
+}
+
 // Import the database connection from config/db.js
 const sequelize = require('./config/db');
 
