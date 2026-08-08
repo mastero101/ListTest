@@ -4,6 +4,7 @@ dotenv.config();
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
+const helmet = require('helmet');
 
 if (!process.env.JWT_SECRET) {
     console.error('JWT_SECRET no está definido. Configúralo en .env antes de arrancar.');
@@ -51,6 +52,11 @@ async function connectWithRetry(retries = 10, delayMs = 5000) {
 
 connectWithRetry();
 
+app.use(helmet({
+    // API pura sin vistas HTML propias; el CSP por defecto de helmet solo
+    // tiene sentido para páginas servidas por este proceso, no aplica aquí.
+    contentSecurityPolicy: false,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
