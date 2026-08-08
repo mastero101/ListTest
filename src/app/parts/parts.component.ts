@@ -75,8 +75,11 @@ export class PartsComponent implements OnInit {
 
   guardar() {
     const data = this.registroForm.value;
+    const token = localStorage.getItem('token');
 
-    axios.post('https://nodemysql12.duckdns.org:443/components/', data)
+    axios.post('https://nodemysql12.duckdns.org:443/components/', data, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then((response) => {
         console.log('Datos guardados exitosamente:', response.data);
         this.snackBar.open('¡Componente registrado exitosamente!', 'Excelente', {

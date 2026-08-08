@@ -109,7 +109,10 @@ export class EditpartsComponent implements OnInit {
   }
 
   guardar(data: any) {
-    axios.put(`https://nodemysql12.duckdns.org:443/components/${data.id}`, data)
+    const token = localStorage.getItem('token');
+    axios.put(`https://nodemysql12.duckdns.org:443/components/${data.id}`, data, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(() => {
         this.snackBar.open('¡Componente actualizado!', 'Aceptar', { duration: 3000 });
         this.recoverProcesadores();
@@ -150,7 +153,10 @@ export class EditpartsComponent implements OnInit {
 
   delete() {
     const id = this.registroForm.get('id')?.value;
-    axios.delete(`https://nodemysql12.duckdns.org:443/components/${id}`)
+    const token = localStorage.getItem('token');
+    axios.delete(`https://nodemysql12.duckdns.org:443/components/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(() => {
         this.snackBar.open('Componente eliminado', 'Aceptar', { duration: 3000 });
         this.resetForm();
