@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -38,7 +39,7 @@ export class DetalleConfiguracionComponent {
     this.error = false;
     this.configData = null;
     // Haz una solicitud al servidor para recuperar la configuración basada en el ID
-    axios.get(`https://nodemysql12.duckdns.org:443/configuraciones/${configId}`)
+    axios.get(`${environment.apiUrl}/configuraciones/${configId}`)
       .then(response => {
         this.configData = response.data.configData;
         this.fechaHora = response.data.fechaHora;

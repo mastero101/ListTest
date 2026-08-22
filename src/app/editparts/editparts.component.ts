@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import axios from 'axios';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-editparts',
@@ -64,7 +65,7 @@ export class EditpartsComponent implements OnInit {
   }
 
   recoverProcesadores() {
-    axios.get('https://nodemysql12.duckdns.org:443/components')
+    axios.get(`${environment.apiUrl}/components`)
       .then((response) => {
         this.items = response.data;
         // Trigger initial filter
@@ -110,7 +111,7 @@ export class EditpartsComponent implements OnInit {
 
   guardar(data: any) {
     const token = localStorage.getItem('token');
-    axios.put(`https://nodemysql12.duckdns.org:443/components/${data.id}`, data, {
+    axios.put(`${environment.apiUrl}/components/${data.id}`, data, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(() => {
@@ -128,7 +129,7 @@ export class EditpartsComponent implements OnInit {
     if (!value) return;
 
     if (typeof value === 'string') {
-      axios.get(`https://nodemysql12.duckdns.org:443/components/modelo/${value}`)
+      axios.get(`${environment.apiUrl}/components/modelo/${value}`)
         .then((response) => {
           if (response.data && response.data[0]) {
             this.fillForm(response.data[0]);
@@ -154,7 +155,7 @@ export class EditpartsComponent implements OnInit {
   delete() {
     const id = this.registroForm.get('id')?.value;
     const token = localStorage.getItem('token');
-    axios.delete(`https://nodemysql12.duckdns.org:443/components/${id}`, {
+    axios.delete(`${environment.apiUrl}/components/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(() => {

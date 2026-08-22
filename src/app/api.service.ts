@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 
+import { environment } from '../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'https://nodemysql12.duckdns.org:443';
+  private baseUrl = environment.apiUrl;
   private baseUrl2 = 'http://localhost:3000';
 
   async getUsuarios() {

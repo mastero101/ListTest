@@ -4,6 +4,8 @@
 /tmp
 /out-tsc
 /bazel-out
+/dist
+dist/
 /CRUD/node_modules
 /CRUD/.env
 
@@ -42,3 +44,13 @@ testem.log
 .DS_Store
 Thumbs.db
 .vercel
+
+# Environment & Sensitive Credentials / Backups
+.env
+.env.*
+!.env.example
+*.sql
+*.sql.gz
+MYSQL Respaldo/
+
+

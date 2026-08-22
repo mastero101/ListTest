@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { BehaviorSubject } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ComponentesService {
-  endpoint = 'https://nodemysql12.duckdns.org:443/components';
+  endpoint = `${environment.apiUrl}/components`;
 
   private _isLoading = new BehaviorSubject<boolean>(false);
   isLoading$ = this._isLoading.asObservable();

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import axios from 'axios';
+import { environment } from '../../environments/environment';
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
@@ -118,7 +119,7 @@ export class BuildsComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
     this.endpoint2 = 'http://localhost:3000';
-    this.endpoint = 'https://nodemysql12.duckdns.org:443';
+    this.endpoint = environment.apiUrl;
 
     try {
       await Promise.all([

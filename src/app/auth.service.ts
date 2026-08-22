@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+import { environment } from '../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private auth_Url = 'https://nodemysql12.duckdns.org:443';
+  private auth_Url = environment.apiUrl;
   private auth_Url2 = 'http://localhost:3000'; // Cambia esta URL con la URL backend
 
   // BehaviorSubject para emitir el estado de autenticación

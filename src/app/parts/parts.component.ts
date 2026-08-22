@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 import axios from 'axios';
 import { NavbarComponent } from '../navbar/navbar.component';
 
@@ -77,7 +79,7 @@ export class PartsComponent implements OnInit {
     const data = this.registroForm.value;
     const token = localStorage.getItem('token');
 
-    axios.post('https://nodemysql12.duckdns.org:443/components/', data, {
+    axios.post(`${environment.apiUrl}/components/`, data, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then((response) => {
@@ -98,7 +100,7 @@ export class PartsComponent implements OnInit {
 
   recoverid() {
     axios
-      .get(`https://nodemysql12.duckdns.org:443/components/`)
+      .get(`${environment.apiUrl}/components/`)
       .then(response => {
         if (response.data && response.data.length > 0) {
           this.idInit = response.data[response.data.length - 1].id + 1;

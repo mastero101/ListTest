@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-home',
@@ -46,7 +47,7 @@ export class HomeComponent implements OnInit {
   }
 
   private async recuperarConfiguracion(configId: string) {
-    const response = await axios.get(`https://nodemysql12.duckdns.org:443/configuraciones/${configId}`);
+    const response = await axios.get(`${environment.apiUrl}/configuraciones/${configId}`);
     return response.data;
   }
 

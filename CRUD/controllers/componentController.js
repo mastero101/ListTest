@@ -33,7 +33,7 @@ exports.getComponentsByModel = async (req, res) => {
     const { modelo } = req.params;
     const components = await Component.findAll({
       where: {
-        modelo: { [require('sequelize').Op.like]: `%${modelo}%` }
+        modelo: { [require('sequelize').Op.iLike]: `%${modelo}%` }
       }
     });
     if (components.length > 0) {

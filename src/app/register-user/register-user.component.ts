@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
+import { environment } from '../../environments/environment';
+
 @Component({
     selector: 'app-register-user',
     templateUrl: './register-user.component.html',
@@ -13,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class RegisterUserComponent implements OnInit {
   registrationForm: FormGroup = new FormGroup({});
-  endpoint = 'https://nodemysql12.duckdns.org:443'
+  endpoint = environment.apiUrl;
 
   constructor(
     private formBuilder: FormBuilder,
