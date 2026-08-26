@@ -38,7 +38,10 @@ services:
 
   backend:
     build: .
-    container_name: crud-backend
+    # Nombre de imagen explicito: sin esto compose la deriva del directorio
+    # del proyecto (CRUD) y quedaria etiquetada como 'crud-backend'.
+    image: cotizadorpc-backend
+    container_name: cotizadorpc-backend
     restart: unless-stopped
     depends_on:
       - postgres-db

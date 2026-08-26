@@ -2,8 +2,8 @@
 
 Aplicación web para armar, valuar y compartir configuraciones (builds) de PC. Es un monorepo con dos partes independientes que viven en el mismo repositorio:
 
-- **Frontend**: Angular 20 (`/src`), desplegado en Vercel.
-- **Backend**: API REST en Node.js/Express con Sequelize sobre MySQL (`/CRUD`), corriendo en `https://nodemysql12.duckdns.org:443`.
+- **Frontend**: Angular 20 (`/src`), desplegado en Vercel (`https://cotizadorpc.org`).
+- **Backend**: API REST en Node.js/Express con Sequelize sobre PostgreSQL (`/CRUD`), corriendo en `https://pcparts.7285531.xyz`.
 
 > El nombre visible del sitio es "Cotizador PC" (ver `configuracionController.js`, que genera URLs `https://cotizadorpc.org/builds/:id`), aunque el proyecto Angular se llama `list-test`.
 
@@ -254,7 +254,7 @@ El backend corre **dockerizado** en el VPS (`nodemysql12.duckdns.org`, host `nod
 **Despliegue automático** (`.github/workflows/deploy.yml`): un runner de GitHub Actions **self-hosted**, corriendo dentro del propio VPS como servicio systemd (`actions.runner.mastero101-ListTest.nodejsmysql`, usuario `ubuntu`), reemplaza el deploy manual por SSH. Mismo patrón usado en el proyecto "Proyecto Solar": el runner solo necesita salida HTTPS hacia GitHub (polling), no expone ninguna llave con permisos de ejecución de comandos.
 
 - Se dispara con `push` a `master` que toque `CRUD/**` (o el propio workflow), o manualmente vía `workflow_dispatch`.
-- Pasos: `git pull` → `docker rm -f crud-backend || true` → `docker build` → `docker run -d --restart unless-stopped --network host --env-file .env` (con las variables `SSL_KEY_PATH`/`SSL_CERT_PATH` y los bind-mounts de certificados) → espera 10s → `docker ps` + `docker logs` + `curl -k -f https://localhost/health` como verificación.
+- Pasos: `git pull` → `docker rm -f cotizadorpc-backend || true` → `docker build` → `docker run -d --restart unless-stopped --network host --env-file .env` (con las variables `SSL_KEY_PATH`/`SSL_CERT_PATH` y los bind-mounts de certificados) → espera 10s → `docker ps` + `docker logs` + `curl -k -f https://localhost/health` como verificación.
 - El runner corre como servicio (`sudo ./svc.sh install && sudo ./svc.sh start`), sobrevive reinicios y desconexiones SSH.
 - El VPS es de recursos ajustados (1 vCPU / ~1GB RAM); se le agregó 1GB de swap persistente (`/etc/fstab`) para que `docker build`/`npm ci` no arriesguen quedarse sin memoria durante el deploy.
 

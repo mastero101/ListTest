@@ -1,0 +1,17 @@
+# Normaliza los finales de linea a LF dentro del repositorio y respeta
+# core.autocrlf al hacer checkout (CRLF en Windows, LF en Linux). Evita que
+# copiar codigo de Windows a un servidor Linux produzca diffs de archivos
+# completos por finales de linea.
+* text=auto
+
+# Los scripts .bat necesitan CRLF para ejecutarse en Windows.
+*.bat text eol=crlf
+
+# Binarios: git no debe transformarlos.
+*.ico binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.woff binary
+*.woff2 binary

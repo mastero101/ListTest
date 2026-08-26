@@ -36,10 +36,13 @@ jobs:
       - name: Reconstruir y relanzar el contenedor del backend
         run: |
           cd /home/ubuntu/ListTest/CRUD
-          docker rm -f crud-backend || true
-          docker build -t crud-backend .
+          # 'crud-backend' es el nombre antiguo: se elimina para que el
+          # contenedor viejo no retenga el puerto 443 (--network host).
+          # Puede quitarse una vez que todos los entornos esten renombrados.
+          docker rm -f cotizadorpc-backend crud-backend || true
+          docker build -t cotizadorpc-backend .
           docker run -d \
-            --name crud-backend \
+            --name cotizadorpc-backend \
             --restart unless-stopped \
             --network host \
             --env-file .env \
@@ -47,11 +50,11 @@ jobs:
             -e SSL_CERT_PATH=/etc/letsencrypt/live/nodemysql12.duckdns.org-0004/fullchain.pem \
             -v /etc/letsencrypt/live/nodemysql12.duckdns.org-0004:/etc/letsencrypt/live/nodemysql12.duckdns.org-0004:ro \
             -v /etc/letsencrypt/archive/nodemysql12.duckdns.org-0004:/etc/letsencrypt/archive/nodemysql12.duckdns.org-0004:ro \
-            crud-backend
+            cotizadorpc-backend
 
       - name: Verificar que arrancó bien
         run: |
           sleep 10
-          docker ps --filter name=crud-backend
-          docker logs crud-backend --tail 40
+          docker ps --filter name=cotizadorpc-backend
+          docker logs cotizadorpc-backend --tail 40
           curl -k -f https://localhost/health
